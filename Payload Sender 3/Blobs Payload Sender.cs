@@ -48,7 +48,6 @@ namespace Payload_Sender
             BrowseButton.ForeColor = c;
             SendButton.ForeColor = c;
             Payload_Sender_3.Properties.Settings.Default.SET_COLOUR = c;
-            Payload_Sender_3.Properties.Settings.Default.Save();
         }
         private void D(int D)
         {
@@ -57,7 +56,7 @@ namespace Payload_Sender
                 bb1.Visible = true;
                 bb2.Visible = true;
                 bb3.Visible = true;
-                BuildLabel.Text = BuildLabel.Text + "-dev";
+                BuildLabel.Text = "1.4.2-dev";
                 ClientSize = new Size(843, 374);
             }
             else
@@ -65,7 +64,7 @@ namespace Payload_Sender
                 bb1.Visible = false;
                 bb2.Visible = false;
                 bb3.Visible = false;
-                BuildLabel.Text = "1.3.1";
+                BuildLabel.Text = "1.4.2";
                 ClientSize = new Size(196, 98);
             }
         }
@@ -152,25 +151,30 @@ namespace Payload_Sender
             if (PayloadPathBox.Text == "debug mode")
             {
                 D(1);
+                PayloadPathBox.Text ="(Payload Path Here)        ";
             }
             else if (PayloadPathBox.Text == "release")
             {
                 D(0);
+                PayloadPathBox.Text = "(Payload Path Here)        ";
             }
             else
             {
                 BIN = PayloadPathBox.Text;
+                Payload_Sender_3.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text;
             }
         }
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
             Close();
+            Payload_Sender_3.Properties.Settings.Default.Save();
         }
 
         private void MinimizeBtn_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
+            Payload_Sender_3.Properties.Settings.Default.Save();
         }
 
         private void ThemeBtn_Click(object sender, EventArgs e)

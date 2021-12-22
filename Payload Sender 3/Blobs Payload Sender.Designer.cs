@@ -281,7 +281,7 @@ namespace Payload_Sender
             this.BuildLabel.Name = "BuildLabel";
             this.BuildLabel.Size = new System.Drawing.Size(58, 21);
             this.BuildLabel.TabIndex = 19;
-            this.BuildLabel.Text = "1.4.0-dev";
+            this.BuildLabel.Text = "1.4.2";
             this.BuildLabel.Click += new System.EventHandler(this.BuildLabel_Click);
             // 
             // AquaButton
