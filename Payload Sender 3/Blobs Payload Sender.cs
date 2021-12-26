@@ -30,6 +30,7 @@ namespace Payload_Sender
         }
         int TI = 0;
         public static string BIN = "";
+        public static Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         //Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         Button BTN = new Button();
         Button[] buttonArray = new Button[8];
@@ -40,6 +41,7 @@ namespace Payload_Sender
             PayloadPathBox.ForeColor = c;
             IPLabel.ForeColor = c;
             PortLabel.ForeColor = c;
+            Box.ForeColor = c;
             BuildLabel.ForeColor = c;
             IPBox.ForeColor = c;
             PortBox.ForeColor = c;
@@ -56,15 +58,15 @@ namespace Payload_Sender
                 bb1.Visible = true;
                 bb2.Visible = true;
                 bb3.Visible = true;
-                BuildLabel.Text = "1.4.2-dev";
+                BuildLabel.Visible = false;
                 ClientSize = new Size(843, 374);
             }
             else
             {
                 bb1.Visible = false;
                 bb2.Visible = false;
+                BuildLabel.Visible = true;
                 bb3.Visible = false;
-                BuildLabel.Text = "1.4.2";
                 ClientSize = new Size(196, 98);
             }
         }
@@ -92,7 +94,7 @@ namespace Payload_Sender
         }
         private void C()
         {
-            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
             s.SendFile(BIN);
@@ -139,24 +141,38 @@ namespace Payload_Sender
                 }
                 else if (r == DialogResult.Abort)
                 {
-                   // s.Close();
+                    s.Close();
                     Thread.Sleep(1337);
-                    MessageBox.Show("Note: Socket Still Open");
+                    //MessageBox.Show("Note: Socket Still Open");
                 }
             }
         }
 
         private void PayloadPathBox_TextChanged(object sender, EventArgs e)
         {
-            if (PayloadPathBox.Text == "debug mode")
+            if (PayloadPathBox.Text == "dbg")
             {
                 D(1);
                 PayloadPathBox.Text ="(Payload Path Here)        ";
             }
-            else if (PayloadPathBox.Text == "release")
+            else if (PayloadPathBox.Text == "rls")
             {
                 D(0);
                 PayloadPathBox.Text = "(Payload Path Here)        ";
+            }
+            else if (PayloadPathBox.Text == "debsv")
+            {
+                D(1);
+                PayloadPathBox.Text = "(Payload Path Here)        ";
+                Payload_Sender_3.Properties.Settings.Default.TM = 1;
+                Payload_Sender_3.Properties.Settings.Default.Save();
+            }
+            else if (PayloadPathBox.Text == "relsv")
+            {
+                D(0);
+                PayloadPathBox.Text = "(Payload Path Here)        ";
+                Payload_Sender_3.Properties.Settings.Default.TM = 0;
+                Payload_Sender_3.Properties.Settings.Default.Save();
             }
             else
             {
@@ -181,12 +197,14 @@ namespace Payload_Sender
         {
             if (TI == 0)
             {
-                ClientSize = new Size(196, 123);
+                ClientSize = new Size(214, 135);
+                Box.Size = new Size(214, 117);
                 TI = 1;
             }
             else
             {
-                ClientSize = new Size(196, 98);
+                ClientSize = new Size(214, 98);
+                Box.Size = new Size(214, 81);
                 TI = 0;
             }
         }
@@ -234,11 +252,6 @@ namespace Payload_Sender
         private void AquaButton_Click(object sender, EventArgs e)
         {
             T(Color.Aqua);
-        }
-
-        private void BuildLabel_Click(object sender, EventArgs e)
-        {
-            D(1);
         }
         private void buttonButton_Click(object sender, EventArgs e) // 
         {
