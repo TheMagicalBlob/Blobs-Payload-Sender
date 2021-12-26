@@ -58,14 +58,12 @@ namespace Payload_Sender
                 bb1.Visible = true;
                 bb2.Visible = true;
                 bb3.Visible = true;
-                BuildLabel.Visible = false;
                 ClientSize = new Size(843, 374);
             }
             else
             {
                 bb1.Visible = false;
                 bb2.Visible = false;
-                BuildLabel.Visible = true;
                 bb3.Visible = false;
                 ClientSize = new Size(196, 98);
             }
@@ -94,7 +92,7 @@ namespace Payload_Sender
         }
         private void C()
         {
-            //Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
             s.SendFile(BIN);
@@ -107,11 +105,11 @@ namespace Payload_Sender
                 Close();
             }
         }
-        private void S()// 
+        private void S() // UNUSED
         {
             // s.SendFile(BIN);
         }
-        private void Cs()
+        private void Cs() // UNUSED
         {
             //s.Close();
             MessageBoxButtons b = MessageBoxButtons.OKCancel;
@@ -130,21 +128,10 @@ namespace Payload_Sender
                 //S();
                 //Cs();
             }
-            catch (Exception fuck)
+            catch (Exception)//fuck)
             {
-                MessageBoxButtons b = MessageBoxButtons.AbortRetryIgnore;
-                DialogResult r = MessageBox.Show(fuck.Message, "An Oh-Fuck Has Occured!", b);
-                if (r == DialogResult.Retry)
-                {
-                    Thread.Sleep(1000);
-                    SendButton_Click(sender, e);
-                }
-                else if (r == DialogResult.Abort)
-                {
-                    s.Close();
-                    Thread.Sleep(1337);
-                    //MessageBox.Show("Note: Socket Still Open");
-                }
+                s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                SendButton_Click(sender, e);
             }
         }
 

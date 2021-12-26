@@ -302,7 +302,7 @@ namespace Payload_Sender
             // 
             this.bb1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bb1.ForeColor = System.Drawing.Color.Cyan;
-            this.bb1.Location = new System.Drawing.Point(70, 0);
+            this.bb1.Location = new System.Drawing.Point(100, 0);
             this.bb1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.bb1.Name = "bb1";
             this.bb1.Size = new System.Drawing.Size(20, 23);
@@ -315,7 +315,7 @@ namespace Payload_Sender
             // 
             this.bb2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bb2.ForeColor = System.Drawing.Color.Red;
-            this.bb2.Location = new System.Drawing.Point(90, 0);
+            this.bb2.Location = new System.Drawing.Point(120, 0);
             this.bb2.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.bb2.Name = "bb2";
             this.bb2.Size = new System.Drawing.Size(20, 23);
@@ -328,7 +328,7 @@ namespace Payload_Sender
             // 
             this.bb3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bb3.ForeColor = System.Drawing.Color.Indigo;
-            this.bb3.Location = new System.Drawing.Point(110, 0);
+            this.bb3.Location = new System.Drawing.Point(140, 0);
             this.bb3.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.bb3.Name = "bb3";
             this.bb3.Size = new System.Drawing.Size(21, 23);
@@ -364,14 +364,14 @@ namespace Payload_Sender
             // 
             // BuildLabel
             // 
-            this.BuildLabel.Font = new System.Drawing.Font("Segoe MDL2 Assets", 12.25F);
+            this.BuildLabel.Font = new System.Drawing.Font("Segoe MDL2 Assets", 7.25F);
             this.BuildLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.BuildLabel.Location = new System.Drawing.Point(81, 0);
+            this.BuildLabel.Location = new System.Drawing.Point(52, 0);
             this.BuildLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.BuildLabel.Name = "BuildLabel";
-            this.BuildLabel.Size = new System.Drawing.Size(36, 22);
+            this.BuildLabel.Size = new System.Drawing.Size(34, 13);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "1.4.3";
+            this.BuildLabel.Text = "1.4.3 R2";
             // 
             // Payload_Sender
             // 
