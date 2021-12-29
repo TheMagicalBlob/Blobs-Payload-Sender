@@ -15,25 +15,25 @@ using System.Windows.Forms;
 
 namespace Payload_Sender
 {
-    public partial class Payload_Sender : Form// default size (196, 98);
+    public partial class Payload_Sender : Form// default size (214, 98);
     {
         public Payload_Sender()
         {
             InitializeComponent();
-            IPBox.Text = Payload_Sender_3.Properties.Settings.Default.SET_IP;
-            PortBox.Text = Convert.ToString(Payload_Sender_3.Properties.Settings.Default.SET_PORT);
-            if (Payload_Sender_3.Properties.Settings.Default.TM == 1)
+            IPBox.Text = Blobs_Payload_Sender.Properties.Settings.Default.SET_IP;
+            PortBox.Text = Convert.ToString(Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT);
+            if (Blobs_Payload_Sender.Properties.Settings.Default.TM == 1)
             {
                 D(1);
             }
-            T(Payload_Sender_3.Properties.Settings.Default.SET_COLOUR);
+            T(Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR);
         }
         int TI = 0;
         public static string BIN = "";
         public static Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         //Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         Button BTN = new Button();
-        Button[] buttonArray = new Button[8];
+        Button[] buttonArray = new Button[10];
         private void T(Color c)
         {
             MinimizeBtn.ForeColor = c;
@@ -49,22 +49,18 @@ namespace Payload_Sender
             ThemeBtn.ForeColor = c;
             BrowseButton.ForeColor = c;
             SendButton.ForeColor = c;
-            Payload_Sender_3.Properties.Settings.Default.SET_COLOUR = c;
+            Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR = c;
         }
         private void D(int D)
         {
             if (D == 1)
             {
-                bb1.Visible = true;
                 bb2.Visible = true;
-                bb3.Visible = true;
                 ClientSize = new Size(843, 374);
             }
             else
             {
-                bb1.Visible = false;
                 bb2.Visible = false;
-                bb3.Visible = false;
                 ClientSize = new Size(196, 98);
             }
         }
@@ -151,33 +147,33 @@ namespace Payload_Sender
             {
                 D(1);
                 PayloadPathBox.Text = "(Payload Path Here)        ";
-                Payload_Sender_3.Properties.Settings.Default.TM = 1;
-                Payload_Sender_3.Properties.Settings.Default.Save();
+                Blobs_Payload_Sender.Properties.Settings.Default.TM = 1;
+                Blobs_Payload_Sender.Properties.Settings.Default.Save();
             }
             else if (PayloadPathBox.Text == "relsv")
             {
                 D(0);
                 PayloadPathBox.Text = "(Payload Path Here)        ";
-                Payload_Sender_3.Properties.Settings.Default.TM = 0;
-                Payload_Sender_3.Properties.Settings.Default.Save();
+                Blobs_Payload_Sender.Properties.Settings.Default.TM = 0;
+                Blobs_Payload_Sender.Properties.Settings.Default.Save();
             }
             else
             {
                 BIN = PayloadPathBox.Text;
-                Payload_Sender_3.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text;
+                Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text;
             }
         }
 
         private void CloseBtn_Click(object sender, EventArgs e)
         {
             Close();
-            Payload_Sender_3.Properties.Settings.Default.Save();
+            Blobs_Payload_Sender.Properties.Settings.Default.Save();
         }
 
         private void MinimizeBtn_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
-            Payload_Sender_3.Properties.Settings.Default.Save();
+            Blobs_Payload_Sender.Properties.Settings.Default.Save();
         }
 
         private void ThemeBtn_Click(object sender, EventArgs e)
@@ -195,85 +191,74 @@ namespace Payload_Sender
                 TI = 0;
             }
         }
-
-        private void PinkBtn_Click(object sender, EventArgs e)
+        private void TM0(object sender, EventArgs e)
         {
             T(Color.Fuchsia);
         }
 
-        private void PorpleBtn_Click(object sender, EventArgs e)
+        private void TM1(object sender, EventArgs e)
+        {
+            T(Color.BlueViolet);
+        }
+
+        private void TM2(object sender, EventArgs e)
         {
             T(Color.DarkViolet);
         }
 
-        private void CrimsonBtn_Click(object sender, EventArgs e)
+        private void TM3(object sender, EventArgs e)
         {
             T(Color.Lime);
         }
 
-        private void BlueBtn_Click(object sender, EventArgs e)
+        private void TM4(object sender, EventArgs e)
         {
             T(Color.Blue);
         }
 
-        private void OrangeBtn_Click(object sender, EventArgs e)
+        private void TM5(object sender, EventArgs e)
         {
             T(Color.DarkOrange);
         }
 
-        private void YellowBtn_Click(object sender, EventArgs e)
+        private void TM6(object sender, EventArgs e)
         {
             T(Color.Gold);
         }
 
-        private void RedBtn_Click(object sender, EventArgs e)
+        private void TM7(object sender, EventArgs e)
         {
             T(Color.Red);
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void TM8(object sender, EventArgs e)
         {
             T(Color.LimeGreen);
         }
 
-        private void AquaButton_Click(object sender, EventArgs e)
+        private void TM9(object sender, EventArgs e)
         {
             T(Color.Aqua);
         }
-        private void buttonButton_Click(object sender, EventArgs e) // 
+        private void TM(int i)
         {
-            if (TI == 0)
+            switch (i)
             {
-                //int h = 5;
-                for (int i = 0; i < 10; i++)
-                {
-                    int T = 50;
-                    int L = 350;
-                    //Button BTN = new Button();
-                    Controls.Add(BTN);
-                    BTN.Location = new Point(L, T);
-                    BTN.Size = new Size(40, 40);
-                    BTN.Click += BTN_Click;
-                    TI = 1;
-                }
-            }
-            else if (TI == 1)
-            {
-                Controls.Remove(BTN);
-                TI = 0;
-            }
-        }
-        private void BTN_Click(object sender, EventArgs e)
-        {
-            //Payload_Sender.Properties.Settings.Default.App_Colour = Color.Red;
-            Close();
-        }
-        private void BTN2_Click(object sender, EventArgs e)
-        {
-            //if (i == 6)
-            {
-                MessageBox.Show("Test", "tst");
-                //return null;
+                case 0:
+                    T(Color.Red);
+                    break;
+                case 1:
+                    T(Color.Green);
+                    break;
+                case 2:
+                    T(Color.Blue);
+                    break;
+                case 3:
+                    T(Color.DarkOrange);
+                    break;
+                case 4:
+                    T(Color.Gold);
+                    break;
             }
         }
         private void noButtonButton_Click(object sender, EventArgs e)
@@ -281,48 +266,47 @@ namespace Payload_Sender
             //Button[] buttonArray = new Button[8];
             if (TI == 0)
             {
-                int h = 7;
-                for (int i = 0; i <= h - 1; i++)
+                for (int i = 0; i <= 9; i++)
                 {
                     buttonArray[i] = new Button();
-                    buttonArray[i].Size = new Size(40, 40);
+                    buttonArray[i].Size = new Size(20, 20);
                     buttonArray[i].Name = "D" + i + "";
-                    buttonArray[i].Click += BTN2_Click;
-                    buttonArray[i].Location = new Point(350, 30 + (i * 40));
+                    buttonArray[i].Location = new Point(350, 30 + (i * 20));
                     Controls.Add(buttonArray[i]);
+                    ClientSize = new Size(214, 135);
+                    Box.Size = new Size(214, 117);
                     TI = 1;
                 }
             }
             else
             {
-                //int h = 7;
-                for (int i = 0; i <= 7 - 1; i++)
+                for (int i = 0; i <= 9; i++)
                 {
                     Controls.Remove(buttonArray[i]);
+                    ClientSize = new Size(214, 98);
+                    Box.Size = new Size(214, 81);
                     TI = 0;
                 }
             }
-        }
-
-        private void bb3_Click(object sender, EventArgs e)
-        {
-            List<Button> buttons = new List<Button>();
-            for (int i = 0; i < 10; i++)
-            {
-                Button newButton = new Button();
-                buttons.Add(newButton);
-                Controls.Add(newButton);
-            }
+            buttonArray[0].Click += TM0;
+            buttonArray[1].Click += TM1;
+            buttonArray[2].Click += TM2;
+            buttonArray[3].Click += TM3;
+            buttonArray[4].Click += TM4;
+            buttonArray[5].Click += TM5;
+            buttonArray[6].Click += TM6;
+            buttonArray[7].Click += TM7;
+            buttonArray[8].Click += TM8;
         }
 
         private void PortBox_TextChanged(object sender, EventArgs e)
         {
-            Payload_Sender_3.Properties.Settings.Default.SET_PORT = Convert.ToInt32(PortBox.Text);
+            Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT = Convert.ToInt32(PortBox.Text);
         }
 
         private void IPBox_TextChanged(object sender, EventArgs e)
         {
-            Payload_Sender_3.Properties.Settings.Default.SET_IP = IPBox.Text;
+            Blobs_Payload_Sender.Properties.Settings.Default.SET_IP = IPBox.Text;
         }
     }
 }
