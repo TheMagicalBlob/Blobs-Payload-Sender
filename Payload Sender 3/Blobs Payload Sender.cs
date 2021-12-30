@@ -129,8 +129,8 @@ namespace Payload_Sender
                 for (int i = 0; i <= 9; i++)
                 {
                     Box.Controls.Remove(TB[i]);
-                    //ClientSize = new Size(214, 100);
-                    //Box.Size = new Size(214, 83);
+                    ClientSize = new Size(214, 100);
+                    Box.Size = new Size(214, 83);
                     TI = 0;
                 }
             }
