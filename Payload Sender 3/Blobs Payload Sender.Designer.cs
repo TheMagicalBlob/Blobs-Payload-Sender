@@ -115,7 +115,7 @@ namespace Payload_Sender
             this.BrowseButton.BackColor = System.Drawing.Color.Black;
             this.BrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BrowseButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.BrowseButton.Location = new System.Drawing.Point(112, 11);
+            this.BrowseButton.Location = new System.Drawing.Point(116, 10);
             this.BrowseButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(52, 23);
@@ -128,7 +128,7 @@ namespace Payload_Sender
             // 
             this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SendButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.SendButton.Location = new System.Drawing.Point(167, 11);
+            this.SendButton.Location = new System.Drawing.Point(170, 10);
             this.SendButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.SendButton.Name = "SendButton";
             this.SendButton.Size = new System.Drawing.Size(42, 23);
@@ -141,7 +141,7 @@ namespace Payload_Sender
             // 
             this.MinimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MinimizeBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.MinimizeBtn.Location = new System.Drawing.Point(167, 0);
+            this.MinimizeBtn.Location = new System.Drawing.Point(168, 0);
             this.MinimizeBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MinimizeBtn.Name = "MinimizeBtn";
             this.MinimizeBtn.Size = new System.Drawing.Size(23, 23);
@@ -154,7 +154,7 @@ namespace Payload_Sender
             // 
             this.CloseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CloseBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.CloseBtn.Location = new System.Drawing.Point(190, 0);
+            this.CloseBtn.Location = new System.Drawing.Point(191, 0);
             this.CloseBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.CloseBtn.Name = "CloseBtn";
             this.CloseBtn.Size = new System.Drawing.Size(23, 23);
@@ -189,7 +189,7 @@ namespace Payload_Sender
             this.Box.ForeColor = System.Drawing.Color.Fuchsia;
             this.Box.Location = new System.Drawing.Point(0, 18);
             this.Box.Name = "Box";
-            this.Box.Size = new System.Drawing.Size(214, 82);
+            this.Box.Size = new System.Drawing.Size(215, 82);
             this.Box.TabIndex = 26;
             this.Box.TabStop = false;
             // 
@@ -209,7 +209,7 @@ namespace Payload_Sender
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(214, 100);
+            this.ClientSize = new System.Drawing.Size(215, 100);
             this.Controls.Add(this.ThemeBtn);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.MinimizeBtn);
