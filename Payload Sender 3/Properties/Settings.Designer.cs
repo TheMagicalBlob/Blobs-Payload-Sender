@@ -25,7 +25,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.137.")]
         public string SET_IP {
             get {
                 return ((string)(this["SET_IP"]));
@@ -49,7 +49,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Aqua")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Crimson")]
         public global::System.Drawing.Color SET_COLOUR {
             get {
                 return ((global::System.Drawing.Color)(this["SET_COLOUR"]));
@@ -61,25 +61,13 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("(Payload Path Here)        ")]
         public string SET_PATH {
             get {
                 return ((string)(this["SET_PATH"]));
             }
             set {
                 this["SET_PATH"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int TM {
-            get {
-                return ((int)(this["TM"]));
-            }
-            set {
-                this["TM"] = value;
             }
         }
     }

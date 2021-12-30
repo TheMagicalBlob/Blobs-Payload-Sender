@@ -15,25 +15,24 @@ using System.Windows.Forms;
 
 namespace Payload_Sender
 {
-    public partial class Payload_Sender : Form// default size (214, 98);
+    public partial class Payload_Sender : Form
     {
         public Payload_Sender()
         {
             InitializeComponent();
             IPBox.Text = Blobs_Payload_Sender.Properties.Settings.Default.SET_IP;
             PortBox.Text = Convert.ToString(Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT);
-            if (Blobs_Payload_Sender.Properties.Settings.Default.TM == 1)
-            {
-                D(1);
-            }
             T(Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR);
+            PayloadPathBox.Text = Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH;
         }
+        /// <summary> Default Size 1.4.6
+        /// ClientSize = new Size(214, 100); 
+        /// Box.Size = new Size(214, 83);
+        /// </summary>
         int TI = 0;
-        public static string BIN = "";
-        public static Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        //Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        Button BTN = new Button();
-        Button[] buttonArray = new Button[10];
+        public static string BIN = "(Payload Path Here)        ";
+        public static Button BTN = new Button();
+        public static Button[] TB = new Button[10];
         private void T(Color c)
         {
             MinimizeBtn.ForeColor = c;
@@ -51,20 +50,6 @@ namespace Payload_Sender
             SendButton.ForeColor = c;
             Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR = c;
         }
-        private void D(int D)
-        {
-            if (D == 1)
-            {
-                bb2.Visible = true;
-                ClientSize = new Size(843, 374);
-            }
-            else
-            {
-                bb2.Visible = false;
-                ClientSize = new Size(196, 98);
-            }
-        }
-
         private const int WM_NCHITTEST = 0x84;// *
         private const int HT_CAPTION = 0x2;// *
         protected override void WndProc(ref Message m)// ** Thank You To elimad On StackOverflow For This Code To Move The Form :)
@@ -83,198 +68,59 @@ namespace Payload_Sender
                 if (O.ShowDialog() == DialogResult.OK)
                 {
                     PayloadPathBox.Text = O.FileName;
+                    Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = O.FileName;
                 }
             }
         }
         private void C()
-        {
-            //s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
-            s.SendFile(BIN);
-            s.Close();
-            MessageBoxButtons b = MessageBoxButtons.OKCancel;
-            DialogResult r;
-            r = MessageBox.Show("Payload: " + BIN, "Injected Without Issue :)", b);
-            if (r == DialogResult.Cancel)
+        {try
             {
-                Close();
-            }
-        }
-        private void S() // UNUSED
-        {
-            // s.SendFile(BIN);
-        }
-        private void Cs() // UNUSED
-        {
-            //s.Close();
-            MessageBoxButtons b = MessageBoxButtons.OKCancel;
-            DialogResult r;
-            r = MessageBox.Show("Payload: " + BIN, "Injected Without Issue :)", b);
-            if (r == DialogResult.Cancel)
-            {
-                Close();
-            }
+                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
+                s.SendFile(BIN);
+                s.Close();
+                MessageBoxButtons b = MessageBoxButtons.OKCancel;
+                DialogResult r;
+                r = MessageBox.Show("Payload: " + BIN, "Injected Without Issue :) - Press Ok To Send Another, Or Cancel To Exit", b);
+                if (r == DialogResult.Cancel)
+                { Close(); }
+            } catch (Exception fuck)
+            { MessageBox.Show(fuck.Message, "private void C()"); }
         }
         private void SendButton_Click(object sender, EventArgs e)
         {
             try
-            {
-                C();
-                //S();
-                //Cs();
-            }
-            catch (Exception)//fuck)
-            {
-                s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                SendButton_Click(sender, e);
-            }
+            { C(); }
+            catch (Exception fuck)
+            { MessageBox.Show(fuck.Message, "private void SendButton_Click(object sender, EventArgs e)");}
         }
 
-        private void PayloadPathBox_TextChanged(object sender, EventArgs e)
-        {
-            if (PayloadPathBox.Text == "dbg")
-            {
-                D(1);
-                PayloadPathBox.Text ="(Payload Path Here)        ";
-            }
-            else if (PayloadPathBox.Text == "rls")
-            {
-                D(0);
-                PayloadPathBox.Text = "(Payload Path Here)        ";
-            }
-            else if (PayloadPathBox.Text == "debsv")
-            {
-                D(1);
-                PayloadPathBox.Text = "(Payload Path Here)        ";
-                Blobs_Payload_Sender.Properties.Settings.Default.TM = 1;
-                Blobs_Payload_Sender.Properties.Settings.Default.Save();
-            }
-            else if (PayloadPathBox.Text == "relsv")
-            {
-                D(0);
-                PayloadPathBox.Text = "(Payload Path Here)        ";
-                Blobs_Payload_Sender.Properties.Settings.Default.TM = 0;
-                Blobs_Payload_Sender.Properties.Settings.Default.Save();
-            }
-            else
-            {
-                BIN = PayloadPathBox.Text;
-                Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text;
-            }
-        }
-
-        private void CloseBtn_Click(object sender, EventArgs e)
-        {
-            Close();
-            Blobs_Payload_Sender.Properties.Settings.Default.Save();
-        }
+        private void PayloadPathBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text; }
+        private void CloseBtn_Click(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.Save(); Close(); }
+        private void PortBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT = Convert.ToInt32(PortBox.Text); }
+        private void IPBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_IP = IPBox.Text; }
 
         private void MinimizeBtn_Click(object sender, EventArgs e)
         {
-            WindowState = FormWindowState.Minimized;
-            Blobs_Payload_Sender.Properties.Settings.Default.Save();
+            //WindowState = FormWindowState.Minimized;
+            //Blobs_Payload_Sender.Properties.Settings.Default.Save();
+            ClientSize = new Size(350, 350);
+            Box.Size = new Size(350, 350);
         }
 
         private void ThemeBtn_Click(object sender, EventArgs e)
         {
             if (TI == 0)
             {
-                ClientSize = new Size(214, 135);
-                Box.Size = new Size(214, 117);
-                TI = 1;
-            }
-            else
-            {
-                ClientSize = new Size(214, 98);
-                Box.Size = new Size(214, 81);
-                TI = 0;
-            }
-        }
-        private void TM0(object sender, EventArgs e)
-        {
-            T(Color.Fuchsia);
-        }
-
-        private void TM1(object sender, EventArgs e)
-        {
-            T(Color.BlueViolet);
-        }
-
-        private void TM2(object sender, EventArgs e)
-        {
-            T(Color.DarkViolet);
-        }
-
-        private void TM3(object sender, EventArgs e)
-        {
-            T(Color.Lime);
-        }
-
-        private void TM4(object sender, EventArgs e)
-        {
-            T(Color.Blue);
-        }
-
-        private void TM5(object sender, EventArgs e)
-        {
-            T(Color.DarkOrange);
-        }
-
-        private void TM6(object sender, EventArgs e)
-        {
-            T(Color.Gold);
-        }
-
-        private void TM7(object sender, EventArgs e)
-        {
-            T(Color.Red);
-        }
-
-        private void TM8(object sender, EventArgs e)
-        {
-            T(Color.LimeGreen);
-        }
-
-        private void TM9(object sender, EventArgs e)
-        {
-            T(Color.Aqua);
-        }
-        private void TM(int i)
-        {
-            switch (i)
-            {
-                case 0:
-                    T(Color.Red);
-                    break;
-                case 1:
-                    T(Color.Green);
-                    break;
-                case 2:
-                    T(Color.Blue);
-                    break;
-                case 3:
-                    T(Color.DarkOrange);
-                    break;
-                case 4:
-                    T(Color.Gold);
-                    break;
-            }
-        }
-        private void noButtonButton_Click(object sender, EventArgs e)
-        {
-            //Button[] buttonArray = new Button[8];
-            if (TI == 0)
-            {
                 for (int i = 0; i <= 9; i++)
                 {
-                    buttonArray[i] = new Button();
-                    buttonArray[i].Size = new Size(20, 20);
-                    buttonArray[i].Name = "D" + i + "";
-                    buttonArray[i].Location = new Point(350, 30 + (i * 20));
-                    Controls.Add(buttonArray[i]);
-                    ClientSize = new Size(214, 135);
-                    Box.Size = new Size(214, 117);
+                    TB[i] = new Button();
+                    TB[i].Size = new Size(20, 20);
+                    TB[i].Location = new Point(3 + i * 21, 78);
+                    TB[i].FlatStyle = FlatStyle.Flat;
+                    Box.Controls.Add(TB[i]);
+                    ClientSize = new Size(214, 119);
+                    Box.Size = new Size(214, 102);
                     TI = 1;
                 }
             }
@@ -282,31 +128,34 @@ namespace Payload_Sender
             {
                 for (int i = 0; i <= 9; i++)
                 {
-                    Controls.Remove(buttonArray[i]);
-                    ClientSize = new Size(214, 98);
-                    Box.Size = new Size(214, 81);
+                    Box.Controls.Remove(TB[i]);
+                    //ClientSize = new Size(214, 100);
+                    //Box.Size = new Size(214, 83);
                     TI = 0;
                 }
             }
-            buttonArray[0].Click += TM0;
-            buttonArray[1].Click += TM1;
-            buttonArray[2].Click += TM2;
-            buttonArray[3].Click += TM3;
-            buttonArray[4].Click += TM4;
-            buttonArray[5].Click += TM5;
-            buttonArray[6].Click += TM6;
-            buttonArray[7].Click += TM7;
-            buttonArray[8].Click += TM8;
+            TB[0].Click += TM0; TB[0].ForeColor = Color.Fuchsia;
+            TB[1].Click += TM1; TB[1].ForeColor = Color.DeepPink;
+            TB[2].Click += TM2; TB[2].ForeColor = Color.Red;
+            TB[3].Click += TM3; TB[3].ForeColor = Color.Gold;
+            TB[4].Click += TM4; TB[4].ForeColor = Color.DarkViolet;
+            TB[5].Click += TM5; TB[5].ForeColor = Color.Blue;
+            TB[6].Click += TM6; TB[6].ForeColor = Color.Aqua;
+            TB[7].Click += TM7; TB[7].ForeColor = Color.DeepSkyBlue;
+            TB[8].Click += TM8; TB[8].ForeColor = Color.SpringGreen;
+            TB[9].Click += TM9; TB[9].ForeColor = Color.Lime;
+            //TB[10].Click += TM10;TB[10].ForeColor =Color.Green;
         }
-
-        private void PortBox_TextChanged(object sender, EventArgs e)
-        {
-            Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT = Convert.ToInt32(PortBox.Text);
-        }
-
-        private void IPBox_TextChanged(object sender, EventArgs e)
-        {
-            Blobs_Payload_Sender.Properties.Settings.Default.SET_IP = IPBox.Text;
-        }
+        private void TM0(object sender, EventArgs e) {T(Color.Fuchsia);}
+        private void TM1(object sender, EventArgs e) {T(Color.DeepPink);}
+        private void TM2(object sender, EventArgs e) {T(Color.Red);}
+        private void TM3(object sender, EventArgs e) {T(Color.Gold);}
+        private void TM4(object sender, EventArgs e) {T(Color.DarkViolet);}
+        private void TM5(object sender, EventArgs e) {T(Color.Blue);}
+        private void TM6(object sender, EventArgs e) {T(Color.Aqua);}
+        private void TM7(object sender, EventArgs e) {T(Color.DeepSkyBlue);}
+        private void TM8(object sender, EventArgs e) {T(Color.SpringGreen);}
+        private void TM9(object sender, EventArgs e) {T(Color.Lime);}
+        //private void TM10(object sender, EventArgs e){T(Color.Green);}
     }
 }

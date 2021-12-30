@@ -3,19 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="SET_IP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">192.168.1</Value>
+      <Value Profile="(Default)">192.168.137.</Value>
     </Setting>
     <Setting Name="SET_PORT" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9020</Value>
     </Setting>
     <Setting Name="SET_COLOUR" Type="System.Drawing.Color" Scope="User">
-      <Value Profile="(Default)">Aqua</Value>
+      <Value Profile="(Default)">Crimson</Value>
     </Setting>
     <Setting Name="SET_PATH" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="TM" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">(Payload Path Here)        </Value>
     </Setting>
   </Settings>
 </SettingsFile>
