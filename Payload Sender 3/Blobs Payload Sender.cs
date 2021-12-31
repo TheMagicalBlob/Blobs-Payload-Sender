@@ -24,6 +24,7 @@ namespace Payload_Sender
             PortBox.Text = Convert.ToString(Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT);
             T(Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR);
             PayloadPathBox.Text = Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH;
+            BIN = Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH;
         }
         /// <summary> Default Size 1.4.6
         /// ClientSize = new Size(214, 100); 
@@ -95,18 +96,11 @@ namespace Payload_Sender
             { MessageBox.Show(fuck.Message, "private void SendButton_Click(object sender, EventArgs e)");}
         }
 
-        private void PayloadPathBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text; }
+        private void PayloadPathBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text; BIN = PayloadPathBox.Text; }
         private void CloseBtn_Click(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.Save(); Close(); }
         private void PortBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT = Convert.ToInt32(PortBox.Text); }
         private void IPBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_IP = IPBox.Text; }
-
-        private void MinimizeBtn_Click(object sender, EventArgs e)
-        {
-            //WindowState = FormWindowState.Minimized;
-            //Blobs_Payload_Sender.Properties.Settings.Default.Save();
-            ClientSize = new Size(350, 350);
-            Box.Size = new Size(350, 350);
-        }
+        private void MinimizeBtn_Click(object sender, EventArgs e)  { WindowState = FormWindowState.Minimized; Blobs_Payload_Sender.Properties.Settings.Default.Save(); }
 
         private void ThemeBtn_Click(object sender, EventArgs e)
         {

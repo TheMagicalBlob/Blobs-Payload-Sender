@@ -203,7 +203,7 @@ namespace Payload_Sender
             this.BuildLabel.Name = "BuildLabel";
             this.BuildLabel.Size = new System.Drawing.Size(28, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "1.5.0";
+            this.BuildLabel.Text = "1.5.1";
             // 
             // Payload_Sender
             // 
