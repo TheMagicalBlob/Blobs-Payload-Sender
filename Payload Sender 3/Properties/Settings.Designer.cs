@@ -73,7 +73,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("NO_PATH")]
         public string SET_P1 {
             get {
                 return ((string)(this["SET_P1"]));
@@ -85,7 +85,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
         public string SET_P2 {
             get {
                 return ((string)(this["SET_P2"]));
@@ -97,7 +97,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("WHYAREYOUREADINGTHECONFIGkek")]
         public string SET_P3 {
             get {
                 return ((string)(this["SET_P3"]));
@@ -109,7 +109,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
         public string SET_P4 {
             get {
                 return ((string)(this["SET_P4"]));

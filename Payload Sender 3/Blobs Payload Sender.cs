@@ -21,9 +21,6 @@ namespace Payload_Sender
             }
             catch (Exception fuck)
             { MessageBox.Show(fuck.Message, "An Oh-Fuck Has Occured!"); }
-            P2_Btn.Visible = false;
-            P3_Btn.Visible = false;
-            P4_Btn.Visible = false;
         }
         /// <summary> Default Size 1.4.6
         /// ClientSize = new Size(214, 100); 
@@ -70,16 +67,14 @@ namespace Payload_Sender
             OpenFileDialog O = new OpenFileDialog();
             O.Filter = "Payload|*.bin*";
             {
-                if (O.ShowDialog() == DialogResult.OK)
-                {
+                if (O.ShowDialog() == DialogResult.OK) {
                     PayloadPathBox.Text = O.FileName;
                     Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = O.FileName;
                 }
             }
         }
         private void C() // Standard One
-        {try
-            {
+        {try {
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
                 s.SendFile(BIN);
@@ -87,8 +82,8 @@ namespace Payload_Sender
                 MessageBoxButtons b = MessageBoxButtons.OKCancel;
                 DialogResult r;
                 r = MessageBox.Show("Payload: " + BIN, "Injected Without Issue :) - Press Ok To Send Another, Or Cancel To Exit", b);
-                if (r == DialogResult.Cancel)
-                {Blobs_Payload_Sender.Properties.Settings.Default.Save();Close();}
+                if (r == DialogResult.Cancel) {
+                    Blobs_Payload_Sender.Properties.Settings.Default.Save();Close();}
             } catch (Exception fuck)
             { MessageBox.Show(fuck.Message, "private void C()"); }
         }
@@ -132,8 +127,8 @@ namespace Payload_Sender
             {
                 for (int i = 0; i <= 9; i++)
                 {
-                    ClientSize = new Size(214, 118); // With HashBox: ClientSize = new Size(214, 140); //  Without HashBox: ClientSize = new Size(214, 118);
-                    Box.Size = new Size(214, 101); // With HashBox: Box.Size = new Size(214, 123); //  Without HashBox: Box.Size = new Size(214, 101);
+                    ClientSize = new Size(215, 118); // With HashBox: ClientSize = new Size(214, 140); //  Without HashBox: ClientSize = new Size(214, 118);
+                    Box.Size = new Size(215, 101); // With HashBox: Box.Size = new Size(214, 123); //  Without HashBox: Box.Size = new Size(214, 101);
                     TB[i] = new Button();
                     //BTN = new Button();
                     TB[i].Size = new Size(20, 20);
@@ -161,8 +156,8 @@ namespace Payload_Sender
                     Box.Controls.Remove(TB[i]);
                     //Box.Controls.Remove(BTN);
                     //Box.Controls.Remove(HashBox);
-                    ClientSize = new Size(214, 100);
-                    Box.Size = new Size(214, 83);
+                    ClientSize = new Size(215, 100);
+                    Box.Size = new Size(215, 83);
                     TI = 0;
                 }
             }
@@ -198,7 +193,7 @@ namespace Payload_Sender
         {
             try
             {
-                if (Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 == "0")
+                if (Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 == "NO_PATH")
                 {
                     OpenFileDialog O = new OpenFileDialog();
                     O.Filter = "Payload|*.bin*";

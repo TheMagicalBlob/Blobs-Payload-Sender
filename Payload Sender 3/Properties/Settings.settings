@@ -15,16 +15,16 @@
       <Value Profile="(Default)">(Payload Path Here)        </Value>
     </Setting>
     <Setting Name="SET_P1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">NO_PATH</Value>
     </Setting>
     <Setting Name="SET_P2" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">TEMP</Value>
     </Setting>
     <Setting Name="SET_P3" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">WHYAREYOUREADINGTHECONFIGkek</Value>
     </Setting>
     <Setting Name="SET_P4" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">TEMP</Value>
     </Setting>
   </Settings>
 </SettingsFile>
