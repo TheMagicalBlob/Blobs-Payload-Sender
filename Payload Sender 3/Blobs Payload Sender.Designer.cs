@@ -41,7 +41,11 @@ namespace Payload_Sender
             this.CloseBtn = new System.Windows.Forms.Button();
             this.ThemeBtn = new System.Windows.Forms.Button();
             this.Box = new System.Windows.Forms.GroupBox();
+            this.P4_Btn = new System.Windows.Forms.Button();
+            this.P3_Btn = new System.Windows.Forms.Button();
+            this.P2_Btn = new System.Windows.Forms.Button();
             this.BuildLabel = new System.Windows.Forms.Label();
+            this.P1_Btn = new System.Windows.Forms.Button();
             this.Box.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,6 +98,7 @@ namespace Payload_Sender
             this.PortLabel.TabIndex = 3;
             this.PortLabel.Text = "Port:";
             this.PortLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.PortLabel.Click += new System.EventHandler(this.PortLabel_Click);
             // 
             // PayloadPathBox
             // 
@@ -166,11 +171,12 @@ namespace Payload_Sender
             // ThemeBtn
             // 
             this.ThemeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ThemeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
             this.ThemeBtn.ForeColor = System.Drawing.Color.Fuchsia;
             this.ThemeBtn.Location = new System.Drawing.Point(0, 0);
             this.ThemeBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ThemeBtn.Name = "ThemeBtn";
-            this.ThemeBtn.Size = new System.Drawing.Size(51, 23);
+            this.ThemeBtn.Size = new System.Drawing.Size(43, 23);
             this.ThemeBtn.TabIndex = 14;
             this.ThemeBtn.Text = "Theme";
             this.ThemeBtn.UseVisualStyleBackColor = true;
@@ -178,8 +184,11 @@ namespace Payload_Sender
             // 
             // Box
             // 
+            this.Box.Controls.Add(this.P4_Btn);
             this.Box.Controls.Add(this.PortBox);
+            this.Box.Controls.Add(this.P3_Btn);
             this.Box.Controls.Add(this.PortLabel);
+            this.Box.Controls.Add(this.P2_Btn);
             this.Box.Controls.Add(this.BrowseButton);
             this.Box.Controls.Add(this.IPLabel);
             this.Box.Controls.Add(this.BuildLabel);
@@ -193,6 +202,45 @@ namespace Payload_Sender
             this.Box.TabIndex = 26;
             this.Box.TabStop = false;
             // 
+            // P4_Btn
+            // 
+            this.P4_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.P4_Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.P4_Btn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.P4_Btn.Location = new System.Drawing.Point(64, 58);
+            this.P4_Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.P4_Btn.Name = "P4_Btn";
+            this.P4_Btn.Size = new System.Drawing.Size(20, 20);
+            this.P4_Btn.TabIndex = 31;
+            this.P4_Btn.Text = "4";
+            this.P4_Btn.UseVisualStyleBackColor = true;
+            // 
+            // P3_Btn
+            // 
+            this.P3_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.P3_Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.P3_Btn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.P3_Btn.Location = new System.Drawing.Point(43, 58);
+            this.P3_Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.P3_Btn.Name = "P3_Btn";
+            this.P3_Btn.Size = new System.Drawing.Size(21, 20);
+            this.P3_Btn.TabIndex = 30;
+            this.P3_Btn.Text = "3";
+            this.P3_Btn.UseVisualStyleBackColor = true;
+            // 
+            // P2_Btn
+            // 
+            this.P2_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.P2_Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            this.P2_Btn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.P2_Btn.Location = new System.Drawing.Point(23, 58);
+            this.P2_Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.P2_Btn.Name = "P2_Btn";
+            this.P2_Btn.Size = new System.Drawing.Size(20, 20);
+            this.P2_Btn.TabIndex = 29;
+            this.P2_Btn.Text = "2";
+            this.P2_Btn.UseVisualStyleBackColor = true;
+            // 
             // BuildLabel
             // 
             this.BuildLabel.BackColor = System.Drawing.Color.Transparent;
@@ -201,15 +249,30 @@ namespace Payload_Sender
             this.BuildLabel.Location = new System.Drawing.Point(0, 8);
             this.BuildLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.BuildLabel.Name = "BuildLabel";
-            this.BuildLabel.Size = new System.Drawing.Size(28, 10);
+            this.BuildLabel.Size = new System.Drawing.Size(37, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "1.5.1";
+            this.BuildLabel.Text = "1.5.3R2";
+            // 
+            // P1_Btn
+            // 
+            this.P1_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.P1_Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
+            this.P1_Btn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.P1_Btn.Location = new System.Drawing.Point(43, 0);
+            this.P1_Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.P1_Btn.Name = "P1_Btn";
+            this.P1_Btn.Size = new System.Drawing.Size(42, 23);
+            this.P1_Btn.TabIndex = 28;
+            this.P1_Btn.Text = "Saved";
+            this.P1_Btn.UseVisualStyleBackColor = true;
+            this.P1_Btn.Click += new System.EventHandler(this.P1_Btn_Click);
             // 
             // Payload_Sender
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(215, 100);
+            this.Controls.Add(this.P1_Btn);
             this.Controls.Add(this.ThemeBtn);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.MinimizeBtn);
@@ -222,7 +285,7 @@ namespace Payload_Sender
             this.Name = "Payload_Sender";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Fuck Off, Dicksneeze";
+            this.Text = "My Dick Sneezed";
             this.Box.ResumeLayout(false);
             this.Box.PerformLayout();
             this.ResumeLayout(false);
@@ -243,6 +306,10 @@ namespace Payload_Sender
         private System.Windows.Forms.Button ThemeBtn;
         private System.Windows.Forms.GroupBox Box;
         private System.Windows.Forms.Label BuildLabel;
+        private System.Windows.Forms.Button P1_Btn;
+        private System.Windows.Forms.Button P2_Btn;
+        private System.Windows.Forms.Button P4_Btn;
+        private System.Windows.Forms.Button P3_Btn;
     }
 }
 

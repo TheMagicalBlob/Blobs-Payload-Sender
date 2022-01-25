@@ -1,0 +1,936 @@
+--------------------------
+|Mafia II 1.00 CUSA00000 |
+--------------------------
+Shooting Fills Clip 12CCD84 (reloading drains ammo)
+
+Drain; 017010 { 0x01, 0x70, 0x10 }
+Fill; 297010 { 0x29, 0x70, 0x10 }
+-----------------------------------
+Infinite Cash 0x801E04A7
+
+F; 4C29F1 { 0x4C, 0x29, 0xF1 }
+R; 909090 { 0x90, 0x90, 0x90 }
+------------------------------
+Buying Things Raises Cash 0x801E04A7 [mov [r14+r12], rcx] The Fuck Is This?
+
+F; 4C29F1 { 0x4C, 0x29, 0xF1 }
+R; 4C01F1 { 0x4C, 0x01, 0xF1 }
+------------------------------
+Infinite Ammo 150C574
+
+Drains; 44 89 60 10 { 0x44, 0x89, 0x60, 0x10 }
+Infinite; 44 89 68 10 { 0x44, 0x89, 0x68, 0x10 }
+
+HP 14C288D (effects everyone for fuck sake. again.)
+Mortal; C5-FA-5C-C0
+Inf; C5-F2-5C-C9
+
+Top To Bottom
+100B6C56E0 float 176.2499 [1]-3-1008000000-131072KB  [Watchpoint 0x15ED988 Constantly Triggered]
+100E661F30 float 176.2499 [2]-3-1010000000-131072KB  [Watchpoint 0x14C288D Makes Everyone Invincible FUCK]
+1013801DA4 float 176.2499 [2]-3-1010000000-131072KB  [Watchpoint 0x1532B6F Constantly Triggered]
+1013843728 float 0.2447915 [2]-3-1010000000-131072KB [Watchpoint 0x13BDB4E]
+                                                     [Watchpoint 0x13BDA64]
+101384372C float 0.2447915 [2]-3-1010000000-131072KB [Watchpoint 0x13BDD51 Constantly Triggered]
+10138437F8 float 0.2447915 [2]-3-1010000000-131072KB [Watchpoint 0x13BEE31 CT]
+10138437FC float 0.2447915 [2]-3-1010000000-131072KB [Watchpoint 0x13BEF27 CT]
+? float 0.3                                 [Watchpoint 0x13BDB13] nope
+-----------------------------------------------------
+-------
+Super Reload 150C57E
+
+F; 41 89 DD { 0x41, 0x89, 0xDD }
+R; 41 89 DC { 0x41, 0x89, 0xDC }
+--------------------------------
+
+--------------------------
+|Mafia III 1.00 CUSA03617|
+--------------------------
+Infinite Cash 0x3402F07
+Drain; 89 B0 D8 02 00 00 {0x89, 0xB0, 0xD8, 0x02, 0x00, 0x00}
+Inf; 90 90 90 90 90 90 {0x90, 0x90, 0x90, 0x90, 0x90, 0x90}
+
+
+
+Infinite Clip Ammo 0x2A1E30B
+Drain; 89 41 18 { 0x89 0x41, 0x18 }
+Infinite; nop { 0x90, 0x90, 0x90 }
+
+Infinite Reserve Ammo 0x2A1C54D
+Drain; 89 70 04 { 0x89, 0x70, 0x04 }
+Infinite; nop { 0x90, 0x90, 0x90 }
+
+Borderlands 3 1.00
+{With Alignment Checked
+Shield (& Health?)
+-----------------
+4 bytes - Unknown Initial: 166C011
+Still Drains, Crashes The Game On Shield Regen
+4 bytes - Exact Value: ??? Probably The Same Result
+-----------------
+8 bytes - Unknown Initial: ???
+8 bytes  - Exact Value: ???
+-----------------
+float - Unknown Initial: ???
+float  - Exact Value: ???
+-----------------
+double - Unknown Initial: ???
+double  - Exact Value: ???
+-----------------------------
+Health 
+-----------------
+4 bytes - Unknown Initial: ???
+4 bytes  - Exact Value: ???
+-----------------
+8 bytes - Unknown Initial: ???
+8 bytes - Exact Value: ???
+-----------------
+Float - Unknown Initial: 0x4DCDAC8 vmovss [rbx+0xa0], xmm1
+Drain: C5-FA-11-8B-A0-00-00-00
+Infinite: C5-FA-11-93-A0-00-00-00
+Always 1 HP (Helps Moze): C5-7A-11-83-A0-00-00-00 or C5-FA-11-B3-A0-00-00-00
+-----------------
+Double - Unknown Initial: ???
+Double - Exact Value: ???
+-----------------------------
+End Of Alignment}
+
+1.26
+
+Infinite Clip Ammo (OG Clip Drain Addr 0x5838EF4)
+Address 5838EC2
+Drain; 0x45, 0x29, 0xF4
+Infinite; 0x45, 0x29, 0xF6
+
+Shooting Increases Stach Ammo
+off;
+on; 
+
+Infinite Stash Ammo
+Address;
+Drain; 
+Infinite; 
+                                                                          ----------------------------
+                                                                          [The Last of Us Part II 1.09] 
+                                                                          ----------------------------
+
+
+F; 
+R; 
+---
+
+
+F; 
+R; 
+---
+
+
+F; 
+R; 
+---
+
+
+F; 
+R; 
+---
+
+
+F; 
+R; 
+---
+
+
+F; 
+R; 
+---
+
+
+F; 
+R; 
+---
+                                                                          ----------------------------
+                                                                          [The Last of Us Part II 1.07] 007dd9ba camera shit Ghid
+                                                                          ----------------------------
+No More Debug "Paused" Icon
+
+F; c6 04 25 78 01 00 00 00 31 c0
+R; c6 04 25 bb 67 24 03 00 31 c0
+--------------------------------
+Movie/Audio Frame Sync Threshold To Non-ADS FOV
+
+F: 48 8d 15 bf da e9 00
+R: 48 8d 15 bf 4b e9 00
+------------------------
+Fixed GPU Frame Delay To X Sensitivity 1
+
+F; 48 8d 15 54 77 e9 00
+R; 48 8d 15 20 2b 68 01
+------------------------
+Game Frame Headstart To X Sensitivity 2
+
+F; 48 8d 15 a0 9a dc 01
+R; 48 8d 15 ac 28 68 01
+------------------------
+Msg Con Scale To Menu Scale
+
+F; 48 8d 05 29 ea e7 00
+R; 48 8d 05 99 df 0b 01
+------------------------
+Msg Con Scale To Fov Slider
+
+F; 48 8d 05 29 ea e7 00
+R; 48 8d 05 d1 11 ea 00
+------------------------
+Camera Clock Multiplier To Menu Scale?
+
+F; 
+R; 
+---
+Completion Text To Build Text
+
+F; 00 43 48 45 41 54 45 44 00 43 6F 6D 70 6C 65 74 69 6F 6E 20 25 2E 31 66 25 25 25 73 20 25 73 0A 00 28 25 64 20 2F 20 25 64 29 20 25 73 0A 00 46 61 64 65 20 25 2E 33 66 0A 00 56 6F 6C 20 53 61 6D 70 6C 65 73 20 25 75 0A 00
+R; 00 44 65 62 75 67 20 20 00 54 32 20 44 65 76 20 4D 65 6E 75 20 2B 20 20 20 20 20 20 20 20 20 0A 00 42 75 69 6C 64 20 35 2E 36 36 20 20 20 00 20 20 20 20 20 20 20 20 20 0A 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 0A 00
+-------
+Vol Samples And Fade Text 
+F; 00 46 61 64 65 20 25 2E 33 66 0A 00 56 6F 6C 20 53 61 6D 70 6C 65 73 20 25 75 0A 00
+R; 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 00
+-------
+Debug Menu Transparency Float (This Makes It Transparent)
+F; B8 0A 00 00 00 9A 99 59 3F
+R; B8 0A 00 00 00 00 00 00 00
+------------------------------
+Allow Screen Tear
+
+F; c6 05 73 b2 d3 02 00
+R; c6 05 73 b2 d3 02 01
+------------------------
+Allow Screen Tear Through Loading Screens
+
+F; c6 05 45 c1 d3 02 00
+R; c6 05 45 c1 d3 02 01
+------------------------
+No Screan Tear Change After Loading? needs more oned nop'd
+
+F; c6 05 45 c1 d3 02 00
+R; 90 90 90 90 90 90 90
+------------------------
+Show Save Slot On start-up
+
+F; 49 8d 46 28 c6 05 5f 95 59 02 00
+R; 49 8d 46 28 c6 05 6d 95 59 02 01
+------------------------------------
+Show Game Completion (Needs Save Slot On Screen)
+
+F; 48 c7 05 39 c8 59 02 00 00 00 00
+R; 48 c7 05 3d c8 59 02 01 00 00 00
+------------------------------------
+lut gamma curve to NPC Scale
+F; 00 48 64 72 20 6C 75 74 20 67 61 6D 6D 61 20 63 75 72 76 65 00
+R; 00 43 68 61 6E 67 65 20 4E 50 43 20 53 63 61 6C 65 20 20 20 00
+-
+F; 48 8d 15 cb be dc 01
+R; 48 8d 15 1b 79 42 02
+------------------------
+Menu Scale
+
+F; c7 05 b5 70 ee 02 9a 99 19 3f
+R; c7 05 b5 70 ee 02 cd cc 4c 3f
+---------------------------------
+FPS Mode Change
+
+F; 41 c7 85 b4 3a 00 00 00 00 00 00 FPS Only
+R;                       1          Verbose MS
+R;                       2          Verbose Percent
+R;                       3          Minimalistic
+----------------------------------------------------
+Verbose Addatives Bytes
+
+F; 41 c7 85 b9 3a 00 00 01 01 01 01
+R; 41 c7 85 b9 3a 00 00 01 00 00 01
+------------------------------------
+Broken GPU Thing Disabled (There's A Patch From illusion To Fix This)
+
+F; 41 c7 85 b9 3a 00 00 01 01 01 01
+R; 41 c7 85 b9 3a 00 00 01 01 01 00
+---------------------------------
+Msg con scale 0.7 on boot
+
+F; 00 00 00 00 10 00 00 00 00 00 00 3f
+R; 00 00 00 00 10 00 00 00 00 00 34 3f
+---------------------------------------------------
+L3 + Triangle to FPS toggle
+
+F; 41 8a 84 24 aa 3a 00 00 89 c1 80 f1 01 41 88 8c 24 aa 3a 00 00
+R; 41 8a 84 24 b8 3a 00 00 89 c1 80 f1 01 41 88 8c 24 b8 3a 00 00
+---------------------------------
+Enable Stat Posting On Boot
+
+F; 66 41 c7 85 ec 3e 00 00 00 00
+R; 66 41 c7 85 ed 3e 00 00 01 00
+---------------------------------
+Upscale Merge Threshold To NPC Scale
+F; 00 55 70 73 63 61 6C 65 20 4D 65 72 67 65 20 54 68 72 65 73 68 6F 6C 64 00
+R; 00 43 68 61 6E 67 65 20 4E 50 43 20 53 63 61 6C 65 20 20 20 20 20 20 20 00
+-
+F; 48 8d 15 d3 7b dc 01
+R; 48 8d 15 1b 36 42 02
+------------------------
+
+{MsgCon +}
+
+
+[Culling Toggle]
+
+F; 48 8d 05 4f 35 dd 01
+R; 48 8d 05 3e 11 e9 00
+---
+F; 48 8d 35 a4 9f 81 00
+R; 48 8d 35 81 31 75 00
+------------------------
+Menu Right Align
+
+F; 48 8d 05 e7 33 dd 01
+R; 48 8d 05 67 17 0c 01
+------------------------
+Prog Pause On Menu Open
+
+F; 49 8d 8d aa 3a 00 00
+R; 48 8d 0d ef 15 0c 01
+------------------------
+Debug Menu Bold Text
+
+F; 49 8d 8d a9 3a 00 00
+R; 48 8d 0d 82 14 0c 01
+---
+On By Default
+
+F; c6 05 9a 71 ee 02 00
+R; c6 05 9a 71 ee 02 01
+------------------------
+Swap O With Square In Debug
+F; 00 55 73 65 20 56 65 72 74 65 78 20 4C 69 73 74 20 28 4E 6F 20 49 6E 64 69 63 65 73 29 00
+R; 00 53 77 61 70 20 4F 20 57 69 74 68 20 53 71 75 61 72 65 20 49 6E 20 44 65 62 75 67 20 00
+-
+F; 48 8d 05 99 d1 e8 00
+R; 48 8d 05 36 d8 0b 01
+------------------------------
+O And Square Swapped In Debug Meny By Default
+
+F; 66 c7 05 8c 71 ee 02 00 00
+R; 66 c7 05 8c 71 ee 02 01 00
+------------------------------
+[Memory Plus V2] W.I.P.
+
+-- Remove All Weapons
+F; 48 8d 35 41 11 73 02
+R; 48 8d 35 f9 f6 78 02
+---keep vsync as is?
+F; 48 8d 05 d8 bc 04 03
+R; 48 8d 05 09 45 14 00
+-- 
+F; 
+R; 
+---
+F; 
+R; 
+-- Novis
+F; 48 8d 35 c3 0e 73 02
+R; 48 8d 35 a8 1d 73 02
+---
+F; 48 8d 05 89 bb 04 03
+R; 48 8d 05 73 fd e6 02
+---
+F; 
+R; 
+---
+F; 
+R; 
+---
+F; 
+R; 
+---
+F; 
+R; 
+---
+F; 
+R; 
+---
+F; 
+R; 
+---
+F; 
+R; 
+------------------------
+                                                           T2 1.07 Offsets
+
+novis 0x301602c - str 0x028d8025
+Menu Bold Text 0x32467b8
+Menu Pause 0x032467b9
+Menu Pause On Exit 0x032467ba
+Menu Scale 0x32467c8
+Disable PAUSED Icon 0x32467bb
+Swap O and Square 0x32467Bd
+Menu Right Align 0x032467be
+Build info Display Byte 0x1CB7B2 offset HEX 48 b8 00 00 00 00 01 01 00 01
+Menu Background Opacity 0x0035f6ed
+Main Camera Feild of View 0x3029a00
+FPS Text Size Float 0x28919a0
+yellow debug text and build text position 0x28919a4
+FPS Text Colour Red 0x28919b8
+FPS Text Colour Yellow 0x2C919BC
+Something To Do With FPS Text, Not Sure 0x289199c
+Look Sensitivity1 X 0x3811B78
+Look Sensitivity2 X 0x3811B80
+NPC Scale 0x45b3bcc
+Jump Height/Length 0x11087123B0
+debug menu code spot 652b90
+
+T2 1.07 Functions
+Remove All Player Weapons: 0x169f610
+Give All Guns And Upgrades: 0x0f12250
+
+------
+[The Last of Us Part II 1.00]
+------
+
+Disable Weapon sway on startup
+
+F; c6 05 ac 8b 65 02 00
+R; c6 05 8f 8b 65 02 01
+------------------------
+Depth of Field Disabled on startup
+
+F; c6 05 54 1a 60 02 00
+R; c6 05 53 1a 60 02 01
+------------------------
+L3 + Triangle to FPS toggle
+
+F; 41 8a 84 24 aa 3a 00 00 89 c1 80 f1 01 41 88 8c 24 aa 3a 00 00
+R; 41 8a 84 24 b8 3a 00 00 89 c1 80 f1 01 41 88 8c 24 b8 3a 00 00
+------------------------------------------------------------------
+Show Save Slot On Startup
+
+F; c6 05 d8 af 2f 04 00
+R; c6 05 e8 af 2f 04 01
+------------------------
+Disable Build Text On Startup
+
+F; 66 41 c7 85 c4 3a 00 00 01 01
+R; 66 41 c7 85 c4 3a 00 00 00 00
+---------------------------------
+Debug Menu Transparency Float (This Makes It Transparent)
+
+F; B8 0A 00 00 00 9A 99 59 3F
+R; B8 0A 00 00 00 00 00 00 00
+------------------------------
+Menu Scale Float
+
+F; C7 05 65 85 EE 02 9A 99 19 3F
+R; C7 05 65 85 EE 02 cd cc 4c 3f
+---------------------------------
+Draw World Axes To Novis
+
+F; 
+R; 
+
+100 Offsets
+Menu Background Opacity 0x36231E
+Menu Scale: 0x362339
+
+
+-------------------
+illusion's Patches|
+-------------------
+Silencer Fix
+
+F; 41 ff 8e 14 08 00 00 4c 89 f7
+R; 67 67 e8 32 53 e2 ff 4c 89 f7
+-
+F; 55 48 89 e5 41 57 41 56 41 55 41 54 53 50 49 89 f6 e8 ea 0d de 00 48 8d 15 ab 01 5d 01 be 10 00
+R; 48 8b 05 19 30 36 02 80 3d e3 a6 1a 02 00 80 b8 ac 43 00 00 00 75 07 41 ff 8e 14 08 00 00 c3 00
+---------------------------------------------------------------------------------------------------
+T2 fix gpu bork (normally always shows 0.00, this restores it)
+
+F; c6 05 00 0f e7 02 00
+R; c6 05 06 0f e7 02 01
+
+1.07 read aim sensitivity instead of weapon specific value (except sniper rifle)
+
+F; c5 fa 10 80 a4 00 00 00
+R; c5 fa 10 05 b7 37 e7 02
+------------------------
+remove render pause and reload ingame shaders (they both do nothing but screw things up)
+
+F; 48 8d 15 b8 f6 83 00
+R; e9 cb 02 00 00 90 90
+<3
+-
+------------------------------------
+[The Last of Us Remastered 1.10 557]
+------------------------------------
+
+Designer Mode to Spawn Horse
+
+F; 48 8d 15 d1 fa ff ff 48 89 c3 48 8d 35 e9 33 02 01
+R; 48 8d 15 e1 54 ff ff 48 89 c3 48 8d 35 1e 22 02 01
+------------------------------------------------------
+Player2 to Manual Camera For 1.10
+
+F; 00 64 72 61 77 2D 73 70 6C 61 73 68 2D 73 63 72 65 65 6E 00
+R; 00 4D 61 6E 75 61 6C 20 43 61 6D 65 72 61 20 20 20 20 20 00
+-------
+F; 48 8d 15 22 fc ff ff 48 89 c3 48 8d 35 6a da bc 00
+R; 48 8d 15 82 49 b2 ff 48 89 c3 48 8d 35 f9 a3 b7 00
+------------------------------------------------------
+Debug Text (5.08)
+
+F; 00 4E 4F 20 53 41 56 45 20 47 41 4D 45 20 41 43 54 49 56 45 00 41 55 54 4F 2D 53 41 56 49 4E 47 20 54 4F 20 50 52 4F 46 49 4C 45 3F 00 55 53 45 52 20 54 4F 20 43 48 4F 4F 53 45 20 41 55 54 4F 2D 53 41 56 45 20 53 4C 4F 54 00 41 55 54 4F 2D 53 41 56 45 20 54 4F 20 4C 41 54 45 53 54 20 54 41 53 4B 00 41 55 54 4F 2D 53 41 56 45 20 53 4C 4F 54 20 25 64 00 50 4C 41 59 47 4F 20 53 55 53 50 45 4E 44 45 44 0A 00 50 4C 41 59 47 4F 20 41 43 54 49 56 45 0A 00 46 61 64 65 20 25 2E 33 66 0A 00 56 6F 6C 20 53 61 6D 70 6C 65 73 20 25 75 0A 00
+R; 00 4C 61 75 6E 63 68 69 6E 67 20 47 61 6D 65 2E 2E 2E 20 20 00 41 55 54 4F 2D 53 41 56 49 4E 47 20 54 4F 20 50 52 4F 46 49 4C 45 3F 00 55 53 45 52 20 54 4F 20 43 48 4F 4F 53 45 20 41 55 54 4F 2D 53 41 56 45 20 53 4C 4F 54 00 41 55 54 4F 2D 53 41 56 45 20 54 4F 20 4C 41 54 45 53 54 20 54 41 53 4B 00 20 20 4D 61 67 69 63 61 6C 20 20 00 00 00 00 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 42 75 69 6C 64 3A 20 35 2E 30 38 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 0A 00
+-------
+-1.10 Crash Replace v1.0- (912 to ada)
+
+F; 00 43 72 61 73 68 2E 2E 2E 00 43 72 61 73 68 00 43 72 61 73 68 20 54 68 65 20 47 61 6D 65 00 43 72 61 73 68 20 54 68 65 20 47 61 6D 65 20 28 41 73 73 65 72 74 69 6F 6E 29 00 43 72 61 73 68 20 54 68 65 20 47 61 6D 65 20 28 52 65 63 75 72 73 69 6F 6E 29 00 43 72 61 73 68 20 54 68 65 20 47 61 6D 65 20 28 44 65 61 64 6C 6F 63 6B 29 00 43 72 61 73 68 20 54 68 65 20 47 61 6D 65 20 28 53 74 61 63 6B 20 4F 76 65 72 66 6C 6F 77 29 00 43 72 61 73 68 20 54 68 65 20 47 61 6D 65 20 28 4E 6F 20 45 6D 61 69 6C 29 00 43 61 6C 6C 20 43 72 61 73 68 20 52 65 70 6F 72 74 20 46 75 6E 63 00
+R; 00 45 78 74 72 61 2E 2E 2E 00 45 78 74 72 61 00 43 72 61 73 68 20 54 68 65 20 47 61 6D 65 00 43 72 61 73 68 20 54 68 65 20 47 61 6D 65 20 28 41 73 73 65 72 74 69 6F 6E 29 00 43 72 61 73 68 20 54 68 65 20 47 61 6D 65 20 28 52 65 63 75 72 73 69 6F 6E 29 00 45 6E 61 62 6C 65 20 4D 65 6E 75 20 50 61 75 73 65 20 20 20 20 20 20 20 20 00 4D 65 6E 75 20 52 69 67 68 74 20 41 6C 69 67 6E 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 00 45 6E 61 62 6C 65 20 44 65 62 75 67 20 50 41 55 53 45 44 20 49 63 6F 6E 20 00 53 77 61 70 20 43 69 72 63 6C 65 20 41 6E 64 20 53 71 75 61 72 65 00
+-------
+F; bf a0 00 00 00 e8 e4 26 c1 00 48 89 c3 48 8d 35 91 3d 02 01 48 8d 15 23 03 00 00 31 c9 45 31 c0 48 89 df e8 e6 de 9b 00 4c 89 f7 48 89 de e8 6b f3 9b 00 bf a0 00 00 00 e8 b1 26 c1 00 48 89 c3 48 8d 35 6d 3d 02 01 48 8d 15 10 03 00 00 31 c9 45 31 c0 48 89 df e8 b3 de 9b 00 4c 89 f7 48 89 de e8 38 f3 9b 00 bf a0 00 00 00 e8 7e 26 c1 00 48 89 c3 48 8d 35 55 3d 02 01 48 8d 15 6d 03 00 00 31 c9 45 31 c0 48 89 df e8 80 de 9b 00 4c 89 f7 48 89 de e8 05 f3 9b 00 bf a0 00 00 00 e8 4b 26 c1 00 48 89 c3 48 8d 35 3d 3d 02 01 48 8d 15 4a 03 00 00 31 c9 45 31 c0 48 89 df e8 4d de 9b 00 4c 89 f7 48 89 de e8 d2 f2 9b 00 bf a0 00 00 00 e8 18 26 c1 00 48 89 c3 48 8d 35 24 3d 02 01 48 8d 15 47 03 00 00 31 c9 45 31 c0 48 89 df e8 1a de 9b 00 4c 89 f7 48 89 de e8 9f f2 9b 00 bf 90 00 00 00 e8 e5 25 c1 00 48 89 c3 48 89 df e8 da aa 9b 00 4c 89 f7 48 89 de e8 7f f2 9b 00 bf a0 00 00 00 e8 c5 25 c1 00 48 89 c3 48 8d 35 f1 3c 02 01 48 8d 15 04 03 00 00 31 c9 45 31 c0 48 89 df e8 c7 dd 9b 00 4c 89 f7 48 89 de e8 4c f2 9b 00 bf a0 00 00 00 e8 92 25 c1 00 48 89 c3 48 8d 35 d8 3c 02 01 48 8d 15 f1 02 00 00 31 c9 45 31 c0 48 89 df e8 94 dd 9b 00 4c 89 f7 48 89 de e8 19 f2 9b 00 bf a0 00 00 00
+R; bf a0 00 00 00 e8 e4 26 c1 00 48 89 c3 48 8d 35 f5 9a 0c 01 48 8d 15 4a 78 4b 01 48 89 df e8 eb ae 9b 00 49 8b fe 48 89 de e8 70 f3 9b 00 bf a0 00 00 00 e8 b6 26 c1 00 48 89 c3 48 8d 35 a4 9d 0c 01 48 8d 15 13 78 4b 01 48 89 df e8 bd ae 9b 00 4c 89 f7 48 89 de 48 e8 41 f3 9b 00 bf a0 00 00 00 e8 87 26 c1 00 48 89 c3 48 8d 35 86 9d 0c 01 48 8d 15 e5 77 4b 01 48 89 df e8 8e ae 9b 00 49 8b fe 48 89 de e8 13 f3 9b 00 bf a0 00 00 00 e8 59 26 c1 00 48 89 c3 48 8d 35 4b 3d 02 01 48 8d 15 a0 9f 4f 01 48 89 df e8 60 ae 9b 00 49 8b fe 48 89 de 48 e8 e4 f2 9b 00 bf a0 00 00 00 e8 2a 26 c1 00 48 89 c3 48 8d 35 36 3d 02 01 48 8d 15 76 9f 4f 01 48 89 df e8 31 ae 9b 00 49 8b fe 48 89 de e8 b6 f2 9b 00 bf a0 00 00 00 e8 fc 25 c1 00 48 89 c3 48 8d 35 1e 85 0c 01 48 8d 15 08 63 4b 01 48 89 df e8 03 ae 9b 00 49 8b fe 48 89 de e8 88 f2 9b 00 bf a0 00 00 00 e8 ce 25 c1 00 48 89 c3 48 8d 35 fa 3c 02 01 48 8d 15 17 9f 4f 01 48 89 df e8 d5 ad 9b 00 49 8b fe 48 89 de 48 e8 59 f2 9b 00 bf a0 00 00 00 48 e8 9e 25 c1 00 48 89 c3 48 8d 35 b9 d1 0c 01 48 8d 15 fa be 7a 01 48 89 df e8 a5 ad 9b 00 49 8b fe 48 89 de 48 e8 29 f2 9b 00 49 8b fe e8 61 5b fd ff 90 90 90 90 90 90 90 90 bf a0 00 00 00
+-------
+-DoF-
+
+Find; C6 83 70 01 00 00 01 C6 83 19 02 00 00 00 C6 83 1A
+Replace; C6 83 71 01 00 00 00 C6 83 19 02 00 00 00 C6 83 1A
+------------------------------------------------------------
+Swap O and Triangle In Debug Menu on Start
+
+F; c6 83 0d 04 00 00 00
+R; c6 05 5d 31 e1 00 01
+------------------------
+-L3 + Triangle To FPS Toggle-
+
+F; 80 b0 85 2e 00 00 01
+R; 80 b0 87 2e 00 00 01
+------------------------------
+1.10 Debug
+
+Find; 75 3A 84 C0 74 36
+Replace ;75 3A 84 C0 75 36
+---------------------------
+[Misc.]
+
+L3 + Triangle Toggle offset; 0xa30fd9
+FPS/MS Location 0xc21c17
+0x171 & 0x219 Pointers: c4fe
+-----------------------------
+T1 1.10 Offsets
+
+Point Mode: 0x0152618f
+Wireframe See Through: 0x0152618e
+Culling: 0x1526197
+Menu Right Align: 0x156897d
+Menu Pause: 0x1568978
+Pause on Menu Exit;  0x01568979
+Pause Icon; 0x0156897a
+Menu O And Square Swap: 0x156897C  string I used (Crash Report Func) 0x109277
+----------------------------------
+
+{Re-usable 110 Code]
+}
+
+  0006f637 90              NOP
+  0006f638 bf a0 00        MOV        EDI,0xa0
+           00 00
+  0006f63d e8 de 19        CALL       FUN_00c81020                                     undefined FUN_00c81020()
+           c1 00
+  0006f642 48 89 c3        MOV        RBX,RAX
+  0006f645 48 8d 35        LEA        RSI,[0x113843b]
+           6a 33 02 01
+  0006f64c 48 8d 15        LEA        RDX,[0x1526197]
+           44 6b 4b 01
+  0006f653 48 89 df        MOV        RDI,RBX
+  0006f656 e8 e5 a1        CALL       FUN_00a29840                                     undefined FUN_00a29840()
+           9b 00
+  0006f65b 49 8b fe        MOV        RDI,R14
+  0006f65e 48 89 de        MOV        RSI,RBX
+  0006f661 e8 6a e6        CALL       FUN_00a2dcd0                                     undefined FUN_00a2dcd0()
+           9b 00
+  0006f666 90              NOP
+
+}
+-------
+}
+bonuses 1.10
+
+0006eaa7 49 8b fe        MOV        RDI,R14
+0006eaaa e8 61 5b        CALL       FUN_00044610                                     undefined FUN_00044610()
+         fd ff
+}
+-------
+
+
+[illusions patches]
+-Motion Blur Off On Startup- (1.00 or 1.10?)
+Find; 49 89 C6 41 C6 85 6D 01 00 00 01
+Replace; 49 89 C6 41 C6 85 6D 01 00 00 00
+
+T1R 1.10 - Fix Grounded Player Spawn Health
+41 8b 46 0c 89 43 30 41 8b 46 14
+to
+41 8b 46 0c 89 5b 30 41 8b 46 14
+------------------------------------------
+
+
+------------------------------------
+[The Last of Us Remastered 1.00 552]
+------------------------------------
+
+-L3 & Triangle To FPS Toggle For 1.00-
+F; 80 b0 85 2e 00 00 01
+R; 80 b0 87 2e 00 00 01
+
+-Player2 to Manual Camera For 1.00-
+F; 48 8d 35 d4 56 c6 00 48 8d 15 18 fc ff ff
+R; 48 8d 35 16 e8 cb 00 48 8d 15 68 97 c0 ff
+-------
+F; 45 64 69 74 20 53 75 6E 6C 69 67 68 74 20 70 6F 73
+R; 4D 61 6E 75 61 6C 20 43 61 6D 65 72 61 20 20 20 20
+------------------------------------------------------
+
+T1 1.00 Offsets
+Point Mode: 0x189935f
+Wireframe See Through: 0x189935e
+Culling: 0x189936a  (or 1899369)
+Menu Pause: 0x15E6710      str deadlock 103a42c   str No Email 103a466
+Menu Right Align: 0x15E6715  str stack overflow 103a446   str Call Crash Report Func 103a480
+Menu O And Square Swap: 0x15E6714
+--------------------------
+
+Crash port wip
+F; 
+R; BF A0 00 00 00 E8 0B 58 A4 00 48 89 C3 48 8D 35 CD C8 08 01 48 8D 15 41 93 83 01 48 89 DF E8 32 D4 82 00 49 8B FE 48 89 DE E8 87 19 83 00 BF A0 00 00 00 E8 DD 57 A4 00 48 89 C3 48 8D 35 7C CB 08 01 48 8D 15 0A 93 83 01 48 89 DF E8 04 D4 82 00 49 8B FE 48 89 DE E8 59 19 83 00 BF A0 00 00 00 E8 AF 57 A4 00 48 89 C3 48 8D 35 5F CB 08 01 48 8D 15 DD 92 83 01 48 89 DF 67 67 E8 D4 D3 82 00 49 8B FE 48 89 DE E8 29 19 83 00 BF A0 00 00 00 48 E8 7E 57 A4 00 48 89 C3 48 8D 35 80 A3 FD 00 48 8D 15 5D 66 58 01 48 89 DF E8 A5 D3 82 00 49 8B FE 48 89 DE E8 FA 18 83 00 BF A0 00 00 00 E8 50 57 A4 00 48 89 C3 48 8D 35 6C A3 FD 00 48 8D 15 34 66 58 01 48 89 DF 67 67 E8 75 D3 82 00 4C 89 F7 48 89 DE E8 CA 18 83 00 49 8B FE E8 B2 DF FD FF 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90 90
+---------------------------------------------------------------------------------------------------------------------------------------------------
+-
+Uncharted 4 1.00
+L3 + Triangle FPS Toggle
+F; 
+R; 
+-
+Super Pause To Manual Camera
+F; 48 8d 35 be 0c d0 01
+R; 48 8d 35 f3 27 d1 01
+---
+F; 48 8d 0d 0b 15 00 00
+R; 48 8d 0d 6b df 2f 00
+UC4 1.32
+---------
+Novis (Non-functional in 1.00)
+F; c4 c1 78 11 85 a8 00 00 00 e8 d9 9e 3d 00 48 89 c3 48 8d 35 98 1a 6f 00 31 d2 48 89 df e8 55 2d 17 00 4c 8d 25 0e 31 9c 00 4c 8d 35 77 7f 17 00 c7 83 94 00 00 00 00 00 00 00 c7 83 98 00 00 00 03 00 00 00 48 8d 05 79 6e 5d 01 4c 89 ef 48 89 de 4c 89 23 4c 89 b3 a0 00 00 00 8a 0d 63 6e 5d 01 88 8b a8 00 00 00 48 89 43 58 c7 43 50 00 00 00 00 c7 83 90 00 00 00 01 00 00 00 e8 a6 7d 17 00 bf b0 00 00 00
+R; c4 c1 78 11 85 a8 00 00 00 e8 d9 9e 3d 00 48 89 c3 48 8d 35 79 06 67 00 31 d2 48 89 df e8 55 2d 17 00 4c 8d 25 0e 31 9c 00 4c 8d 35 77 7f 17 00 c7 83 94 00 00 00 00 00 00 00 c7 83 98 00 00 00 03 00 00 00 48 8d 05 b4 ce a0 00 4c 89 ef 48 89 de 4c 89 23 4c 89 b3 a0 00 00 00 8a 0d 9e ce a0 00 88 8b a8 00 00 00 48 89 43 58 c7 43 50 00 00 00 00 c7 83 90 00 00 00 01 00 00 00 e8 a6 7d 17 00 bf b0 00 00 00
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+L3 + Triangle FPS Toggle
+F; ba 01 00 00 00 48 89 df 49 89 dc e8 49 69 70 01 84 c0 74 4e 41 80 bf 79 2e 00 00 00 74 44 41 8a 8f 7f 2e 00 00 80 f1 01 41 88 8f 7f 2e 00 00 41 0f b7 87 7e 2e 00 00 84 c0 74 27 c1 e8 08 41 88 8f 88 2e 00 00 41 88 87 dc 2e 00 00 88 c2 48 8b 0d 8c 83 f7 01 80 f2 01
+R; ba 01 00 00 00 48 89 df 49 89 dc e8 49 69 70 01 84 c0 74 4e 41 80 bf 79 2e 00 00 00 74 44 41 8a 8f 88 2e 00 00 80 f1 01 41 88 8f 88 2e 00 00 41 0f b7 87 7e 2e 00 00 84 c0 74 27 c1 e8 08 41 88 8f 88 2e 00 00 41 88 87 dc 2e 00 00 88 c2 48 8b 0d 8c 83 f7 01 80 f2 01
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Live Debug Menu 0x12EA2D CUSA917
+F; C5 FA 11 84 24 30 07 00 00 80 B8 9D 2E 00 00 00 0F 85 15 0E 00 00 80 B8 95 2E 00 00 00 0F 84 08 0E 00 00
+R; C5 FA 11 84 24 30 07 00 00 80 B8 9D 2E 00 00 00 0F 85 15 0E 00 00 C6 80 95 2E 00 00 01 EB 04 08 0E 00 00
+R; 0xC5, 0xFA, 0x11, 0x84, 0x24, 0x30, 0x07, 0x00, 0x00, 0x80, 0xB8, 0x9D, 0x2E, 0x00, 0x00, 0x00, 0x0F, 0x85, 0x15, 0x0E, 0x00, 0x00, 0xC6, 0x80, 0x95, 0x2E, 0x00, 0x00, 0x01, 0xEB, 0x04, 0x08, 0x0E, 0x00, 0x00
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Uncharted 4 1.18
+-
+Live Debug Menu Toggle
+F; ?
+R; 80B8882E0000000F85D7220000C680792E000001EB04CA220000
+R; 0x80, 0xB8, 0x88, 0x2E, 0x00, 0x00, 0x00, 0x0F, 0x85, 0xD7, 0x22, 0x00, 0x00, 0xC6, 0x80, 0x79, 0x2E, 0x00, 0x00, 0x01, 0xEB, 0x04, 0xCA, 0x22, 0x00, 0x00
+
+Live Debug Menu Toggle
+
+-
+[The Lost Legacy 1.00]
+
+Draw World Axes to Novis
+F; 48 8d 35 98 51 73 00
+R; 48 8d 35 59 fa 6a 00
+-
+F; 48 8d 05 0a 8b 65 01
+R; 48 8d 05 75 2a a6 00
+------------------------
+L3 + Triangle FPS Toggle
+F; 418a8fff2e000080f10141888fff2e0000
+R; 418a8f082f000080f10141888f082f0000
+--------------------------------------
+NPC Scale 22b4160 ghidoffst
+------------------------------------------------
+Show Save Slot On Screen
+F; c6 05 6e 67 fb 00 00
+R; c6 05 6e 67 fb 00 01
+------------------------
+Menu Right Align Toggle
+F; 44 72 61 77 20 57 6F 72 6C 64 20 41 78 65 73 20 28 43 61 6D 65 72 61 20 52 65 6C 61 74 69 76 65 29
+R; 41 6C 69 67 6E 20 4D 65 6E 75 73 20 72 69 67 68 74 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20 20
+- 
+F; 48 8d 05 85 8a 65 01
+R: 48 8d 05 64 70 b7 00
+-
+Right By Default
+F: c6 05 00 2e 0d 02 00
+R: c6 05 00 2e 0d 02 01
+------------------------
+Restore UC4 Task Menu For Looks (illusion Found How To Renable It, I just Pointed Out That The Submenu Was Still There)
+F: 80 bf c5 2e 00 00 00 41 0f 94 c5
+R: 80 bf c5 2e 00 00 00 41 0f 95 c5
+------------------------------------
+Menu Pause Toggles
+On open
+F: 
+R: 
+-
+On Close
+F; 
+R: 
+-
+No Pause By Default
+F: c7 05 09 2e 0d 02 01 01 01 01
+R: c7 05 09 2e 0d 02 01 01 00 00
+------------------------
+Toggle To Swap O and Square In Debug Menu
+F: 
+R: 
+-
+F: 
+R: 
+-
+Swapped On Boot
+F: c6 05 06 2e 0d 02 00
+R: c6 05 06 2e 0d 02 01
+------------------------
+Enable Debug Rendering On Startup (Idk Which One Yet Lol, Just Do 'Em All)
+F; c6 80 ff 2e 00 00 01
+R; c6 80 ff 2e 00 00 00
+------------------------
+Force-Enable Msg Con in FINAL On Startup
+F; c6 05 a1 19 0b 02 01
+R; c6 05 9d 19 0b 02 01
+------------------------
+FPS Mode Set To Verbose On Boot
+F; c7 83 04 2f 00 00 00 00 00 00
+R; c7 83 04 2f 00 00 01 00 00 00
+-
+Enable Stat Posting On Boot
+F; c6 83 65 32 00 00 00
+R; c6 83 65 32 00 00 01
+-
+Offsets Lost Legacy 7737 1.00
+Menu Pause On Open: 0x23ca338
+Menu Pause On Exit: 0x23ca339
+Right Align: 0x23CA33D
+Pause Icon: 0x23CA33A
+Swap O and Square: 0x23CA33C
+NPC Scale 0x22b4160
+-
+NPC Scale:
+Hex In Eboot: 00 00 80 3f 00 00 00 00 01 00 00 00 01 00 00 00 01 01 00 00 ef 01
+Ghidra Address 22b4160
+Eboot Address 22b8160
+PS4 Cheater Address 26b4160
+-
+Write Value I didn't use yet
+c6 05 86 06 09 02 01
+
+DEBUG MENU CODES BY illusion
+
+[PS3]
+Uncharted 1
+1.00 Disc 0x3e61c 409e
+1.01 Disc 0x3b6ac 409e
+PSN 0x3b5c4 419e
+
+Uncharted 2
+1.00 0x13c64, 419e
+1.09 0x13c0c, 419e
+Demo 0x87a18, 98c3
+1.10 PSN 0x144e0, 419e
+
+Uncharted 3
+1.00 Disc 0x31e34 419e
+1.19 Disc 0x32814 419e
+1.10 GOTY 0x32624 419e
+
+
+PS4:
+
+TLOU Remastered:
+1.09 to 1.11
+F; 75 3A 84 C0 74 36
+R; 75 3A 84 C0 75 36
+
+
+Uncharted Collection 1.00
+UC1
+F; C6 87 91 49 00 00 01 C6 87 EC 47 00 00 01 C6 87 E9 47 00 00 01 C6 87 E8 47 00 00 01 C6 87 44 48 00 00 00 C6 87 B9 39 00 00 01 C6 87 04 3A 00 00 01
+R; C6 87 91 49 00 00 00 C6 87 EC 47 00 00 00 C6 87 E9 47 00 00 00 C6 87 E8 47 00 00 00 C6 87 44 48 00 00 01 C6 87 B9 39 00 00 00 C6 87 04 3A 00 00 00
+-
+UC2
+F; C6 87 38 48 00 00 01 C6 87 24 48 00 00 01 C6 87 22 48 00 00 01 C6 87 21 48 00 00 01 C6 87 8C 48 00 00 00 C6 87 B9 39 00 00 01 C6 87 04 3A 00 00 01
+R; C6 87 38 48 00 00 00 C6 87 24 48 00 00 00 C6 87 22 48 00 00 00 C6 87 21 48 00 00 00 C6 87 8C 48 00 00 01 C6 87 B9 39 00 00 00 C6 87 04 3A 00 00 00
+-
+UC3
+F; C6 87 16 4C 00 00 01 C6 87 02 4C 00 00 01 C6 87 FF 4B 00 00 01 C6 87 01 4C 00 00 01 C6 87 FC 4B 00 00 00 C6 87 B9 39 00 00 01 C6 87 04 3A 00 00 01
+R; C6 87 16 4C 00 00 00 C6 87 02 4C 00 00 00 C6 87 FF 4B 00 00 00 C6 87 01 4C 00 00 00 C6 87 FC 4B 00 00 01 C6 87 B9 39 00 00 00 C6 87 04 3A 00 00 00
+
+Uncharted 4:
+-
+1.00
+F; f6 c2 01 75 34 84 c9 74 30
+R; f6 c2 01 75 34 84 c9 75 30
+-
+1.32
+F; 41 f6 c4 01 75 34 84 c9 74 30
+R; 41 f6 c4 01 75 34 84 c9 75 30
+-
+Uncharted The Lost Legacy:
+
+-
+The Last of Us Part 2:
+-
+1.00
+F; F6 44 24 78 01 41 C7 85 64 3A 00 00 00 00 00 00 75 51 84 C0 74 4D
+R; F6 44 24 78 01 41 C7 85 64 3A 00 00 00 00 00 00 75 51 84 C0 75 4D
+-
+1.01
+F; 75 54 84 C0 74 50 B2 01 31 C0 EB 4C
+R; 75 54 84 C0 75 50 B2 01 31 C0 EB 4C
+-
+1.02
+F; 75 54 84 C0 74 50 B2 01 31 C0 EB 4C
+R; 75 54 84 C0 75 50 B2 01 31 C0 EB 4C
+-
+1.05
+F; 75 54 84 C0 74 50 B2 01 31 C0 EB 4C
+R; 75 54 84 C0 75 50 B2 01 31 C0 EB 4C
+-
+1.07 + 1.09
+F; 75 54 84 C0 74 50 B2 01 31 C0 EB 4C
+R; 75 54 84 C0 75 50 B2 01 31 C0 EB 4C
+-
+Resident Evil 3 - re3
+
+______________
+CUSA14123 & CUSA14168 1.00
+-
+No Reload
+
+0x223203A 0x90, 0x90, 0x90
+0x223203A 0x89, 0x51, 0x20
+some cloth physics float 53DB75C (ps4cheater addr)
+---------------------------
+______________
+CUSA14168 1.03
+
+
+
+
+
+1.07 dude
+
+
+-
+Debug Menu Transparency Float (This Makes It Transparent But You Can Set The Float To Whatever)
+
+F; B8 0A 00 00 00 9A 99 59 3F
+R; B8 0A 00 00 00 00 00 00 00
+-
+Debug Menu Scale Float (mod this if you do not want to replace msg con scale with the menu scale menu option)
+
+Find: c7 05 b5 70 ee 02 9a 99 19 3f (9a 99 19 3f = 0.6)
+Replace With: c7 05 b5 70 ee 02 cd cc 4c 3f (cd cc 4c 3f = 0.8)
+-
+Msg Con Size Float (you probably won't use this one)
+
+Find: 00 00 00 00 10 00 00 00 00 00 00 3f (00 00 00 3f = 0.5)
+Replace with: I don't know if you know how float values work, but 00 00 80 3f is a value of 1.
+You can use a float to hex calculator to make them bigger of smaller. just make sure to "swap endian" to little since it's PS4
+-
+Msg Con Scale To Menu Scale (This Adds The Menu Option)
+
+F; 48 8d 05 29 ea e7 00
+R; 48 8d 05 99 df 0b 01
+------------------------
+
+{MsgCon +}
+
+
+[Culling Toggle]
+
+F; 48 8d 05 4f 35 dd 01
+R; 48 8d 05 3e 11 e9 00
+---
+F; 48 8d 35 a4 9f 81 00
+R; 48 8d 35 81 31 75 00
+------------------------
+Menu Right Align
+
+F; 48 8d 05 e7 33 dd 01
+R; 48 8d 05 67 17 0c 01
+------------------------
+Prog Pause On Menu Open
+
+F; 49 8d 8d aa 3a 00 00
+R; 48 8d 0d ef 15 0c 01
+------------------------
+Debug Menu Bold Text
+
+F; 49 8d 8d a9 3a 00 00
+R; 48 8d 0d 82 14 0c 01
+---
+On By Default
+
+F; c6 05 9a 71 ee 02 00
+R; c6 05 9a 71 ee 02 01
+------------------------
+
+Swap O With Square In Debug Menu
+F; 00 55 73 65 20 56 65 72 74 65 78 20 4C 69 73 74 20 28 4E 6F 20 49 6E 64 69 63 65 73 29 00
+R; 00 53 77 61 70 20 4F 20 57 69 74 68 20 53 71 75 61 72 65 20 49 6E 20 44 65 62 75 67 20 00
+-
+F; 48 8d 05 99 d1 e8 00
+R; 48 8d 05 36 d8 0b 01
+------------------------------
+O And Square Swapped In Debug Meny By Default
+
+F; 66 c7 05 8c 71 ee 02 00 00
+R; 66 c7 05 8c 71 ee 02 01 00
+
+These two render additional debug text that you can personalize. to get rid of text replace it with spaces (so hex 20), don't blank the data with zeros
+
+Show Save Slot On start-up
+
+F; 49 8d 46 28 c6 05 5f 95 59 02 00
+R; 49 8d 46 28 c6 05 6d 95 59 02 01
+------------------------------------
+Show Game Completion (Needs Save Slot On Screen)
+
+F; 48 c7 05 39 c8 59 02 00 00 00 00
+R; 48 c7 05 3d c8 59 02 01 00 00 00
+
+L3 + Triangle to FPS toggle
+
+F; 41 8a 84 24 aa 3a 00 00 89 c1 80 f1 01 41 88 8c 24 aa 3a 00 00
+R; 41 8a 84 24 b8 3a 00 00 89 c1 80 f1 01 41 88 8c 24 b8 3a 00 00
+---------------------------------
+Enable Stat Posting On Boot
+
+F; 66 41 c7 85 ec 3e 00 00 00 00
+R; 66 41 c7 85 ed 3e 00 00 01 00
+---------------------------------
+
+Borderlands 3
+Infinite Ammo
+Offset;
+Drain;
+Infinite;
+-
+Infinite Health (Float - 0x4DCDAC0 vmovss [rbx+0xa0], xmm1 - C5-FA-11-8B-A0-00-00-00)
+Offset; 0x4DCDAC3
+Drain; 0x8B
+Infinite; 0x93
+Always 1 HP (Helps Moze): 0xB3

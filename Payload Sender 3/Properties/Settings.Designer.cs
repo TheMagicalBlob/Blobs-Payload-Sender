@@ -70,5 +70,53 @@ namespace Blobs_Payload_Sender.Properties {
                 this["SET_PATH"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string SET_P1 {
+            get {
+                return ((string)(this["SET_P1"]));
+            }
+            set {
+                this["SET_P1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SET_P2 {
+            get {
+                return ((string)(this["SET_P2"]));
+            }
+            set {
+                this["SET_P2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SET_P3 {
+            get {
+                return ((string)(this["SET_P3"]));
+            }
+            set {
+                this["SET_P3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SET_P4 {
+            get {
+                return ((string)(this["SET_P4"]));
+            }
+            set {
+                this["SET_P4"] = value;
+            }
+        }
     }
 }

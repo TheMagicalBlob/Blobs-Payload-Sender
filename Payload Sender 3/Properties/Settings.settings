@@ -14,5 +14,17 @@
     <Setting Name="SET_PATH" Type="System.String" Scope="User">
       <Value Profile="(Default)">(Payload Path Here)        </Value>
     </Setting>
+    <Setting Name="SET_P1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="SET_P2" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SET_P3" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="SET_P4" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>
