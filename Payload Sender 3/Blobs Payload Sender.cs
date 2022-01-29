@@ -220,11 +220,11 @@ namespace Payload_Sender
 
         private void PortLabel_Click(object sender, EventArgs e)
         {
-            if (PortLabel.Text != "9020") {
-                PortLabel.Text = "9020";
+            if (PortBox.Text != "9020") {
+                PortBox.Text = "9020";
             }
-            else if (PortLabel.Text == "9020") {
-                PortLabel.Text ="9021";
+            else if (PortBox.Text == "9020") {
+                PortBox.Text ="9021";
             }
         }
     }

@@ -117,7 +117,7 @@ namespace Payload_Sender
             this.BrowseButton.BackColor = System.Drawing.Color.Black;
             this.BrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BrowseButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.BrowseButton.Location = new System.Drawing.Point(116, 10);
+            this.BrowseButton.Location = new System.Drawing.Point(118, 8);
             this.BrowseButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(52, 23);
@@ -130,7 +130,7 @@ namespace Payload_Sender
             // 
             this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SendButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.SendButton.Location = new System.Drawing.Point(170, 10);
+            this.SendButton.Location = new System.Drawing.Point(172, 8);
             this.SendButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.SendButton.Name = "SendButton";
             this.SendButton.Size = new System.Drawing.Size(42, 23);
@@ -206,7 +206,7 @@ namespace Payload_Sender
             this.BuildLabel.Name = "BuildLabel";
             this.BuildLabel.Size = new System.Drawing.Size(37, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "1.5.3R3";
+            this.BuildLabel.Text = "1.5.3R4";
             // 
             // P1_Btn
             // 
