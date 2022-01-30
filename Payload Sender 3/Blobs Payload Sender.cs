@@ -47,6 +47,7 @@ namespace Payload_Sender
             PortBox.ForeColor = c;
             PayloadPathBox.ForeColor = c;
             ThemeBtn.ForeColor = c;
+            ResetLabel.ForeColor = c;
             BrowseButton.ForeColor = c;
             SendButton.ForeColor = c;
             P1_Btn.ForeColor = c;
@@ -65,7 +66,7 @@ namespace Payload_Sender
         private void BrowseButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog O = new OpenFileDialog();
-            O.Filter = "Payload|*.bin*";
+            O.Filter = "Payload (*.bin)|*.bin|Elf (*.elf*)|*.elf*";
             {
                 if (O.ShowDialog() == DialogResult.OK) {
                     PayloadPathBox.Text = O.FileName;
@@ -226,6 +227,12 @@ namespace Payload_Sender
             else if (PortBox.Text == "9020") {
                 PortBox.Text ="9021";
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = "NO_PATH";
+            P1_Btn_Click(sender, e);
         }
     }
 }

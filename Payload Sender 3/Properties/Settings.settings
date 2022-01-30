@@ -12,7 +12,7 @@
       <Value Profile="(Default)">Crimson</Value>
     </Setting>
     <Setting Name="SET_PATH" Type="System.String" Scope="User">
-      <Value Profile="(Default)">(Payload Path Here)        </Value>
+      <Value Profile="(Default)">        (Payload Path Here)</Value>
     </Setting>
     <Setting Name="SET_P1" Type="System.String" Scope="User">
       <Value Profile="(Default)">NO_PATH</Value>

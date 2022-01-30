@@ -43,6 +43,7 @@ namespace Payload_Sender
             this.Box = new System.Windows.Forms.GroupBox();
             this.BuildLabel = new System.Windows.Forms.Label();
             this.P1_Btn = new System.Windows.Forms.Button();
+            this.ResetLabel = new System.Windows.Forms.Label();
             this.Box.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +51,7 @@ namespace Payload_Sender
             // 
             this.IPLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold);
             this.IPLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.IPLabel.Location = new System.Drawing.Point(1, 36);
+            this.IPLabel.Location = new System.Drawing.Point(4, 41);
             this.IPLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.IPLabel.Name = "IPLabel";
             this.IPLabel.Size = new System.Drawing.Size(122, 18);
@@ -62,7 +63,7 @@ namespace Payload_Sender
             this.IPBox.BackColor = System.Drawing.Color.Black;
             this.IPBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.IPBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.IPBox.Location = new System.Drawing.Point(122, 40);
+            this.IPBox.Location = new System.Drawing.Point(125, 45);
             this.IPBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.IPBox.Name = "IPBox";
             this.IPBox.Size = new System.Drawing.Size(85, 13);
@@ -76,7 +77,7 @@ namespace Payload_Sender
             this.PortBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PortBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.PortBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PortBox.Location = new System.Drawing.Point(48, 21);
+            this.PortBox.Location = new System.Drawing.Point(49, 25);
             this.PortBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(34, 13);
@@ -88,7 +89,7 @@ namespace Payload_Sender
             // 
             this.PortLabel.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold);
             this.PortLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PortLabel.Location = new System.Drawing.Point(1, 18);
+            this.PortLabel.Location = new System.Drawing.Point(4, 21);
             this.PortLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PortLabel.Name = "PortLabel";
             this.PortLabel.Size = new System.Drawing.Size(47, 18);
@@ -108,8 +109,7 @@ namespace Payload_Sender
             this.PayloadPathBox.Name = "PayloadPathBox";
             this.PayloadPathBox.Size = new System.Drawing.Size(194, 16);
             this.PayloadPathBox.TabIndex = 4;
-            this.PayloadPathBox.Text = "(Payload Path Here)        ";
-            this.PayloadPathBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.PayloadPathBox.Text = "        (Payload Path Here)";
             this.PayloadPathBox.TextChanged += new System.EventHandler(this.PayloadPathBox_TextChanged);
             // 
             // BrowseButton
@@ -181,6 +181,7 @@ namespace Payload_Sender
             // 
             // Box
             // 
+            this.Box.Controls.Add(this.ResetLabel);
             this.Box.Controls.Add(this.PortBox);
             this.Box.Controls.Add(this.PortLabel);
             this.Box.Controls.Add(this.BrowseButton);
@@ -204,9 +205,9 @@ namespace Payload_Sender
             this.BuildLabel.Location = new System.Drawing.Point(0, 8);
             this.BuildLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.BuildLabel.Name = "BuildLabel";
-            this.BuildLabel.Size = new System.Drawing.Size(37, 10);
+            this.BuildLabel.Size = new System.Drawing.Size(26, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "1.5.3R4";
+            this.BuildLabel.Text = "1.5.4";
             // 
             // P1_Btn
             // 
@@ -221,6 +222,20 @@ namespace Payload_Sender
             this.P1_Btn.Text = "Saved";
             this.P1_Btn.UseVisualStyleBackColor = true;
             this.P1_Btn.Click += new System.EventHandler(this.P1_Btn_Click);
+            // 
+            // ResetLabel
+            // 
+            this.ResetLabel.BackColor = System.Drawing.Color.Transparent;
+            this.ResetLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ResetLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
+            this.ResetLabel.ForeColor = System.Drawing.Color.Fuchsia;
+            this.ResetLabel.Location = new System.Drawing.Point(43, 8);
+            this.ResetLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ResetLabel.Name = "ResetLabel";
+            this.ResetLabel.Size = new System.Drawing.Size(42, 12);
+            this.ResetLabel.TabIndex = 24;
+            this.ResetLabel.Text = "Reset ^";
+            this.ResetLabel.Click += new System.EventHandler(this.label1_Click);
             // 
             // Payload_Sender
             // 
@@ -262,6 +277,7 @@ namespace Payload_Sender
         private System.Windows.Forms.GroupBox Box;
         private System.Windows.Forms.Label BuildLabel;
         private System.Windows.Forms.Button P1_Btn;
+        private System.Windows.Forms.Label ResetLabel;
     }
 }
 

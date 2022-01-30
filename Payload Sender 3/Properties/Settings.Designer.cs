@@ -61,7 +61,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("(Payload Path Here)        ")]
+        [global::System.Configuration.DefaultSettingValueAttribute("        (Payload Path Here)")]
         public string SET_PATH {
             get {
                 return ((string)(this["SET_PATH"]));
