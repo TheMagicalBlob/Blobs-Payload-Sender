@@ -36,14 +36,14 @@ namespace Payload_Sender
             this.PortLabel = new System.Windows.Forms.Label();
             this.PayloadPathBox = new System.Windows.Forms.TextBox();
             this.BrowseButton = new System.Windows.Forms.Button();
-            this.SendButton = new System.Windows.Forms.Button();
             this.MinimizeBtn = new System.Windows.Forms.Button();
             this.CloseBtn = new System.Windows.Forms.Button();
             this.ThemeBtn = new System.Windows.Forms.Button();
             this.Box = new System.Windows.Forms.GroupBox();
-            this.BuildLabel = new System.Windows.Forms.Label();
-            this.P1_Btn = new System.Windows.Forms.Button();
             this.ResetLabel = new System.Windows.Forms.Label();
+            this.BuildLabel = new System.Windows.Forms.Label();
+            this.SendButton = new System.Windows.Forms.Button();
+            this.P1_Btn = new System.Windows.Forms.Button();
             this.Box.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -126,19 +126,6 @@ namespace Payload_Sender
             this.BrowseButton.UseVisualStyleBackColor = false;
             this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
-            // SendButton
-            // 
-            this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.SendButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.SendButton.Location = new System.Drawing.Point(172, 8);
-            this.SendButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.SendButton.Name = "SendButton";
-            this.SendButton.Size = new System.Drawing.Size(42, 23);
-            this.SendButton.TabIndex = 6;
-            this.SendButton.Text = "Send";
-            this.SendButton.UseVisualStyleBackColor = true;
-            this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
-            // 
             // MinimizeBtn
             // 
             this.MinimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -197,6 +184,20 @@ namespace Payload_Sender
             this.Box.TabIndex = 26;
             this.Box.TabStop = false;
             // 
+            // ResetLabel
+            // 
+            this.ResetLabel.BackColor = System.Drawing.Color.Transparent;
+            this.ResetLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ResetLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
+            this.ResetLabel.ForeColor = System.Drawing.Color.Fuchsia;
+            this.ResetLabel.Location = new System.Drawing.Point(43, 8);
+            this.ResetLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.ResetLabel.Name = "ResetLabel";
+            this.ResetLabel.Size = new System.Drawing.Size(42, 12);
+            this.ResetLabel.TabIndex = 24;
+            this.ResetLabel.Text = "Reset ^";
+            this.ResetLabel.Click += new System.EventHandler(this.label1_Click);
+            // 
             // BuildLabel
             // 
             this.BuildLabel.BackColor = System.Drawing.Color.Transparent;
@@ -207,7 +208,20 @@ namespace Payload_Sender
             this.BuildLabel.Name = "BuildLabel";
             this.BuildLabel.Size = new System.Drawing.Size(26, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "1.5.4";
+            this.BuildLabel.Text = "1.5.6";
+            // 
+            // SendButton
+            // 
+            this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SendButton.ForeColor = System.Drawing.Color.Fuchsia;
+            this.SendButton.Location = new System.Drawing.Point(172, 8);
+            this.SendButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.SendButton.Name = "SendButton";
+            this.SendButton.Size = new System.Drawing.Size(42, 23);
+            this.SendButton.TabIndex = 6;
+            this.SendButton.Text = "Send";
+            this.SendButton.UseVisualStyleBackColor = true;
+            this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
             // P1_Btn
             // 
@@ -223,25 +237,11 @@ namespace Payload_Sender
             this.P1_Btn.UseVisualStyleBackColor = true;
             this.P1_Btn.Click += new System.EventHandler(this.P1_Btn_Click);
             // 
-            // ResetLabel
-            // 
-            this.ResetLabel.BackColor = System.Drawing.Color.Transparent;
-            this.ResetLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ResetLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
-            this.ResetLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ResetLabel.Location = new System.Drawing.Point(43, 8);
-            this.ResetLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.ResetLabel.Name = "ResetLabel";
-            this.ResetLabel.Size = new System.Drawing.Size(42, 12);
-            this.ResetLabel.TabIndex = 24;
-            this.ResetLabel.Text = "Reset ^";
-            this.ResetLabel.Click += new System.EventHandler(this.label1_Click);
-            // 
             // Payload_Sender
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(215, 100);
+            this.ClientSize = new System.Drawing.Size(215, 99);
             this.Controls.Add(this.P1_Btn);
             this.Controls.Add(this.ThemeBtn);
             this.Controls.Add(this.CloseBtn);
@@ -253,9 +253,8 @@ namespace Payload_Sender
             this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MaximizeBox = false;
             this.Name = "Payload_Sender";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "My Dick Sneezed";
+            this.Text = "Payload Sender (Blob)";
             this.Box.ResumeLayout(false);
             this.Box.PerformLayout();
             this.ResumeLayout(false);
@@ -270,7 +269,6 @@ namespace Payload_Sender
         private System.Windows.Forms.Label PortLabel;
         private System.Windows.Forms.TextBox PayloadPathBox;
         private System.Windows.Forms.Button BrowseButton;
-        private System.Windows.Forms.Button SendButton;
         private System.Windows.Forms.Button MinimizeBtn;
         private System.Windows.Forms.Button CloseBtn;
         private System.Windows.Forms.Button ThemeBtn;
@@ -278,6 +276,7 @@ namespace Payload_Sender
         private System.Windows.Forms.Label BuildLabel;
         private System.Windows.Forms.Button P1_Btn;
         private System.Windows.Forms.Label ResetLabel;
+        private System.Windows.Forms.Button SendButton;
     }
 }
 

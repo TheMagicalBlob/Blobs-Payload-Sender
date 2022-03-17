@@ -23,8 +23,8 @@ namespace Payload_Sender
             { MessageBox.Show(fuck.Message, "An Oh-Fuck Has Occured!"); }
         }
         /// <summary> Default Size 1.4.6
-        /// ClientSize = new Size(214, 100); 
-        /// Box.Size = new Size(214, 83);
+        /// ClientSize = new Size(215, 99); 
+        /// Box.Size = new Size(215, 82);
         /// </summary>
         int TI = 0;
         public static string BIN = "(Payload Path Here)        ";
@@ -55,7 +55,7 @@ namespace Payload_Sender
         }
         private const int WM_NCHITTEST = 0x84;// *
         private const int HT_CAPTION = 0x2;// *
-        protected override void WndProc(ref Message m)// ** Thank You To elimad On StackOverflow For This Code To Move The Form :)
+        protected override void WndProc(ref Message m)// ** Thanks "elimad" On StackOverflow For This Code To Move The Form lol :)
         {
             base.WndProc(ref m);
             if (m.Msg == WM_NCHITTEST)
@@ -66,7 +66,7 @@ namespace Payload_Sender
         private void BrowseButton_Click(object sender, EventArgs e)
         {
             OpenFileDialog O = new OpenFileDialog();
-            O.Filter = "Payload (*.bin)|*.bin|Elf (*.elf*)|*.elf*";
+            O.Filter = "Payload (*.bin)|*.bin|Elf (*.elf)|*.elf*";
             {
                 if (O.ShowDialog() == DialogResult.OK) {
                     PayloadPathBox.Text = O.FileName;
@@ -80,11 +80,15 @@ namespace Payload_Sender
                 s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
                 s.SendFile(BIN);
                 s.Close();
-                MessageBoxButtons b = MessageBoxButtons.OKCancel;
+                MessageBoxButtons b = MessageBoxButtons.YesNoCancel;
                 DialogResult r;
-                r = MessageBox.Show("Payload: " + BIN, "Injected Without Issue :) - Press Ok To Send Another, Or Cancel To Exit", b);
+                r = MessageBox.Show("Payload: " + BIN, "Injected Without Issue :) - Press Yes To Send It Again, Or Cancel To Exit", b);
                 if (r == DialogResult.Cancel) {
-                    Blobs_Payload_Sender.Properties.Settings.Default.Save();Close();}
+                    Blobs_Payload_Sender.Properties.Settings.Default.Save();Close();
+                }
+                if (r == DialogResult.Yes) {
+                    C();
+                }
             } catch (Exception fuck)
             { MessageBox.Show(fuck.Message, "private void C()"); }
         }
@@ -96,11 +100,15 @@ namespace Payload_Sender
                 s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
                 s.SendFile(Blobs_Payload_Sender.Properties.Settings.Default.SET_P1);
                 s.Close();
-                MessageBoxButtons b = MessageBoxButtons.OKCancel;
+                MessageBoxButtons b = MessageBoxButtons.YesNoCancel;
                 DialogResult r;
                 r = MessageBox.Show("Payload: " + Blobs_Payload_Sender.Properties.Settings.Default.SET_P1, "Injected Without Issue :) - Press Ok To Send Another, Or Cancel To Exit", b);
                 if (r == DialogResult.Cancel)
                 { Blobs_Payload_Sender.Properties.Settings.Default.Save(); Close(); }
+                if (r == DialogResult.Yes)
+                {
+                    C2();
+                }
             }
             catch (Exception fuck)
             { MessageBox.Show(fuck.Message, "private void C()"); }
@@ -233,6 +241,11 @@ namespace Payload_Sender
         {
             Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = "NO_PATH";
             P1_Btn_Click(sender, e);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(BIN);
         }
     }
 }
