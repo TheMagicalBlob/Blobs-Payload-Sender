@@ -123,7 +123,8 @@ namespace Payload_Sender
         private void ThemeBtn_Click(object sender, EventArgs e) {
             if (TI == 0) {
                 for (int i = 0; i <= 9; i++) {
-                    ClientSize = new Size(215, 118);
+                    ClientSize = new Size(215, 119);
+                    Box.Size = new Size(215, 102);
                     TB[i] = new Button();
                     TB[i].Size = new Size(20, 20);
                     TB[i].Location = new Point(3 + i * 21, 78);
