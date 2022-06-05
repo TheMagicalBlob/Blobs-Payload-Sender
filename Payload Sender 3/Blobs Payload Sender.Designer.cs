@@ -40,7 +40,6 @@ namespace Payload_Sender
             this.CloseBtn = new System.Windows.Forms.Button();
             this.ThemeBtn = new System.Windows.Forms.Button();
             this.Box = new System.Windows.Forms.GroupBox();
-            this.ResetLabel = new System.Windows.Forms.Label();
             this.BuildLabel = new System.Windows.Forms.Label();
             this.SendButton = new System.Windows.Forms.Button();
             this.P1_Btn = new System.Windows.Forms.Button();
@@ -168,7 +167,6 @@ namespace Payload_Sender
             // 
             // Box
             // 
-            this.Box.Controls.Add(this.ResetLabel);
             this.Box.Controls.Add(this.PortBox);
             this.Box.Controls.Add(this.PortLabel);
             this.Box.Controls.Add(this.BrowseButton);
@@ -184,31 +182,17 @@ namespace Payload_Sender
             this.Box.TabIndex = 26;
             this.Box.TabStop = false;
             // 
-            // ResetLabel
-            // 
-            this.ResetLabel.BackColor = System.Drawing.Color.Transparent;
-            this.ResetLabel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ResetLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
-            this.ResetLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ResetLabel.Location = new System.Drawing.Point(43, 8);
-            this.ResetLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.ResetLabel.Name = "ResetLabel";
-            this.ResetLabel.Size = new System.Drawing.Size(42, 12);
-            this.ResetLabel.TabIndex = 24;
-            this.ResetLabel.Text = "Reset ^";
-            this.ResetLabel.Click += new System.EventHandler(this.label1_Click);
-            // 
             // BuildLabel
             // 
             this.BuildLabel.BackColor = System.Drawing.Color.Transparent;
             this.BuildLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
             this.BuildLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.BuildLabel.Location = new System.Drawing.Point(0, 8);
+            this.BuildLabel.Location = new System.Drawing.Point(1, 8);
             this.BuildLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.BuildLabel.Name = "BuildLabel";
-            this.BuildLabel.Size = new System.Drawing.Size(26, 10);
+            this.BuildLabel.Size = new System.Drawing.Size(18, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "1.5.6";
+            this.BuildLabel.Text = "1.6";
             // 
             // SendButton
             // 
@@ -225,6 +209,7 @@ namespace Payload_Sender
             // 
             // P1_Btn
             // 
+            this.P1_Btn.CausesValidation = false;
             this.P1_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.P1_Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
             this.P1_Btn.ForeColor = System.Drawing.Color.Fuchsia;
@@ -235,7 +220,7 @@ namespace Payload_Sender
             this.P1_Btn.TabIndex = 28;
             this.P1_Btn.Text = "Saved";
             this.P1_Btn.UseVisualStyleBackColor = true;
-            this.P1_Btn.Click += new System.EventHandler(this.P1_Btn_Click);
+            this.P1_Btn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.P1_Btn_Click);
             // 
             // Payload_Sender
             // 

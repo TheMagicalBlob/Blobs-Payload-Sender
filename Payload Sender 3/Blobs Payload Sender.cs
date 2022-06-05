@@ -12,11 +12,17 @@ namespace Payload_Sender
         {
             InitializeComponent();
             try {
+                Blobs_Payload_Sender.Properties.Settings.Default.IsFirstTime = true;
                 IPBox.Text = Blobs_Payload_Sender.Properties.Settings.Default.SET_IP;
                 PortBox.Text = Convert.ToString(Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT);
                 T(Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR);
                 PayloadPathBox.Text = Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH;
                 BIN = Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH;
+                if (Blobs_Payload_Sender.Properties.Settings.Default.IsFirstTime) {
+                    MessageBox.Show("Note:\n- Right-Click The \"Saved\" Button To Reset It.\n- Clicking The \"Port\" Label Switches Between 9020/9021", "First-Time Message - This Won't Show Again After This");
+                    Blobs_Payload_Sender.Properties.Settings.Default.IsFirstTime = false;
+                    Blobs_Payload_Sender.Properties.Settings.Default.Save();
+                }
             }
             catch (Exception fuck)
             { MessageBox.Show(fuck.Message, "An Oh-Fuck Has Occured!"); }
@@ -45,7 +51,6 @@ namespace Payload_Sender
             PortBox.ForeColor = c;
             PayloadPathBox.ForeColor = c;
             ThemeBtn.ForeColor = c;
-            ResetLabel.ForeColor = c;
             BrowseButton.ForeColor = c;
             SendButton.ForeColor = c;
             P1_Btn.ForeColor = c;
@@ -61,12 +66,13 @@ namespace Payload_Sender
             }
         }
         private void BrowseButton_Click(object sender, EventArgs e) {
-            OpenFileDialog O = new OpenFileDialog();
-            O.Filter = "Payload (*.bin)|*.bin|Elf (*.elf)|*.elf*"; {
-                if (O.ShowDialog() == DialogResult.OK) {
-                    PayloadPathBox.Text = O.FileName;
-                    Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = O.FileName;
-                }
+            FileDialog O = new OpenFileDialog {
+                Filter = "Payload/Executable|*.bin;*.elf",
+                Title = "Which File Would You Like To Send?"
+            };
+            if (O.ShowDialog() == DialogResult.OK) {
+                PayloadPathBox.Text = O.FileName;
+                Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = O.FileName;
             }
         }
         private void C() // Standard One
@@ -83,13 +89,14 @@ namespace Payload_Sender
                     Blobs_Payload_Sender.Properties.Settings.Default.Save();Close();
                 }
             } catch (Exception fuck)
-            { MessageBox.Show(fuck.Message, "private void C()"); }
+            { MessageBox.Show(fuck.Message, "C1"); }
         }
         private void C2() // For Saved Payloads
         {
             try {
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
+                s.SendTimeout = 1337 + 420;
                 s.SendFile(Blobs_Payload_Sender.Properties.Settings.Default.SET_P1);
                 s.Close();
                 MessageBoxButtons b = MessageBoxButtons.YesNoCancel;
@@ -97,8 +104,7 @@ namespace Payload_Sender
                 r = MessageBox.Show("Payload: " + Blobs_Payload_Sender.Properties.Settings.Default.SET_P1, "Injected Without Issue :) - Press Ok To Send Another, Or Cancel To Exit", b);
                 if (r == DialogResult.Cancel)
                 { Blobs_Payload_Sender.Properties.Settings.Default.Save(); Close(); }
-                if (r == DialogResult.Yes)
-                {
+                if (r == DialogResult.Yes) {
                     C2();
                 }
             }
@@ -155,38 +161,42 @@ namespace Payload_Sender
             TB[8].Click += TM8; TB[8].ForeColor = Color.SpringGreen;
             TB[9].Click += TM9; TB[9].ForeColor = Color.Lime;
         }
-        private void TM0(object sender, EventArgs e) {T(Color.Fuchsia);}
-        private void TM1(object sender, EventArgs e) {T(Color.DeepPink);}
-        private void TM2(object sender, EventArgs e) {T(Color.Red);}
-        private void TM3(object sender, EventArgs e) {T(Color.Gold);}
-        private void TM4(object sender, EventArgs e) {T(Color.DarkViolet);}
-        private void TM5(object sender, EventArgs e) {T(Color.Blue);}
-        private void TM6(object sender, EventArgs e) {T(Color.Aqua);}
-        private void TM7(object sender, EventArgs e) {T(Color.DeepSkyBlue);}
-        private void TM8(object sender, EventArgs e) {T(Color.SpringGreen);}
-        private void TM9(object sender, EventArgs e) {T(Color.Lime);}
-        private void HashTheme(object sender, EventArgs e) { T(HashColour); }
+        private void TM0(object sender, EventArgs e) => T(Color.Fuchsia);
+        private void TM1(object sender, EventArgs e) => T(Color.DeepPink);
+        private void TM2(object sender, EventArgs e) => T(Color.Red);
+        private void TM3(object sender, EventArgs e) => T(Color.Gold);
+        private void TM4(object sender, EventArgs e) => T(Color.DarkViolet);
+        private void TM5(object sender, EventArgs e) => T(Color.Blue);
+        private void TM6(object sender, EventArgs e) => T(Color.Aqua);
+        private void TM7(object sender, EventArgs e) => T(Color.DeepSkyBlue);
+        private void TM8(object sender, EventArgs e) => T(Color.SpringGreen);
+        private void TM9(object sender, EventArgs e) => T(Color.Lime);
+        private void HashTheme(object sender, EventArgs e) => T(HashColour); 
 
-        private void P1_Btn_Click(object sender, EventArgs e) {
-            try {
-                if (Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 == "NO_PATH") {
-                    OpenFileDialog O = new OpenFileDialog();
-                    O.Filter = "Payload|*.bin*";
-                    {
-                        if (O.ShowDialog() == DialogResult.OK) {
-                            Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = O.FileName;
+        private void P1_Btn_Click(object sender, MouseEventArgs e) {
+            if (e.Button == MouseButtons.Left) {
+                try {
+                    if (Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 == "NO_PATH") {
+                        OpenFileDialog O = new OpenFileDialog();
+                        O.Filter = "Payload|*.bin;*.elf";
+                        {
+                            if (O.ShowDialog() == DialogResult.OK) {
+                                Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = O.FileName;
+                            }
                         }
+                    } else {
+                        C2();
+                    }
+                } catch (Exception fuck) {
+                    DialogResult r = MessageBox.Show(fuck.Message);
+                    if (r == DialogResult.OK) {
+                        Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = "0";
+                        P1_Btn_Click(sender, e);
                     }
                 }
-                else {
-                    C2();
-                }
-            } catch (Exception fuck) {
-                DialogResult r = MessageBox.Show(fuck.Message);
-                if(r == DialogResult.OK) {
-                    Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = "0";
-                    P1_Btn_Click(sender, e);
-                }
+            }
+            if (e.Button == MouseButtons.Right) {
+                Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = "NO_PATH";
             }
         }
 
@@ -194,18 +204,13 @@ namespace Payload_Sender
             if (PortBox.Text != "9020") {
                 PortBox.Text = "9020";
             }
-            else if (PortBox.Text == "9020") {
+            else {//if (PortBox.Text == "9020") {
                 PortBox.Text ="9021";
             }
         }
 
-        private void label1_Click(object sender, EventArgs e) {
-            Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = "NO_PATH";
-            P1_Btn_Click(sender, e);
-        }
+        private void P1_Btn_Click(object sender, EventArgs e) {
 
-        private void button1_Click(object sender, EventArgs e) {
-            MessageBox.Show(BIN);
         }
     }
 }
