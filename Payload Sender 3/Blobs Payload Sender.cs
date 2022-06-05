@@ -12,7 +12,6 @@ namespace Payload_Sender
         {
             InitializeComponent();
             try {
-                Blobs_Payload_Sender.Properties.Settings.Default.IsFirstTime = true;
                 IPBox.Text = Blobs_Payload_Sender.Properties.Settings.Default.SET_IP;
                 PortBox.Text = Convert.ToString(Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT);
                 T(Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR);
@@ -207,10 +206,6 @@ namespace Payload_Sender
             else {//if (PortBox.Text == "9020") {
                 PortBox.Text ="9021";
             }
-        }
-
-        private void P1_Btn_Click(object sender, EventArgs e) {
-
         }
     }
 }
