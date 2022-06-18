@@ -67,7 +67,7 @@ namespace Payload_Sender
             this.IPBox.Name = "IPBox";
             this.IPBox.Size = new System.Drawing.Size(85, 13);
             this.IPBox.TabIndex = 1;
-            this.IPBox.Text = "192.168.137.";
+            this.IPBox.Text = "        Enter IP";
             this.IPBox.TextChanged += new System.EventHandler(this.IPBox_TextChanged);
             // 
             // PortBox
@@ -81,7 +81,7 @@ namespace Payload_Sender
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(34, 13);
             this.PortBox.TabIndex = 2;
-            this.PortBox.Text = "9020";
+            this.PortBox.Text = "9090";
             this.PortBox.TextChanged += new System.EventHandler(this.PortBox_TextChanged);
             // 
             // PortLabel
@@ -190,9 +190,9 @@ namespace Payload_Sender
             this.BuildLabel.Location = new System.Drawing.Point(1, 8);
             this.BuildLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.BuildLabel.Name = "BuildLabel";
-            this.BuildLabel.Size = new System.Drawing.Size(18, 10);
+            this.BuildLabel.Size = new System.Drawing.Size(26, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "1.6";
+            this.BuildLabel.Text = "1.6.2";
             // 
             // SendButton
             // 

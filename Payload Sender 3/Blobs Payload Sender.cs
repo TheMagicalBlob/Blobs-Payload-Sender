@@ -18,7 +18,7 @@ namespace Payload_Sender
                 PayloadPathBox.Text = Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH;
                 BIN = Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH;
                 if (Blobs_Payload_Sender.Properties.Settings.Default.IsFirstTime) {
-                    MessageBox.Show("Note:\n- Right-Click The \"Saved\" Button To Reset It.\n- Clicking The \"Port\" Label Switches Between 9020/9021", "First-Time Message - This Won't Show Again After This");
+                    MessageBox.Show("READ ME\n\n- Right-Click The \"Saved\" Button To Choose A New Payload To Save.\n- Clicking The \"Port\" Label Switches The Port Between 9090/9020/9021", "First-Time Message - This Won't Show Again After This");
                     Blobs_Payload_Sender.Properties.Settings.Default.IsFirstTime = false;
                     Blobs_Payload_Sender.Properties.Settings.Default.Save();
                 }
@@ -55,11 +55,12 @@ namespace Payload_Sender
             P1_Btn.ForeColor = c;
             Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR = c;
         }
-        private const int WM_NCHITTEST = 0x84;// *
-        private const int HT_CAPTION = 0x2;// *
-        protected override void WndProc(ref Message m)// ** Thanks "elimad" On StackOverflow For This Code To Move The Form lol :)
-        {
-            base.WndProc(ref m);
+
+        protected override void WndProc(ref Message m) {
+//          Got This Code To Move The Form From StackOverflow lol
+            base.WndProc(ref m);        
+            const int WM_NCHITTEST = 0x84;
+            const int HT_CAPTION = 0x2;
             if (m.Msg == WM_NCHITTEST) {
                 m.Result = (IntPtr)(HT_CAPTION);
             }
@@ -178,12 +179,12 @@ namespace Payload_Sender
                     if (Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 == "NO_PATH") {
                         OpenFileDialog O = new OpenFileDialog();
                         O.Filter = "Payload|*.bin;*.elf";
-                        {
-                            if (O.ShowDialog() == DialogResult.OK) {
-                                Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = O.FileName;
-                            }
+                        O.Title = "Which File Would You Like To Save\\Send?";
+                        if (O.ShowDialog() == DialogResult.OK) {
+                            Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = O.FileName;
                         }
-                    } else {
+                    }
+                    else {
                         C2();
                     }
                 } catch (Exception fuck) {
@@ -196,15 +197,19 @@ namespace Payload_Sender
             }
             if (e.Button == MouseButtons.Right) {
                 Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = "NO_PATH";
+                P1_Btn_Click(sender, new MouseEventArgs(MouseButtons.Left, e.Clicks, e.Location.X, e.Location.Y, e.Delta));
             }
         }
 
         private void PortLabel_Click(object sender, EventArgs e) {
-            if (PortBox.Text != "9020") {
+            if (PortBox.Text == "9021") {
+                PortBox.Text = "9090";
+            }
+            else if (PortBox.Text == "9090") {
                 PortBox.Text = "9020";
             }
-            else {//if (PortBox.Text == "9020") {
-                PortBox.Text ="9021";
+            else if (PortBox.Text == "9020") {
+                PortBox.Text = "9021";
             }
         }
     }

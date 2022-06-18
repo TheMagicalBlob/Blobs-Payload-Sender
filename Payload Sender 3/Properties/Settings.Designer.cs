@@ -25,7 +25,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.137.")]
+        [global::System.Configuration.DefaultSettingValueAttribute("        Enter IP")]
         public string SET_IP {
             get {
                 return ((string)(this["SET_IP"]));
@@ -37,7 +37,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9020")]
+        [global::System.Configuration.DefaultSettingValueAttribute("9090")]
         public int SET_PORT {
             get {
                 return ((int)(this["SET_PORT"]));
@@ -80,42 +80,6 @@ namespace Blobs_Payload_Sender.Properties {
             }
             set {
                 this["SET_P1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
-        public string SET_P2 {
-            get {
-                return ((string)(this["SET_P2"]));
-            }
-            set {
-                this["SET_P2"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WHYAREYOUREADINGTHECONFIGkek")]
-        public string SET_P3 {
-            get {
-                return ((string)(this["SET_P3"]));
-            }
-            set {
-                this["SET_P3"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
-        public string SET_P4 {
-            get {
-                return ((string)(this["SET_P4"]));
-            }
-            set {
-                this["SET_P4"] = value;
             }
         }
         
