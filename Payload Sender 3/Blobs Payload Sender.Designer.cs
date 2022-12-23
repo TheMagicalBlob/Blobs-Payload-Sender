@@ -42,7 +42,6 @@ namespace Payload_Sender
             this.Box = new System.Windows.Forms.GroupBox();
             this.BuildLabel = new System.Windows.Forms.Label();
             this.SendButton = new System.Windows.Forms.Button();
-            this.P1_Btn = new System.Windows.Forms.Button();
             this.Box.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -99,6 +98,7 @@ namespace Payload_Sender
             // 
             // PayloadPathBox
             // 
+            this.PayloadPathBox.AllowDrop = true;
             this.PayloadPathBox.BackColor = System.Drawing.Color.Black;
             this.PayloadPathBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PayloadPathBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
@@ -192,7 +192,7 @@ namespace Payload_Sender
             this.BuildLabel.Name = "BuildLabel";
             this.BuildLabel.Size = new System.Drawing.Size(26, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "1.6.2";
+            this.BuildLabel.Text = "1.7.0";
             // 
             // SendButton
             // 
@@ -207,27 +207,11 @@ namespace Payload_Sender
             this.SendButton.UseVisualStyleBackColor = true;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
-            // P1_Btn
-            // 
-            this.P1_Btn.CausesValidation = false;
-            this.P1_Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.P1_Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
-            this.P1_Btn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.P1_Btn.Location = new System.Drawing.Point(43, 0);
-            this.P1_Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.P1_Btn.Name = "P1_Btn";
-            this.P1_Btn.Size = new System.Drawing.Size(42, 23);
-            this.P1_Btn.TabIndex = 28;
-            this.P1_Btn.Text = "Saved";
-            this.P1_Btn.UseVisualStyleBackColor = true;
-            this.P1_Btn.MouseDown += new System.Windows.Forms.MouseEventHandler(this.P1_Btn_Click);
-            // 
             // Payload_Sender
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(215, 99);
-            this.Controls.Add(this.P1_Btn);
             this.Controls.Add(this.ThemeBtn);
             this.Controls.Add(this.CloseBtn);
             this.Controls.Add(this.MinimizeBtn);
@@ -259,7 +243,6 @@ namespace Payload_Sender
         private System.Windows.Forms.Button ThemeBtn;
         private System.Windows.Forms.GroupBox Box;
         private System.Windows.Forms.Label BuildLabel;
-        private System.Windows.Forms.Button P1_Btn;
         private System.Windows.Forms.Label ResetLabel;
         private System.Windows.Forms.Button SendButton;
     }

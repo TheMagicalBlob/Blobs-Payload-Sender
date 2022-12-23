@@ -12,7 +12,7 @@ namespace Blobs_Payload_Sender.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.1.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -32,18 +32,6 @@ namespace Blobs_Payload_Sender.Properties {
             }
             set {
                 this["SET_IP"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9090")]
-        public int SET_PORT {
-            get {
-                return ((int)(this["SET_PORT"]));
-            }
-            set {
-                this["SET_PORT"] = value;
             }
         }
         
@@ -92,6 +80,54 @@ namespace Blobs_Payload_Sender.Properties {
             }
             set {
                 this["IsFirstTime"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9020")]
+        public int SET_PORT {
+            get {
+                return ((int)(this["SET_PORT"]));
+            }
+            set {
+                this["SET_PORT"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
+        public string SET_P2 {
+            get {
+                return ((string)(this["SET_P2"]));
+            }
+            set {
+                this["SET_P2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("WHYAREYOUREADINGTHECONFIGkek")]
+        public string SET_P3 {
+            get {
+                return ((string)(this["SET_P3"]));
+            }
+            set {
+                this["SET_P3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
+        public string SET_P4 {
+            get {
+                return ((string)(this["SET_P4"]));
+            }
+            set {
+                this["SET_P4"] = value;
             }
         }
     }

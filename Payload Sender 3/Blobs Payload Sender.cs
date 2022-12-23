@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Payload_Sender
@@ -37,7 +38,6 @@ namespace Payload_Sender
         public static TextBox HashBox = new TextBox();
         public static string HC = HashBox.Text;
         public static TextBox HB = new TextBox();
-        public static Color HashColour = ColorTranslator.FromHtml(HC);
         private void T(Color c) {
             MinimizeBtn.ForeColor = c;
             CloseBtn.ForeColor = c;
@@ -52,18 +52,16 @@ namespace Payload_Sender
             ThemeBtn.ForeColor = c;
             BrowseButton.ForeColor = c;
             SendButton.ForeColor = c;
-            P1_Btn.ForeColor = c;
             Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR = c;
         }
 
         protected override void WndProc(ref Message m) {
-//          Got This Code To Move The Form From StackOverflow lol
+//          Got This Code To Move The Now Borderless Form From StackOverflow lol, Not Mine
             base.WndProc(ref m);        
             const int WM_NCHITTEST = 0x84;
             const int HT_CAPTION = 0x2;
-            if (m.Msg == WM_NCHITTEST) {
+            if (m.Msg == WM_NCHITTEST)
                 m.Result = (IntPtr)(HT_CAPTION);
-            }
         }
         private void BrowseButton_Click(object sender, EventArgs e) {
             FileDialog O = new OpenFileDialog {
@@ -75,52 +73,29 @@ namespace Payload_Sender
                 Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = O.FileName;
             }
         }
-        private void C() // Standard One
+        private void C()
         {
             try {
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
-                s.SendFile(BIN);
-                s.Close();
-                MessageBoxButtons b = MessageBoxButtons.OKCancel;
-                DialogResult r;
+                s.SendFile(BIN); s.Close();
+
+                MessageBoxButtons b = MessageBoxButtons.OKCancel; DialogResult r;
                 r = MessageBox.Show("Payload: " + BIN, "Injected Without Issue :) - Press Ok To Continue | Cancel To Exit", b);
                 if (r == DialogResult.Cancel) {
-                    Blobs_Payload_Sender.Properties.Settings.Default.Save();Close();
-                }
-            } catch (Exception fuck)
-            { MessageBox.Show(fuck.Message, "C1"); }
-        }
-        private void C2() // For Saved Payloads
-        {
-            try {
-                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
-                s.SendTimeout = 1337 + 420;
-                s.SendFile(Blobs_Payload_Sender.Properties.Settings.Default.SET_P1);
-                s.Close();
-                MessageBoxButtons b = MessageBoxButtons.YesNoCancel;
-                DialogResult r;
-                r = MessageBox.Show("Payload: " + Blobs_Payload_Sender.Properties.Settings.Default.SET_P1, "Injected Without Issue :) - Press Ok To Send Another, Or Cancel To Exit", b);
-                if (r == DialogResult.Cancel)
-                { Blobs_Payload_Sender.Properties.Settings.Default.Save(); Close(); }
-                if (r == DialogResult.Yes) {
-                    C2();
+                    Blobs_Payload_Sender.Properties.Settings.Default.Save(); Close();
                 }
             }
-            catch (Exception fuck)
-            { MessageBox.Show(fuck.Message, "private void C()"); }
+            catch (Exception fuck) { MessageBox.Show(fuck.Message, "C1"); }
         }
         private void SendButton_Click(object sender, EventArgs e) {
             try
-            { C(); }
+                { C(); } // Some "Obfuscation" So WD Doesn't Think It's A Virus. Aren't False-Positives Fun?
             catch (Exception fuck)
-            { MessageBox.Show(fuck.Message, "private void SendButton_Click(object sender, EventArgs e)");}
+            { MessageBox.Show(fuck.Message, "SendButton_Click");}
         }
 
-        private void PayloadPathBox_TextChanged(object sender, EventArgs e) { 
-            Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text; BIN = PayloadPathBox.Text;
-        }
+        private void PayloadPathBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text; BIN = PayloadPathBox.Text; }
         private void CloseBtn_Click(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.Save(); Close(); }
         private void PortBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT = Convert.ToInt32(PortBox.Text); }
         private void IPBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_IP = IPBox.Text; }
@@ -171,35 +146,6 @@ namespace Payload_Sender
         private void TM7(object sender, EventArgs e) => T(Color.DeepSkyBlue);
         private void TM8(object sender, EventArgs e) => T(Color.SpringGreen);
         private void TM9(object sender, EventArgs e) => T(Color.Lime);
-        private void HashTheme(object sender, EventArgs e) => T(HashColour); 
-
-        private void P1_Btn_Click(object sender, MouseEventArgs e) {
-            if (e.Button == MouseButtons.Left) {
-                try {
-                    if (Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 == "NO_PATH") {
-                        OpenFileDialog O = new OpenFileDialog();
-                        O.Filter = "Payload|*.bin;*.elf";
-                        O.Title = "Which File Would You Like To Save\\Send?";
-                        if (O.ShowDialog() == DialogResult.OK) {
-                            Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = O.FileName;
-                        }
-                    }
-                    else {
-                        C2();
-                    }
-                } catch (Exception fuck) {
-                    DialogResult r = MessageBox.Show(fuck.Message);
-                    if (r == DialogResult.OK) {
-                        Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = "0";
-                        P1_Btn_Click(sender, e);
-                    }
-                }
-            }
-            if (e.Button == MouseButtons.Right) {
-                Blobs_Payload_Sender.Properties.Settings.Default.SET_P1 = "NO_PATH";
-                P1_Btn_Click(sender, new MouseEventArgs(MouseButtons.Left, e.Clicks, e.Location.X, e.Location.Y, e.Delta));
-            }
-        }
 
         private void PortLabel_Click(object sender, EventArgs e) {
             if (PortBox.Text == "9021") {
