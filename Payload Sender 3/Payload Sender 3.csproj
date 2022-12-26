@@ -7,7 +7,7 @@
     <ProjectGuid>{B5103A5E-5FD3-4341-8DFC-BF652B414354}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Blobs_Payload_Sender</RootNamespace>
-    <AssemblyName>Payload Sender 1.6.3</AssemblyName>
+    <AssemblyName>Payload Sender 1.7.0</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -80,6 +80,7 @@
     <Compile Include="Settings1.cs" />
     <EmbeddedResource Include="Blobs Payload Sender.resx">
       <DependentUpon>Blobs Payload Sender.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

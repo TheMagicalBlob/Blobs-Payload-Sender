@@ -36,8 +36,9 @@ namespace Payload_Sender
         public static Button BTN = new Button();
         public static Button[] TB = new Button[10];
         public static TextBox HashBox = new TextBox();
-        public static string HC = HashBox.Text;
-        public static TextBox HB = new TextBox();
+        public static byte MouseIsDown, MouseScrolled;
+        public static Point LastPos;
+        public static Point MouseDif;
         private void T(Color c) {
             MinimizeBtn.ForeColor = c;
             CloseBtn.ForeColor = c;
@@ -55,13 +56,19 @@ namespace Payload_Sender
             Blobs_Payload_Sender.Properties.Settings.Default.SET_COLOUR = c;
         }
 
-        protected override void WndProc(ref Message m) {
-//          Got This Code To Move The Now Borderless Form From StackOverflow lol, Not Mine
-            base.WndProc(ref m);        
-            const int WM_NCHITTEST = 0x84;
-            const int HT_CAPTION = 0x2;
-            if (m.Msg == WM_NCHITTEST)
-                m.Result = (IntPtr)(HT_CAPTION);
+        public void MouseDownFunc(object sender, MouseEventArgs e) {
+            MouseIsDown = 1; LastPos = ActiveForm.Location;
+            MouseDif = new Point(MousePosition.X - ActiveForm.Location.X, MousePosition.Y - ActiveForm.Location.Y);
+        }
+        public void MouseUpFunc(object sender, MouseEventArgs e) {
+            MouseScrolled = MouseIsDown = 0;
+        }
+
+        public void MoveForm(object sender, MouseEventArgs e) {
+            if (MouseIsDown != 0) {
+                ActiveForm.Location = new Point(MousePosition.X - MouseDif.X, MousePosition.Y - MouseDif.Y);
+                ActiveForm.Update();
+            }
         }
         private void BrowseButton_Click(object sender, EventArgs e) {
             FileDialog O = new OpenFileDialog {
