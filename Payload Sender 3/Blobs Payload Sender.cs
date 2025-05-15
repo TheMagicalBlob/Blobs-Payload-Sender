@@ -85,9 +85,11 @@ namespace Payload_Sender
             try {
                 Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                 s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
-                s.SendFile(BIN); s.Close();
+                s.SendFile(BIN);
+                s.Close();
 
-                MessageBoxButtons b = MessageBoxButtons.OKCancel; DialogResult r;
+                var b = MessageBoxButtons.OKCancel;
+                DialogResult r;
                 r = MessageBox.Show("Payload: " + BIN, "Injected Without Issue :) - Press Ok To Continue | Cancel To Exit", b);
                 if (r == DialogResult.Cancel) {
                     Blobs_Payload_Sender.Properties.Settings.Default.Save(); Close();
@@ -104,7 +106,13 @@ namespace Payload_Sender
 
         private void PayloadPathBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_PATH = PayloadPathBox.Text; BIN = PayloadPathBox.Text; }
         private void CloseBtn_Click(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.Save(); Close(); }
-        private void PortBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT = Convert.ToInt32(PortBox.Text); }
+        private void PortBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Int32.TryParse(PortBox.Text, out var ip))
+            {
+                Blobs_Payload_Sender.Properties.Settings.Default.SET_PORT = ip;
+            }
+        }
         private void IPBox_TextChanged(object sender, EventArgs e) { Blobs_Payload_Sender.Properties.Settings.Default.SET_IP = IPBox.Text; }
         private void MinimizeBtn_Click(object sender, EventArgs e)  { WindowState = FormWindowState.Minimized; Blobs_Payload_Sender.Properties.Settings.Default.Save(); }
 
