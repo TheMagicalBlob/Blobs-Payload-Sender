@@ -37,34 +37,30 @@ namespace Payload_Sender
             this.PayloadPathBox = new System.Windows.Forms.TextBox();
             this.BrowseButton = new System.Windows.Forms.Button();
             this.MinimizeBtn = new System.Windows.Forms.Button();
-            this.CloseBtn = new System.Windows.Forms.Button();
+            this.ExitBtn = new System.Windows.Forms.Button();
             this.ThemeBtn = new System.Windows.Forms.Button();
-            this.Box = new System.Windows.Forms.GroupBox();
             this.BuildLabel = new System.Windows.Forms.Label();
             this.SendButton = new System.Windows.Forms.Button();
-            this.Box.SuspendLayout();
+            this.ThemeBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // IPLabel
             // 
             this.IPLabel.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Bold);
             this.IPLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.IPLabel.Location = new System.Drawing.Point(4, 41);
+            this.IPLabel.Location = new System.Drawing.Point(50, 59);
             this.IPLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.IPLabel.Name = "IPLabel";
             this.IPLabel.Size = new System.Drawing.Size(122, 18);
             this.IPLabel.TabIndex = 0;
             this.IPLabel.Text = "I.P. Address:";
-            this.IPLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDownFunc);
-            this.IPLabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MoveForm);
-            this.IPLabel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MouseUpFunc);
             // 
             // IPBox
             // 
             this.IPBox.BackColor = System.Drawing.Color.Black;
             this.IPBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.IPBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.IPBox.Location = new System.Drawing.Point(125, 45);
+            this.IPBox.Location = new System.Drawing.Point(171, 63);
             this.IPBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.IPBox.Name = "IPBox";
             this.IPBox.Size = new System.Drawing.Size(85, 13);
@@ -78,7 +74,7 @@ namespace Payload_Sender
             this.PortBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PortBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.PortBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PortBox.Location = new System.Drawing.Point(49, 25);
+            this.PortBox.Location = new System.Drawing.Point(95, 43);
             this.PortBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(34, 13);
@@ -90,7 +86,7 @@ namespace Payload_Sender
             // 
             this.PortLabel.Font = new System.Drawing.Font("Verdana", 10F, System.Drawing.FontStyle.Bold);
             this.PortLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PortLabel.Location = new System.Drawing.Point(4, 21);
+            this.PortLabel.Location = new System.Drawing.Point(50, 39);
             this.PortLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.PortLabel.Name = "PortLabel";
             this.PortLabel.Size = new System.Drawing.Size(47, 18);
@@ -98,9 +94,6 @@ namespace Payload_Sender
             this.PortLabel.Text = "Port:";
             this.PortLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.PortLabel.Click += new System.EventHandler(this.PortLabel_Click);
-            this.PortLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDownFunc);
-            this.PortLabel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MoveForm);
-            this.PortLabel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MouseUpFunc);
             // 
             // PayloadPathBox
             // 
@@ -109,7 +102,7 @@ namespace Payload_Sender
             this.PayloadPathBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PayloadPathBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.PayloadPathBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PayloadPathBox.Location = new System.Drawing.Point(8, 58);
+            this.PayloadPathBox.Location = new System.Drawing.Point(54, 76);
             this.PayloadPathBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PayloadPathBox.Name = "PayloadPathBox";
             this.PayloadPathBox.Size = new System.Drawing.Size(194, 16);
@@ -122,7 +115,7 @@ namespace Payload_Sender
             this.BrowseButton.BackColor = System.Drawing.Color.Black;
             this.BrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BrowseButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.BrowseButton.Location = new System.Drawing.Point(118, 8);
+            this.BrowseButton.Location = new System.Drawing.Point(159, 31);
             this.BrowseButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(52, 23);
@@ -135,7 +128,7 @@ namespace Payload_Sender
             // 
             this.MinimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MinimizeBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.MinimizeBtn.Location = new System.Drawing.Point(169, 0);
+            this.MinimizeBtn.Location = new System.Drawing.Point(216, 1);
             this.MinimizeBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MinimizeBtn.Name = "MinimizeBtn";
             this.MinimizeBtn.Size = new System.Drawing.Size(23, 23);
@@ -144,25 +137,25 @@ namespace Payload_Sender
             this.MinimizeBtn.UseVisualStyleBackColor = true;
             this.MinimizeBtn.Click += new System.EventHandler(this.MinimizeBtn_Click);
             // 
-            // CloseBtn
+            // ExitBtn
             // 
-            this.CloseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CloseBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.CloseBtn.Location = new System.Drawing.Point(192, 0);
-            this.CloseBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.CloseBtn.Name = "CloseBtn";
-            this.CloseBtn.Size = new System.Drawing.Size(23, 23);
-            this.CloseBtn.TabIndex = 8;
-            this.CloseBtn.Text = "X";
-            this.CloseBtn.UseVisualStyleBackColor = true;
-            this.CloseBtn.Click += new System.EventHandler(this.CloseBtn_Click);
+            this.ExitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ExitBtn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.ExitBtn.Location = new System.Drawing.Point(239, 1);
+            this.ExitBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.ExitBtn.Name = "ExitBtn";
+            this.ExitBtn.Size = new System.Drawing.Size(23, 23);
+            this.ExitBtn.TabIndex = 8;
+            this.ExitBtn.Text = "X";
+            this.ExitBtn.UseVisualStyleBackColor = true;
+            this.ExitBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
             // ThemeBtn
             // 
             this.ThemeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ThemeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
             this.ThemeBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ThemeBtn.Location = new System.Drawing.Point(0, 0);
+            this.ThemeBtn.Location = new System.Drawing.Point(1, 1);
             this.ThemeBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ThemeBtn.Name = "ThemeBtn";
             this.ThemeBtn.Size = new System.Drawing.Size(43, 23);
@@ -170,26 +163,6 @@ namespace Payload_Sender
             this.ThemeBtn.Text = "Theme";
             this.ThemeBtn.UseVisualStyleBackColor = true;
             this.ThemeBtn.Click += new System.EventHandler(this.ThemeBtn_Click);
-            // 
-            // Box
-            // 
-            this.Box.Controls.Add(this.PortBox);
-            this.Box.Controls.Add(this.PortLabel);
-            this.Box.Controls.Add(this.BrowseButton);
-            this.Box.Controls.Add(this.IPLabel);
-            this.Box.Controls.Add(this.BuildLabel);
-            this.Box.Controls.Add(this.IPBox);
-            this.Box.Controls.Add(this.PayloadPathBox);
-            this.Box.Controls.Add(this.SendButton);
-            this.Box.ForeColor = System.Drawing.Color.Fuchsia;
-            this.Box.Location = new System.Drawing.Point(0, 18);
-            this.Box.Name = "Box";
-            this.Box.Size = new System.Drawing.Size(215, 82);
-            this.Box.TabIndex = 26;
-            this.Box.TabStop = false;
-            this.Box.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDownFunc);
-            this.Box.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MouseUpFunc);
-            this.Box.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MoveForm);
             // 
             // BuildLabel
             // 
@@ -207,7 +180,7 @@ namespace Payload_Sender
             // 
             this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SendButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.SendButton.Location = new System.Drawing.Point(172, 8);
+            this.SendButton.Location = new System.Drawing.Point(213, 31);
             this.SendButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.SendButton.Name = "SendButton";
             this.SendButton.Size = new System.Drawing.Size(42, 23);
@@ -216,15 +189,37 @@ namespace Payload_Sender
             this.SendButton.UseVisualStyleBackColor = true;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
+            // ThemeBox
+            // 
+            this.ThemeBox.AllowDrop = true;
+            this.ThemeBox.BackColor = System.Drawing.Color.Black;
+            this.ThemeBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.ThemeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
+            this.ThemeBox.ForeColor = System.Drawing.Color.Fuchsia;
+            this.ThemeBox.Location = new System.Drawing.Point(11, 137);
+            this.ThemeBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.ThemeBox.Name = "ThemeBox";
+            this.ThemeBox.Size = new System.Drawing.Size(194, 16);
+            this.ThemeBox.TabIndex = 24;
+            this.ThemeBox.Text = "0x";
+            // 
             // Payload_Sender
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(215, 99);
+            this.ClientSize = new System.Drawing.Size(263, 177);
+            this.Controls.Add(this.ThemeBox);
             this.Controls.Add(this.ThemeBtn);
-            this.Controls.Add(this.CloseBtn);
+            this.Controls.Add(this.ExitBtn);
             this.Controls.Add(this.MinimizeBtn);
-            this.Controls.Add(this.Box);
+            this.Controls.Add(this.PortBox);
+            this.Controls.Add(this.PortLabel);
+            this.Controls.Add(this.BrowseButton);
+            this.Controls.Add(this.IPLabel);
+            this.Controls.Add(this.BuildLabel);
+            this.Controls.Add(this.IPBox);
+            this.Controls.Add(this.PayloadPathBox);
+            this.Controls.Add(this.SendButton);
             this.ForeColor = System.Drawing.Color.Fuchsia;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -233,17 +228,14 @@ namespace Payload_Sender
             this.Name = "Payload_Sender";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Payload Sender (Blob)";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MouseDownFunc);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MoveForm);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MouseUpFunc);
-            this.Box.ResumeLayout(false);
-            this.Box.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
-
         #endregion
-
+        
+        
+        
         private System.Windows.Forms.Label IPLabel;
         private System.Windows.Forms.TextBox IPBox;
         private System.Windows.Forms.TextBox PortBox;
@@ -251,12 +243,12 @@ namespace Payload_Sender
         private System.Windows.Forms.TextBox PayloadPathBox;
         private System.Windows.Forms.Button BrowseButton;
         private System.Windows.Forms.Button MinimizeBtn;
-        private System.Windows.Forms.Button CloseBtn;
+        private System.Windows.Forms.Button ExitBtn;
         private System.Windows.Forms.Button ThemeBtn;
-        private System.Windows.Forms.GroupBox Box;
         private System.Windows.Forms.Label BuildLabel;
         private System.Windows.Forms.Label ResetLabel;
         private System.Windows.Forms.Button SendButton;
+        private System.Windows.Forms.TextBox ThemeBox;
     }
 }
 

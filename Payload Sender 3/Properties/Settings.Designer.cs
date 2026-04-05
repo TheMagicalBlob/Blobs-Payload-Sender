@@ -12,7 +12,7 @@ namespace Blobs_Payload_Sender.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "18.4.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,108 +26,108 @@ namespace Blobs_Payload_Sender.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("        Enter IP")]
-        public string SET_IP {
+        public string SAVED_IP {
             get {
-                return ((string)(this["SET_IP"]));
+                return ((string)(this["SAVED_IP"]));
             }
             set {
-                this["SET_IP"] = value;
+                this["SAVED_IP"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Crimson")]
-        public global::System.Drawing.Color SET_COLOUR {
+        [global::System.Configuration.DefaultSettingValueAttribute("1057023")]
+        public int SAVED_THEME {
             get {
-                return ((global::System.Drawing.Color)(this["SET_COLOUR"]));
+                return ((int)(this["SAVED_THEME"]));
             }
             set {
-                this["SET_COLOUR"] = value;
+                this["SAVED_THEME"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("        (Payload Path Here)")]
-        public string SET_PATH {
+        public string SAVED_PATH {
             get {
-                return ((string)(this["SET_PATH"]));
+                return ((string)(this["SAVED_PATH"]));
             }
             set {
-                this["SET_PATH"] = value;
+                this["SAVED_PATH"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("NO_PATH")]
-        public string SET_P1 {
+        public string SAVED_P1 {
             get {
-                return ((string)(this["SET_P1"]));
+                return ((string)(this["SAVED_P1"]));
             }
             set {
-                this["SET_P1"] = value;
+                this["SAVED_P1"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool IsFirstTime {
+        public bool IsFirstBoot {
             get {
-                return ((bool)(this["IsFirstTime"]));
+                return ((bool)(this["IsFirstBoot"]));
             }
             set {
-                this["IsFirstTime"] = value;
+                this["IsFirstBoot"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("9020")]
-        public int SET_PORT {
+        public int SAVED_PORT {
             get {
-                return ((int)(this["SET_PORT"]));
+                return ((int)(this["SAVED_PORT"]));
             }
             set {
-                this["SET_PORT"] = value;
+                this["SAVED_PORT"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
-        public string SET_P2 {
+        public string SAVED_P2 {
             get {
-                return ((string)(this["SET_P2"]));
+                return ((string)(this["SAVED_P2"]));
             }
             set {
-                this["SET_P2"] = value;
+                this["SAVED_P2"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("WHYAREYOUREADINGTHECONFIGkek")]
-        public string SET_P3 {
+        public string SAVED_P3 {
             get {
-                return ((string)(this["SET_P3"]));
+                return ((string)(this["SAVED_P3"]));
             }
             set {
-                this["SET_P3"] = value;
+                this["SAVED_P3"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
-        public string SET_P4 {
+        public string SAVED_P4 {
             get {
-                return ((string)(this["SET_P4"]));
+                return ((string)(this["SAVED_P4"]));
             }
             set {
-                this["SET_P4"] = value;
+                this["SAVED_P4"] = value;
             }
         }
     }
