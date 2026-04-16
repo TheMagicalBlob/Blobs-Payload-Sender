@@ -1,8 +1,4 @@
-﻿using Payload_Sender;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace Payload_Sender_3
@@ -17,7 +13,7 @@ namespace Payload_Sender_3
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Payload_Sender.Payload_Sender());
+            Application.Run(new PayloadSender.Payload_Sender());
         }
     }
 }

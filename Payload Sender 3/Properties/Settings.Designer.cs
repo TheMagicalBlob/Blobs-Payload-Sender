@@ -37,7 +37,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1057023")]
+        [global::System.Configuration.DefaultSettingValueAttribute("65280")]
         public int SAVED_THEME {
             get {
                 return ((int)(this["SAVED_THEME"]));

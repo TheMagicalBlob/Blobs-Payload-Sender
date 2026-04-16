@@ -6,7 +6,7 @@
       <Value Profile="(Default)">        Enter IP</Value>
     </Setting>
     <Setting Name="SAVED_THEME" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1057023</Value>
+      <Value Profile="(Default)">65280</Value>
     </Setting>
     <Setting Name="SAVED_PATH" Type="System.String" Scope="User">
       <Value Profile="(Default)">        (Payload Path Here)</Value>
