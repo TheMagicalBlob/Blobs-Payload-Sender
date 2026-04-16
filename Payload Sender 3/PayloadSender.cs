@@ -1,6 +1,5 @@
 ﻿using Blobs_Payload_Sender.Properties;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -21,7 +20,7 @@ namespace PayloadSender
 
 
             //##-> Shrink the form to hide the theme editor controls
-            ThemeHeightAdjustment = Height - ((PayloadPathBox.Location.Y + PayloadPathBox.Height) + 4); // Save the amount adjusted for later toggling of the editor's visibility
+            ThemeHeightAdjustment = Height - ((PayloadPathBox.Location.Y + PayloadPathBox.Height) + 6); // Save the amount adjusted for later toggling of the editor's visibility
 
             Venat.Height -= ThemeHeightAdjustment;
 
@@ -31,9 +30,15 @@ namespace PayloadSender
 #endif
             // Load saved settings
             IPBox.Text = Settings.SAVED_IP;
+            
             PortBox.Text = Convert.ToString(Settings.SAVED_PORT);
+
             PayloadPathBox.Text = Settings.SAVED_PATH;
+            PayloadPathBox.SelectionStart = PayloadPathBox.Text.Length;
+            PayloadPathBox.ScrollToCaret();
+
             BIN = Settings.SAVED_PATH;
+
 
             // Apply saved theme forecolour
             ChangeControlColours(Settings.SAVED_THEME);
@@ -121,11 +126,13 @@ namespace PayloadSender
 
 
 
-        private void BrowseButton_Click(object sender, EventArgs e) {
+        private void BrowseButton_Click(object sender, EventArgs e)
+        {
             FileDialog O = new OpenFileDialog {
                 Filter = "Payload/Executable|*.bin;*.elf",
                 Title = "Which File Would You Like To Send?"
             };
+
             if (O.ShowDialog() == DialogResult.OK) {
                 PayloadPathBox.Text = O.FileName;
                 Settings.SAVED_PATH = O.FileName;
@@ -173,8 +180,13 @@ namespace PayloadSender
 
         private void PayloadPathBox_TextChanged(object sender, EventArgs e)
         {
-            Settings.SAVED_PATH = PayloadPathBox.Text;
-            BIN = PayloadPathBox.Text;
+            var payloadPathBox = sender as TextBox;
+
+            Settings.SAVED_PATH = payloadPathBox.Text;
+            BIN = payloadPathBox.Text;
+
+            payloadPathBox.SelectionStart = payloadPathBox.Text.Length;
+            payloadPathBox.ScrollToCaret();
         }
 
 
@@ -357,7 +369,7 @@ namespace PayloadSender
 
         private void ResetBtn_Click(object sender, EventArgs e)
         {
-            ChangeControlColours(Settings.SAVED_THEME = 0xFF00FF);
+            ChangeControlColours(Settings.SAVED_THEME = ThemeBox.Value = 0xFF00FF);
         }
 
 
@@ -390,8 +402,6 @@ namespace PayloadSender
                 }
             }
         }
-
-
         #endregion
 
 
@@ -413,7 +423,7 @@ namespace PayloadSender
 
         private class RGBBox : TextBox
         {
-            public int Hash
+            public int Value
             {
                 get => _hash;
 
@@ -425,26 +435,10 @@ namespace PayloadSender
             }
 
             private int _hash;
-
-
-
-            public byte Red
-            {
-                get => byte.Parse(_hash.ToString("X").PadLeft(6, '0').Remove(2));
-            }
-
-
-            public byte Green
-            {
-                get => byte.Parse(_hash.ToString("X").PadLeft(6, '0').Remove(4).Substring(2));
-            }
-
-
-            public byte Blue
-            {
-                get => byte.Parse(_hash.ToString("X").PadLeft(6, '0').Substring(4));
-            }
         }
+
+
+
 
         public class Label : System.Windows.Forms.Label
         {

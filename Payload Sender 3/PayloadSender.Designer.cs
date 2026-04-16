@@ -48,8 +48,9 @@ namespace PayloadSender
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
             this.redGreenBlueLabel = new System.Windows.Forms.Label();
-            this.propertyEditorLabel = new System.Windows.Forms.Label();
             this.separatorLine0 = new PayloadSender.Payload_Sender.Label();
+            this.separatorLine1 = new PayloadSender.Payload_Sender.Label();
+            this.propertyEditorLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -61,7 +62,7 @@ namespace PayloadSender
             this.IPBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.IPBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
             this.IPBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.IPBox.Location = new System.Drawing.Point(49, 84);
+            this.IPBox.Location = new System.Drawing.Point(49, 81);
             this.IPBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.IPBox.Name = "IPBox";
             this.IPBox.Size = new System.Drawing.Size(107, 21);
@@ -76,7 +77,7 @@ namespace PayloadSender
             this.PortBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PortBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
             this.PortBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PortBox.Location = new System.Drawing.Point(3, 84);
+            this.PortBox.Location = new System.Drawing.Point(3, 81);
             this.PortBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(42, 21);
@@ -92,7 +93,7 @@ namespace PayloadSender
             this.PayloadPathBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PayloadPathBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.PayloadPathBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PayloadPathBox.Location = new System.Drawing.Point(3, 112);
+            this.PayloadPathBox.Location = new System.Drawing.Point(4, 112);
             this.PayloadPathBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PayloadPathBox.Name = "PayloadPathBox";
             this.PayloadPathBox.Size = new System.Drawing.Size(258, 23);
@@ -109,9 +110,9 @@ namespace PayloadSender
             this.BrowseButton.Location = new System.Drawing.Point(266, 112);
             this.BrowseButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(52, 23);
+            this.BrowseButton.Size = new System.Drawing.Size(117, 23);
             this.BrowseButton.TabIndex = 5;
-            this.BrowseButton.Text = "Browse";
+            this.BrowseButton.Text = "Browse for Payload...";
             this.BrowseButton.UseVisualStyleBackColor = false;
             this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
             // 
@@ -119,7 +120,7 @@ namespace PayloadSender
             // 
             this.MinimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MinimizeBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.MinimizeBtn.Location = new System.Drawing.Point(274, 3);
+            this.MinimizeBtn.Location = new System.Drawing.Point(338, 3);
             this.MinimizeBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MinimizeBtn.Name = "MinimizeBtn";
             this.MinimizeBtn.Size = new System.Drawing.Size(23, 23);
@@ -132,7 +133,7 @@ namespace PayloadSender
             // 
             this.ExitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ExitBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ExitBtn.Location = new System.Drawing.Point(297, 3);
+            this.ExitBtn.Location = new System.Drawing.Point(361, 3);
             this.ExitBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(23, 23);
@@ -146,7 +147,7 @@ namespace PayloadSender
             this.ThemeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ThemeBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F);
             this.ThemeBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ThemeBtn.Location = new System.Drawing.Point(275, 29);
+            this.ThemeBtn.Location = new System.Drawing.Point(3, 32);
             this.ThemeBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ThemeBtn.Name = "ThemeBtn";
             this.ThemeBtn.Size = new System.Drawing.Size(44, 23);
@@ -160,24 +161,24 @@ namespace PayloadSender
             this.BuildLabel.BackColor = System.Drawing.Color.Transparent;
             this.BuildLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
             this.BuildLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.BuildLabel.Location = new System.Drawing.Point(217, 5);
+            this.BuildLabel.Location = new System.Drawing.Point(281, 5);
             this.BuildLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.BuildLabel.Name = "BuildLabel";
             this.BuildLabel.Size = new System.Drawing.Size(54, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "2.12.7";
+            this.BuildLabel.Text = "2.14.8";
             this.BuildLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // SendButton
             // 
             this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SendButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.SendButton.Location = new System.Drawing.Point(160, 83);
+            this.SendButton.Location = new System.Drawing.Point(160, 80);
             this.SendButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.SendButton.Name = "SendButton";
-            this.SendButton.Size = new System.Drawing.Size(42, 23);
+            this.SendButton.Size = new System.Drawing.Size(83, 23);
             this.SendButton.TabIndex = 6;
-            this.SendButton.Text = "Send";
+            this.SendButton.Text = "Send Payload";
             this.SendButton.UseVisualStyleBackColor = true;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
@@ -188,7 +189,6 @@ namespace PayloadSender
             this.ThemeBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ThemeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.ThemeBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ThemeBox.Hash = 0;
             this.ThemeBox.Location = new System.Drawing.Point(6, 191);
             this.ThemeBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ThemeBox.MaxLength = 8;
@@ -196,6 +196,7 @@ namespace PayloadSender
             this.ThemeBox.Size = new System.Drawing.Size(100, 16);
             this.ThemeBox.TabIndex = 24;
             this.ThemeBox.Text = "0x";
+            this.ThemeBox.Value = 0;
             this.ThemeBox.TextChanged += new System.EventHandler(this.ThemeBox_TextChanged);
             // 
             // ApplyBtn
@@ -322,18 +323,6 @@ namespace PayloadSender
             this.redGreenBlueLabel.TabIndex = 32;
             this.redGreenBlueLabel.Text = "Red   Green   Blue";
             // 
-            // propertyEditorLabel
-            // 
-            this.propertyEditorLabel.BackColor = System.Drawing.Color.Transparent;
-            this.propertyEditorLabel.Font = new System.Drawing.Font("Verdana", 6.5F);
-            this.propertyEditorLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.propertyEditorLabel.Location = new System.Drawing.Point(9, 163);
-            this.propertyEditorLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.propertyEditorLabel.Name = "propertyEditorLabel";
-            this.propertyEditorLabel.Size = new System.Drawing.Size(86, 18);
-            this.propertyEditorLabel.TabIndex = 33;
-            this.propertyEditorLabel.Text = "Property Editor";
-            // 
             // separatorLine0
             // 
             this.separatorLine0.BackColor = System.Drawing.Color.Transparent;
@@ -343,18 +332,45 @@ namespace PayloadSender
             this.separatorLine0.Location = new System.Drawing.Point(6, 141);
             this.separatorLine0.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.separatorLine0.Name = "separatorLine0";
-            this.separatorLine0.Size = new System.Drawing.Size(86, 13);
+            this.separatorLine0.Size = new System.Drawing.Size(291, 13);
             this.separatorLine0.StretchToFitForm = true;
             this.separatorLine0.TabIndex = 34;
             this.separatorLine0.Text = "------------------------------------";
+            // 
+            // separatorLine1
+            // 
+            this.separatorLine1.BackColor = System.Drawing.Color.Transparent;
+            this.separatorLine1.Font = new System.Drawing.Font("Verdana", 6.5F);
+            this.separatorLine1.ForeColor = System.Drawing.Color.Fuchsia;
+            this.separatorLine1.IsSeparatorLine = true;
+            this.separatorLine1.Location = new System.Drawing.Point(39, 21);
+            this.separatorLine1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.separatorLine1.Name = "separatorLine1";
+            this.separatorLine1.Size = new System.Drawing.Size(258, 13);
+            this.separatorLine1.StretchToFitForm = true;
+            this.separatorLine1.TabIndex = 35;
+            this.separatorLine1.Text = "------------------------------------";
+            // 
+            // propertyEditorLabel
+            // 
+            this.propertyEditorLabel.BackColor = System.Drawing.Color.Transparent;
+            this.propertyEditorLabel.Font = new System.Drawing.Font("Verdana", 9.5F, System.Drawing.FontStyle.Bold);
+            this.propertyEditorLabel.ForeColor = System.Drawing.Color.Fuchsia;
+            this.propertyEditorLabel.Location = new System.Drawing.Point(3, 156);
+            this.propertyEditorLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.propertyEditorLabel.Name = "propertyEditorLabel";
+            this.propertyEditorLabel.Size = new System.Drawing.Size(105, 21);
+            this.propertyEditorLabel.TabIndex = 36;
+            this.propertyEditorLabel.Text = "Theme Editor";
             // 
             // Payload_Sender
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(322, 255);
-            this.Controls.Add(this.separatorLine0);
+            this.ClientSize = new System.Drawing.Size(387, 255);
             this.Controls.Add(this.propertyEditorLabel);
+            this.Controls.Add(this.separatorLine1);
+            this.Controls.Add(this.separatorLine0);
             this.Controls.Add(this.redGreenBlueLabel);
             this.Controls.Add(this.numericUpDown3);
             this.Controls.Add(this.numericUpDown2);
@@ -410,8 +426,9 @@ namespace PayloadSender
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.Label redGreenBlueLabel;
-        private System.Windows.Forms.Label propertyEditorLabel;
         private PayloadSender.Payload_Sender.Label separatorLine0;
+        private Label separatorLine1;
+        private System.Windows.Forms.Label propertyEditorLabel;
     }
 }
 
