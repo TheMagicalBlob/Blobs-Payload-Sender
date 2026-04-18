@@ -26,6 +26,8 @@ namespace PayloadSender
         public static Font MainFont = new Font("Gadugi", 8.25f, FontStyle.Bold); // For the vast majority of controls; anything the user doesn't edit, really.
         public static Font TextFont = new Font("Segoe UI Semibold", 7.5f); // For option controls with customized contents
 
+        private static int ThemeHeightAdjustment;
+
 
         /// <summary> An array of Point() arrays with the start and end points of a line to draw. </summary>
         private Point[][] HSeparatorLines;
@@ -118,6 +120,8 @@ namespace PayloadSender
             {
                 HSeparatorLines = hSeparatorLineScanner.ToArray();
             }
+
+            VSeparatorLines = null;
 
 
             Paint += (venat, yoshiP) => DrawFormDecorations((Form)venat, yoshiP);

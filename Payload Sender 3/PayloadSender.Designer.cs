@@ -40,7 +40,6 @@ namespace PayloadSender
             this.BuildLabel = new System.Windows.Forms.Label();
             this.SendButton = new System.Windows.Forms.Button();
             this.ThemeBox = new PayloadSender.Payload_Sender.RGBBox();
-            this.ApplyBtn = new System.Windows.Forms.Button();
             this.ResetBtn = new System.Windows.Forms.Button();
             this.TitleLabel = new System.Windows.Forms.Label();
             this.TcpLabel = new System.Windows.Forms.Label();
@@ -51,6 +50,9 @@ namespace PayloadSender
             this.separatorLine0 = new PayloadSender.Payload_Sender.Label();
             this.separatorLine1 = new PayloadSender.Payload_Sender.Label();
             this.propertyEditorLabel = new System.Windows.Forms.Label();
+            this.RebootBtn = new System.Windows.Forms.Button();
+            this.ArrowBoxesApplyBtn = new System.Windows.Forms.Button();
+            this.ThemeBoxApplyBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -166,7 +168,7 @@ namespace PayloadSender
             this.BuildLabel.Name = "BuildLabel";
             this.BuildLabel.Size = new System.Drawing.Size(54, 10);
             this.BuildLabel.TabIndex = 23;
-            this.BuildLabel.Text = "2.14.8";
+            this.BuildLabel.Text = "ver";
             this.BuildLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // SendButton
@@ -189,39 +191,23 @@ namespace PayloadSender
             this.ThemeBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ThemeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.ThemeBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ThemeBox.Location = new System.Drawing.Point(6, 191);
+            this.ThemeBox.Location = new System.Drawing.Point(6, 186);
             this.ThemeBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ThemeBox.MaxLength = 8;
             this.ThemeBox.Name = "ThemeBox";
             this.ThemeBox.Size = new System.Drawing.Size(100, 16);
             this.ThemeBox.TabIndex = 24;
-            this.ThemeBox.Text = "0x";
-            this.ThemeBox.Value = 0;
-            this.ThemeBox.TextChanged += new System.EventHandler(this.ThemeBox_TextChanged);
-            // 
-            // ApplyBtn
-            // 
-            this.ApplyBtn.BackColor = System.Drawing.Color.Black;
-            this.ApplyBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ApplyBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ApplyBtn.Location = new System.Drawing.Point(138, 190);
-            this.ApplyBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.ApplyBtn.Name = "ApplyBtn";
-            this.ApplyBtn.Size = new System.Drawing.Size(52, 23);
-            this.ApplyBtn.TabIndex = 25;
-            this.ApplyBtn.Text = "Apply";
-            this.ApplyBtn.UseVisualStyleBackColor = false;
-            this.ApplyBtn.Click += new System.EventHandler(this.ApplyBtn_Click);
+            this.ThemeBox.Text = "0xFF00FF";
             // 
             // ResetBtn
             // 
             this.ResetBtn.BackColor = System.Drawing.Color.Black;
             this.ResetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResetBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ResetBtn.Location = new System.Drawing.Point(138, 219);
+            this.ResetBtn.Location = new System.Drawing.Point(175, 184);
             this.ResetBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ResetBtn.Name = "ResetBtn";
-            this.ResetBtn.Size = new System.Drawing.Size(52, 23);
+            this.ResetBtn.Size = new System.Drawing.Size(52, 58);
             this.ResetBtn.TabIndex = 26;
             this.ResetBtn.Text = "Reset";
             this.ResetBtn.UseVisualStyleBackColor = false;
@@ -255,8 +241,8 @@ namespace PayloadSender
             // 
             this.numericUpDown1.BackColor = System.Drawing.SystemColors.WindowText;
             this.numericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.numericUpDown1.ForeColor = System.Drawing.SystemColors.Window;
-            this.numericUpDown1.Location = new System.Drawing.Point(6, 230);
+            this.numericUpDown1.ForeColor = System.Drawing.Color.Fuchsia;
+            this.numericUpDown1.Location = new System.Drawing.Point(5, 225);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             255,
             0,
@@ -275,8 +261,8 @@ namespace PayloadSender
             // 
             this.numericUpDown2.BackColor = System.Drawing.SystemColors.WindowText;
             this.numericUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.numericUpDown2.ForeColor = System.Drawing.SystemColors.Window;
-            this.numericUpDown2.Location = new System.Drawing.Point(46, 230);
+            this.numericUpDown2.ForeColor = System.Drawing.Color.Fuchsia;
+            this.numericUpDown2.Location = new System.Drawing.Point(46, 225);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             255,
             0,
@@ -285,18 +271,13 @@ namespace PayloadSender
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(38, 16);
             this.numericUpDown2.TabIndex = 30;
-            this.numericUpDown2.Value = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
             // 
             // numericUpDown3
             // 
             this.numericUpDown3.BackColor = System.Drawing.SystemColors.WindowText;
             this.numericUpDown3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.numericUpDown3.ForeColor = System.Drawing.SystemColors.Window;
-            this.numericUpDown3.Location = new System.Drawing.Point(85, 230);
+            this.numericUpDown3.ForeColor = System.Drawing.Color.Fuchsia;
+            this.numericUpDown3.Location = new System.Drawing.Point(86, 225);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             255,
             0,
@@ -316,7 +297,7 @@ namespace PayloadSender
             this.redGreenBlueLabel.BackColor = System.Drawing.Color.Transparent;
             this.redGreenBlueLabel.Font = new System.Drawing.Font("Verdana", 6.5F);
             this.redGreenBlueLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.redGreenBlueLabel.Location = new System.Drawing.Point(9, 213);
+            this.redGreenBlueLabel.Location = new System.Drawing.Point(11, 208);
             this.redGreenBlueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.redGreenBlueLabel.Name = "redGreenBlueLabel";
             this.redGreenBlueLabel.Size = new System.Drawing.Size(95, 16);
@@ -329,7 +310,7 @@ namespace PayloadSender
             this.separatorLine0.Font = new System.Drawing.Font("Verdana", 6.5F);
             this.separatorLine0.ForeColor = System.Drawing.Color.Fuchsia;
             this.separatorLine0.IsSeparatorLine = true;
-            this.separatorLine0.Location = new System.Drawing.Point(6, 141);
+            this.separatorLine0.Location = new System.Drawing.Point(6, 133);
             this.separatorLine0.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.separatorLine0.Name = "separatorLine0";
             this.separatorLine0.Size = new System.Drawing.Size(291, 13);
@@ -356,18 +337,63 @@ namespace PayloadSender
             this.propertyEditorLabel.BackColor = System.Drawing.Color.Transparent;
             this.propertyEditorLabel.Font = new System.Drawing.Font("Verdana", 9.5F, System.Drawing.FontStyle.Bold);
             this.propertyEditorLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.propertyEditorLabel.Location = new System.Drawing.Point(3, 156);
+            this.propertyEditorLabel.Location = new System.Drawing.Point(3, 153);
             this.propertyEditorLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.propertyEditorLabel.Name = "propertyEditorLabel";
             this.propertyEditorLabel.Size = new System.Drawing.Size(105, 21);
             this.propertyEditorLabel.TabIndex = 36;
             this.propertyEditorLabel.Text = "Theme Editor";
             // 
+            // RebootBtn
+            // 
+            this.RebootBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RebootBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
+            this.RebootBtn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.RebootBtn.Location = new System.Drawing.Point(338, 31);
+            this.RebootBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.RebootBtn.Name = "RebootBtn";
+            this.RebootBtn.Size = new System.Drawing.Size(46, 20);
+            this.RebootBtn.TabIndex = 37;
+            this.RebootBtn.Text = "Reboot";
+            this.RebootBtn.UseVisualStyleBackColor = true;
+            this.RebootBtn.Click += new System.EventHandler(this.RebootBtn_Click);
+            // 
+            // ArrowBoxesApplyBtn
+            // 
+            this.ArrowBoxesApplyBtn.BackColor = System.Drawing.Color.Black;
+            this.ArrowBoxesApplyBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ArrowBoxesApplyBtn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.ArrowBoxesApplyBtn.Location = new System.Drawing.Point(129, 216);
+            this.ArrowBoxesApplyBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.ArrowBoxesApplyBtn.Name = "ArrowBoxesApplyBtn";
+            this.ArrowBoxesApplyBtn.Size = new System.Drawing.Size(43, 26);
+            this.ArrowBoxesApplyBtn.TabIndex = 38;
+            this.ArrowBoxesApplyBtn.Text = "Apply";
+            this.ArrowBoxesApplyBtn.UseVisualStyleBackColor = false;
+            this.ArrowBoxesApplyBtn.Click += new System.EventHandler(this.ArrowBoxesApplyBtn_Click);
+            // 
+            // ThemeBoxApplyBtn
+            // 
+            this.ThemeBoxApplyBtn.BackColor = System.Drawing.Color.Black;
+            this.ThemeBoxApplyBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ThemeBoxApplyBtn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.ThemeBoxApplyBtn.Location = new System.Drawing.Point(129, 184);
+            this.ThemeBoxApplyBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.ThemeBoxApplyBtn.Name = "ThemeBoxApplyBtn";
+            this.ThemeBoxApplyBtn.Size = new System.Drawing.Size(43, 26);
+            this.ThemeBoxApplyBtn.TabIndex = 39;
+            this.ThemeBoxApplyBtn.Text = "Apply";
+            this.ThemeBoxApplyBtn.UseVisualStyleBackColor = false;
+            this.ThemeBoxApplyBtn.Click += new System.EventHandler(this.ThemeBoxApplyBtn_Click);
+            // 
             // Payload_Sender
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(387, 255);
+            this.ClientSize = new System.Drawing.Size(387, 249);
+            this.Controls.Add(this.ThemeBoxApplyBtn);
+            this.Controls.Add(this.ArrowBoxesApplyBtn);
+            this.Controls.Add(this.RebootBtn);
             this.Controls.Add(this.propertyEditorLabel);
             this.Controls.Add(this.separatorLine1);
             this.Controls.Add(this.separatorLine0);
@@ -378,7 +404,6 @@ namespace PayloadSender
             this.Controls.Add(this.TcpLabel);
             this.Controls.Add(this.TitleLabel);
             this.Controls.Add(this.ResetBtn);
-            this.Controls.Add(this.ApplyBtn);
             this.Controls.Add(this.ThemeBox);
             this.Controls.Add(this.ThemeBtn);
             this.Controls.Add(this.ExitBtn);
@@ -418,7 +443,6 @@ namespace PayloadSender
         private System.Windows.Forms.Label ResetLabel;
         private System.Windows.Forms.Button SendButton;
         private PayloadSender.Payload_Sender.RGBBox ThemeBox;
-        private System.Windows.Forms.Button ApplyBtn;
         private System.Windows.Forms.Button ResetBtn;
         private System.Windows.Forms.Label TitleLabel;
         private System.Windows.Forms.Label TcpLabel;
@@ -429,6 +453,9 @@ namespace PayloadSender
         private PayloadSender.Payload_Sender.Label separatorLine0;
         private Label separatorLine1;
         private System.Windows.Forms.Label propertyEditorLabel;
+        private System.Windows.Forms.Button RebootBtn;
+        private System.Windows.Forms.Button ArrowBoxesApplyBtn;
+        private System.Windows.Forms.Button ThemeBoxApplyBtn;
     }
 }
 

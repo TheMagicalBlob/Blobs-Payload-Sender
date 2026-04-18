@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Payload_Sender_3
+namespace Payload_Sender
 {
     internal static class Program
     {
@@ -13,7 +13,12 @@ namespace Payload_Sender_3
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new PayloadSender.Payload_Sender());
+
+            do {
+                Application.Run(new PayloadSender.Payload_Sender());
+                Console.WriteLine("\nRestarting program...");
+            }
+            while (true); // Restart program when closed through Close() function instead of Environment.Exit(0)
         }
     }
 }

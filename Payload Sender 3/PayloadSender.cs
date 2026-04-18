@@ -1,52 +1,59 @@
 ﻿using Blobs_Payload_Sender.Properties;
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
+        internal const string version = "2.25.19"
+        ;
+
         public Payload_Sender()
         {
+            //##-> Initialize form and form references
             Venat = this;
             Settings = new Settings();
 
             InitializeComponent();
             InitializeAdditionalEventHandlers(Venat);
 
+            // Populate build label
+            BuildLabel.Text += version;
+
 
             //##-> Shrink the form to hide the theme editor controls
-            ThemeHeightAdjustment = Height - ((PayloadPathBox.Location.Y + PayloadPathBox.Height) + 6); // Save the amount adjusted for later toggling of the editor's visibility
+            ThemeHeightAdjustment = Height - (PayloadPathBox.Location.Y + PayloadPathBox.Height + 6); // Save the amount adjusted for later toggling of the editor's visibility
 
             Venat.Height -= ThemeHeightAdjustment;
+
+
+            //##-> Initialize thread used to send payloads
+            CTSendPayload = new Thread(Connect);
+
+
 
 
 #if !DEBUG
             try {
 #endif
-            // Load saved settings
-            IPBox.Text = Settings.SAVED_IP;
-            
-            PortBox.Text = Convert.ToString(Settings.SAVED_PORT);
 
-            PayloadPathBox.Text = Settings.SAVED_PATH;
-            PayloadPathBox.SelectionStart = PayloadPathBox.Text.Length;
-            PayloadPathBox.ScrollToCaret();
+            //##-> Handle Saved Settings
+            LoadSavedSettings();
 
-            BIN = Settings.SAVED_PATH;
-
-
-            // Apply saved theme forecolour
-            ChangeControlColours(Settings.SAVED_THEME);
-            ThemeBox.Text += Settings.SAVED_THEME.ToString("X").PadLeft(6, '0');
 
             if (Settings.IsFirstBoot)
             {
                 MessageBox.Show("READ ME\n\n- Right-Click The \"Saved\" Button To Choose A New Payload To Save.\n- Clicking The \"Port\" Label Switches The Port Between 9090/9020/9021", "First-Time Message - This Won't Show Again After This");
+                
                 Settings.IsFirstBoot = false;
                 Settings.Save();
             }
@@ -70,14 +77,15 @@ namespace PayloadSender
         //========================================\\
         #region [Global Variable Declarations]
 
-        public static string BIN = "(Payload Path Here)        ";
-        public static Button BTN = new Button();
+        public static string PayloadPath = "(Payload Path Here)        ";
 
         private static Payload_Sender Venat;
 
         private static Settings Settings;
 
-        private static int ThemeHeightAdjustment;
+        private readonly Thread CTSendPayload;
+
+        private bool ReadyToConnect;
 
         /// <summary>
         /// Default Size 1.4.6
@@ -97,18 +105,30 @@ namespace PayloadSender
 
 
 
+
+
+
+
+
+
+
+
+        //=================================\\
+        //--|   Function Declarations   |--\\
+        //=================================\\
+        #region [Function Declarations]
+
+        /// <summary>
+        /// //!
+        /// </summary>
+        /// <param name="colour"></param>
         private void ChangeControlColours(int colour)
         {
-            var hexNumber = colour.ToString("X").PadLeft(6, '0');
+            Console.WriteLine($"New RGB Colour: 0x{colour.ToString("X").PadLeft(6, '0')}");
 
-            var red =   byte.Parse($"{hexNumber[0]}{hexNumber[1]}", System.Globalization.NumberStyles.HexNumber);
-            var green = byte.Parse($"{hexNumber[2]}{hexNumber[3]}", System.Globalization.NumberStyles.HexNumber);
-            var blue =  byte.Parse($"{hexNumber[4]}{hexNumber[5]}", System.Globalization.NumberStyles.HexNumber);
+            ThemeBox.Value = colour;
 
-            Console.WriteLine($"New Argb Colour: 0xFF{red:X}{green.ToString("X").PadLeft(2, '0')}{blue:X}");
-
-
-            var c = Color.FromArgb(0xFF, red, green, blue);
+            var c = Color.FromArgb(0xFF, ThemeBox.Red, ThemeBox.Green, ThemeBox.Blue);
 
             foreach (var control in Controls.Cast<Control>().Where(control => control.GetType() != typeof(Label)))
             {
@@ -116,6 +136,35 @@ namespace PayloadSender
             }
 
             Settings.SAVED_THEME = colour;
+            Settings.Save();
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// //!
+        /// </summary>
+        private void LoadSavedSettings()
+        {
+            IPBox.Text = Settings.SAVED_IP;
+
+            PortBox.Text = Convert.ToString(Settings.SAVED_PORT);
+
+            PayloadPathBox.Text = Settings.SAVED_PATH;
+            PayloadPathBox.SelectionStart = PayloadPathBox.Text.Length;
+            PayloadPathBox.ScrollToCaret();
+
+            PayloadPath = Settings.SAVED_PATH;
+
+
+
+            // Apply saved theme forecolour
+            ThemeBox.Value = Settings.SAVED_THEME;
+
+            ChangeControlColours(ThemeBox.Value);
         }
 
 
@@ -128,14 +177,15 @@ namespace PayloadSender
 
         private void BrowseButton_Click(object sender, EventArgs e)
         {
-            FileDialog O = new OpenFileDialog {
+            var fileDialogue = new OpenFileDialog
+            {
                 Filter = "Payload/Executable|*.bin;*.elf",
-                Title = "Which File Would You Like To Send?"
+                Title = "Select a .bin or /elf Payload to send."
             };
 
-            if (O.ShowDialog() == DialogResult.OK) {
-                PayloadPathBox.Text = O.FileName;
-                Settings.SAVED_PATH = O.FileName;
+            if (fileDialogue.ShowDialog() == DialogResult.OK)
+            {
+                Settings.SAVED_PATH = PayloadPathBox.Text = fileDialogue.FileName;
             }
         }
 
@@ -144,20 +194,39 @@ namespace PayloadSender
 
         private void Connect()
         {
-            try {
-                Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                s.Connect(new IPEndPoint(IPAddress.Parse(IPBox.Text), Convert.ToInt32(PortBox.Text)));
-                s.SendFile(BIN);
-                s.Close();
+            while (true)
+            {
+                while (!ReadyToConnect);
 
-                var b = MessageBoxButtons.OKCancel;
-                DialogResult r;
-                r = MessageBox.Show("Payload: " + BIN, "Injected Without Issue :) - Press Ok To Continue | Cancel To Exit", b);
-                if (r == DialogResult.Cancel) {
-                    Settings.Save(); Close();
+                try {
+                    ReadyToConnect = false;
+
+                    var payloadSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+
+                    payloadSocket.Connect
+                    (
+                        new IPEndPoint(IPAddress.Parse(IPBox.Text),
+                        Convert.ToInt32(PortBox.Text))
+                    );
+
+                    payloadSocket.SendFile(PayloadPath.Replace("\"", string.Empty));
+                    payloadSocket.Close();
+
+
+                    if (MessageBox.Show("Payload: " + PayloadPath, "Injected Without Issue :) - Press Ok To Continue | Cancel To Exit", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                    {
+                        exit();
+                    }
+                }
+                catch (FileNotFoundException)
+                {
+                    MessageBox.Show("Please provide a valid payload path. (file does not exist)", $"Path \"{PayloadPath}\" was not valid.");
+                }
+                catch (Exception fuck)
+                {
+                    MessageBox.Show(fuck.Message, $"Unexpected error occurred in {nameof(Payload_Sender)}.{nameof(Connect)}().");
                 }
             }
-            catch (Exception fuck) { MessageBox.Show(fuck.Message, "C1"); }
         }
 
 
@@ -165,13 +234,17 @@ namespace PayloadSender
 
         private void SendButton_Click(object sender, EventArgs e)
         {
-            // Some "Obfuscation" So WD Doesn't Think It's A Virus. Aren't False-Positives Fun?
-            try {
-                Connect();
-            } 
-            catch (Exception fuck)
+            if (ReadyToConnect)
             {
-                MessageBox.Show(fuck.Message, nameof(SendButton_Click));
+                return;
+            }
+
+            if (CTSendPayload.ThreadState == System.Threading.ThreadState.Unstarted)
+            {
+                CTSendPayload.Start();
+            }
+            else {
+                ReadyToConnect = true;
             }
         }
 
@@ -183,7 +256,7 @@ namespace PayloadSender
             var payloadPathBox = sender as TextBox;
 
             Settings.SAVED_PATH = payloadPathBox.Text;
-            BIN = payloadPathBox.Text;
+            PayloadPath = payloadPathBox.Text;
 
             payloadPathBox.SelectionStart = payloadPathBox.Text.Length;
             payloadPathBox.ScrollToCaret();
@@ -332,13 +405,9 @@ namespace PayloadSender
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void MouseDownFunc(object sender = null, EventArgs e = null)
+        public static void MouseUpFunc(object sender = null, EventArgs e = null)
         {
-            if (Venat != null)
-            {
-                MouseDif = new Point(MousePosition.X - Venat.Location.X, MousePosition.Y - Venat.Location.Y);
-                MouseIsDown = true;
-            }
+            MouseIsDown = false;
         }
 
 
@@ -351,17 +420,13 @@ namespace PayloadSender
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void MouseUpFunc(object sender = null, EventArgs e = null)
+        public static void MouseDownFunc(object sender = null, EventArgs e = null)
         {
-            MouseIsDown = false;
-        }
-
-
-
-
-        private void ApplyBtn_Click(object sender, EventArgs e)
-        {
-            ChangeControlColours(Settings.SAVED_THEME);
+            if (Venat != null)
+            {
+                MouseDif = new Point(MousePosition.X - Venat.Location.X, MousePosition.Y - Venat.Location.Y);
+                MouseIsDown = true;
+            }
         }
 
 
@@ -369,17 +434,24 @@ namespace PayloadSender
 
         private void ResetBtn_Click(object sender, EventArgs e)
         {
-            ChangeControlColours(Settings.SAVED_THEME = ThemeBox.Value = 0xFF00FF);
+            ChangeControlColours(ThemeBox.Value = 0xFF00FF);
         }
 
 
 
 
-        private void ThemeBox_TextChanged(object sender, EventArgs e)
+        private void RebootBtn_Click(object sender, EventArgs e)
+        {
+            Settings?.Save();
+            Close();
+        }
+
+        private void ThemeBoxApplyBtn_Click(object sender, EventArgs e)
         {
             if (ThemeBox.Text.Length < 2)
             {
-                ThemeBox.Text = "0x";
+                Console.WriteLine($"ThemeBox text too short; re-assigning");
+                ThemeBox.Text = "0x" + ThemeBox.Value.ToString("X").PadLeft(6, '0');
                 return;
             }
             else if (!ThemeBox.Text.StartsWith("0x"))
@@ -394,15 +466,116 @@ namespace PayloadSender
             {
                 if (int.TryParse(ThemeBox.Text.Substring(2), System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.CurrentCulture, out int @int))
                 {
-                    Settings.SAVED_THEME = @int;
-                    Settings.Save();
+                    ThemeBox.Value = @int;
                 }
                 else {
-                    Console.WriteLine("Oh for fuck sake");
+                    MessageBox.Show("Unable to parse new RGB hash; Please provide a 3-byte hexadecimal value (eg: 0xFE16A0)");
+                    ResetBtn_Click(null, null);
                 }
             }
+
+            ChangeControlColours(ThemeBox.Value);
+        }
+
+
+        private void ArrowBoxesApplyBtn_Click(object sender, EventArgs e)
+        {
+            ThemeBox.Red   = (byte) numericUpDown1.Value;
+            ThemeBox.Green = (byte) numericUpDown2.Value;
+            ThemeBox.Blue = (byte) numericUpDown3.Value;
+
+            ThemeBox.Text = "0x" + ThemeBox.Value.ToString("X").PadLeft(6, '0');
+
+            ChangeControlColours(ThemeBox.Value);
         }
         #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+        //=======================================================\\
+        //---|   Logging/Output Functionality Declarations   |---\\
+        //=======================================================\\
+        #region [Logging/Output Functionality Declarations]
+
+        /// <summary>
+        /// Echo a provided string (or string representation of an object) to the standard console output, followed by a newline.
+        /// <br/> Appends an empty new line if no message is provided.
+        /// </summary>
+#pragma warning disable IDE1006 // bug off, this one's lowercase
+        public static void echo(object message = null)
+        {
+#if DEBUG
+            var str = message?.ToString() ?? string.Empty;
+
+            Console.WriteLine(str);
+            Debug.WriteLineIf(!Console.IsOutputRedirected, str);
+
+            if (!Console.IsOutputRedirected)
+            {
+                Debug.WriteLine(str);
+            }
+#endif
+        }
+
+
+
+
+        /// <summary>
+        /// Echo a provided string (or string representation of an object) to the standard console output.
+        /// <br/> Appends a single whitespace character if no message is provided.
+        /// </summary>
+        /// <param name="message"></param>
+        public static void _echo(object message = null)
+        {
+#if DEBUG
+            var str = message?.ToString() ?? " ";
+
+            Console.Write(str);
+
+            if (!Console.IsOutputRedirected)
+            {
+                Debug.Write(str);
+            }
+#endif
+        }
+
+
+
+
+        /// <summary>
+        /// Save settings and close the form
+        /// </summary>
+        /// <param name="exitCode"></param>
+        private static void exit(int exitCode = 0)
+        {
+            echo($"Application exiting with code {exitCode} / 0x{exitCode:X}");
+
+            _echo("Saving settings... ");
+            if (Settings != null)
+            {
+                Settings.Save();
+                echo("Settings Saved.");
+            }
+            else {
+                echo($"{nameof(Payload_Sender)}.{nameof(Settings)} was null for some reason, nothing to save.");
+            }
+
+
+            Environment.Exit(exitCode);
+        }
+#pragma warning restore IDE1006
+        #endregion
+
+        #endregion (function declarations)
 
 
 
@@ -423,18 +596,80 @@ namespace PayloadSender
 
         private class RGBBox : TextBox
         {
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public int Value
             {
-                get => _hash;
+                get => _value;
 
                 set {
-                    _hash = value;
+                    if (value < 0)
+                    {
+                        return; // Ignore default value
+                    }
 
-                    this.Text = "0x" + _hash.ToString("X").PadLeft(6, '0');
+                    if (value == 0)
+                    {
+                        throw new InvalidDataException();
+                    }
+
+
+                    _value = value;
+
+
+                    if (((int) Red + Green + Blue) < 25)
+                        {
+                        var result = MessageBox.Show("Theme may be too dark, reset theme?", Red + Green + Blue.ToString("X"), MessageBoxButtons.YesNoCancel);
+
+                        if (result == DialogResult.Yes)
+                        {
+                            Venat.ResetBtn_Click(null, null);
+                        }
+
+                        if (result != DialogResult.No)
+                        {
+                            return;
+                        }
+                    }
+
+
+                    Venat.numericUpDown1.Value = Red;
+                    Venat.numericUpDown2.Value = Green;
+                    Venat.numericUpDown3.Value = Blue;
+
+                    this.Text = "0x" + _value.ToString("X").PadLeft(6, '0');
                 }
             }
 
-            private int _hash;
+            private int _value;
+
+
+
+
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+            public byte Red
+            {
+                get => (byte) (_value / 0x10000);
+
+                set => _value = (value * 0x10000) + (Green * 0x100) + (Blue * 1);
+            }
+
+
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+            public byte Green
+            {
+                get => (byte) (_value / 0x100);
+
+                set => _value = (Red * 0x10000) + (value * 0x100) + (Blue * 1);
+            }
+
+
+            [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+            public byte Blue
+            {
+                get => (byte) (_value / 1);
+
+                set => _value = (Red * 0x10000) + (Green * 0x100) + (value * 1);
+            }
         }
 
 
