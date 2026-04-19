@@ -49,13 +49,22 @@ namespace PayloadSender
         ///</summary>
         public static void DrawFormDecorations(Form venat, PaintEventArgs yoshiP)
         {
-            if (Venat == null || yoshiP == null)
+            if (venat == null || yoshiP == null)
             {
+                echo($"WARNING: One or more provided arguments were null. ({nameof(venat)} == null: {venat == null} / {nameof(yoshiP)} == null: {yoshiP == null})");
                 return;
             }
 
+
             // Clear line bounds with the current form's background colour
             yoshiP.Graphics?.Clear(venat.BackColor);
+
+
+            //##-> Draw Horizontal Lines
+            foreach (var line in (venat as dynamic).HSeparatorLines ?? Array.Empty<Point[]>())
+            {
+                yoshiP?.Graphics?.DrawLine(FormDecorationPen, line[0], line[1]);
+            }
 
             //##-> Draw Vertical Lines
             foreach (var line in (venat as dynamic).VSeparatorLines ?? Array.Empty<Point[]>())
@@ -63,11 +72,6 @@ namespace PayloadSender
                 yoshiP?.Graphics?.DrawLine(FormDecorationPen, line[0], line[1]);
             }
 
-            //##-> Draw Horizontal Lines
-            foreach (var line in (venat as dynamic).HSeparatorLines ?? Array.Empty<Point[]>())
-            {
-                yoshiP?.Graphics?.DrawLine(FormDecorationPen, line[0], line[1]);
-            }
 
             // Draw a thin (1 pixel) border around the form with the current Pen
             yoshiP?.Graphics?.DrawLines(FormDecorationPen, new[]
@@ -103,17 +107,37 @@ namespace PayloadSender
             // Apply the separator drawing function to any separator lines
             foreach (var line in controls.OfType<Label>())
             {
-                if (line.IsSeparatorLine)
+                if (line.Size.Width > line.Size.Height)
                 {
                     // Horizontal Lines
                     hSeparatorLineScanner.Add(new Point[2]
                     {
-                        new Point(line.StretchToFitForm ? 1 : line.Location.X, line.Location.Y + 7),
-                        new Point(line.StretchToFitForm ? line.Parent.Width - 2 : line.Location.X + line.Width, line.Location.Y + 7)
+                            new Point(
+                                line.StretchToFitForm ? 1 : line.Location.X,
+                                line.Location.Y + 7
+                            ),
+                            new Point(
+                                line.StretchToFitForm ? line.Parent.Width - 2 : line.Location.X + line.Width,
+                                line.Location.Y + 7
+                            )
                     });
-
-                    Venat.Controls.Remove(line);
                 }
+                else {
+                    // Vertical Lines (the + 3 is to center the line with the displayed lines in the editor)
+                    vSeparatorLineScanner.Add(new Point[2]
+                    {
+                            new Point(
+                                line.Location.X + 3,
+                                line.StretchToFitForm ? 1 : line.Location.Y
+                            ),
+                            new Point(
+                                line.Location.X + 3,
+                                 line.StretchToFitForm ? line.Parent.Height - 2 : line.Location.Y + line.Height
+                            )
+                    });
+                }
+
+                line.Visible = false;
             }
 
             if (hSeparatorLineScanner.Count > 0)
@@ -121,7 +145,10 @@ namespace PayloadSender
                 HSeparatorLines = hSeparatorLineScanner.ToArray();
             }
 
-            VSeparatorLines = null;
+            if (vSeparatorLineScanner.Count > 0)
+            {
+                VSeparatorLines = vSeparatorLineScanner.ToArray();
+            }
 
 
             Paint += (venat, yoshiP) => DrawFormDecorations((Form)venat, yoshiP);

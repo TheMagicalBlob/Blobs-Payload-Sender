@@ -14,7 +14,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.25.19"
+        internal const string version = "2.33.28"
         ;
 
         public Payload_Sender()
@@ -63,6 +63,8 @@ namespace PayloadSender
             {
                 MessageBox.Show(fuck.Message, "An error occured when loading the settings. See exception message below");
             }
+
+            RebootBtn.Visible = false;
 #endif
         }
 
@@ -94,8 +96,8 @@ namespace PayloadSender
         /// </summary>
         private bool ThemePanelOpen;
 
-        public static bool MouseIsDown, MouseScrolled;
-        public static Point LastPos, MouseDif;
+        public static bool MouseIsDown;
+        public static Point MouseDif;
         #endregion
 
 
@@ -383,6 +385,20 @@ namespace PayloadSender
 
 
 
+
+        private void RebootBtn_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            Settings?.Save();
+            Close();
+#endif
+        }
+
+
+
+
+
+
         /// <summary>
         /// Handle Form Dragging for Borderless Form.
         /// </summary>
@@ -437,41 +453,17 @@ namespace PayloadSender
             ChangeControlColours(ThemeBox.Value = 0xFF00FF);
         }
 
-
-
-
-        private void RebootBtn_Click(object sender, EventArgs e)
-        {
-            Settings?.Save();
-            Close();
-        }
-
         private void ThemeBoxApplyBtn_Click(object sender, EventArgs e)
         {
-            if (ThemeBox.Text.Length < 2)
+            ThemeBox.Text = ThemeBox.Text.ToLower().Replace("0x", string.Empty).Replace("x", string.Empty);
+
+            if (int.TryParse(ThemeBox.Text, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.CurrentCulture, out int @int))
             {
-                Console.WriteLine($"ThemeBox text too short; re-assigning");
-                ThemeBox.Text = "0x" + ThemeBox.Value.ToString("X").PadLeft(6, '0');
-                return;
+                ThemeBox.Value = @int;
             }
-            else if (!ThemeBox.Text.StartsWith("0x"))
-            {
-                ThemeBox.Text = "0x" + ThemeBox.Text;
-            }
-
-
-
-
-            if (ThemeBox.Text.Length > 2)
-            {
-                if (int.TryParse(ThemeBox.Text.Substring(2), System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.CurrentCulture, out int @int))
-                {
-                    ThemeBox.Value = @int;
-                }
-                else {
-                    MessageBox.Show("Unable to parse new RGB hash; Please provide a 3-byte hexadecimal value (eg: 0xFE16A0)");
-                    ResetBtn_Click(null, null);
-                }
+            else {
+                MessageBox.Show("Unable to parse new RGB hash; Please provide a 3-byte hexadecimal value (eg: 0xFE16A0)", "Three hexadecimal-formatted bytes expected.");
+                ResetBtn_Click(null, null);
             }
 
             ChangeControlColours(ThemeBox.Value);
@@ -482,7 +474,7 @@ namespace PayloadSender
         {
             ThemeBox.Red   = (byte) numericUpDown1.Value;
             ThemeBox.Green = (byte) numericUpDown2.Value;
-            ThemeBox.Blue = (byte) numericUpDown3.Value;
+            ThemeBox.Blue  = (byte) numericUpDown3.Value;
 
             ThemeBox.Text = "0x" + ThemeBox.Value.ToString("X").PadLeft(6, '0');
 
@@ -641,6 +633,21 @@ namespace PayloadSender
             }
 
             private int _value;
+
+
+
+
+            /// <summary>
+            /// //! Unimplemented override
+            /// </summary>
+            new public string Text
+            {
+                get => base.Text;
+
+                set {
+                    base.Text = value;
+                }
+            }
 
 
 
