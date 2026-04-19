@@ -14,7 +14,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.33.28"
+        internal const string version = "2.34.33"
         ;
 
         public Payload_Sender()
@@ -39,6 +39,8 @@ namespace PayloadSender
             //##-> Initialize thread used to send payloads
             CTSendPayload = new Thread(Connect);
 
+            getIPBoxValue = () => IPBox.Text;
+            getPortBoxValue = () => PortBox.Text;
 
 
 
@@ -86,6 +88,11 @@ namespace PayloadSender
         private static Settings Settings;
 
         private readonly Thread CTSendPayload;
+
+
+        private delegate object CTControlProbe();
+
+        private CTControlProbe getIPBoxValue, getPortBoxValue;
 
         private bool ReadyToConnect;
 
@@ -174,9 +181,11 @@ namespace PayloadSender
 
 
 
-
-
-
+        /// <summary>
+        /// //!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BrowseButton_Click(object sender, EventArgs e)
         {
             var fileDialogue = new OpenFileDialog
@@ -194,28 +203,65 @@ namespace PayloadSender
 
 
 
+
+
+        /// <summary>
+        /// //!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            if (ReadyToConnect)
+            {
+                return;
+            }
+
+            if (CTSendPayload.ThreadState == System.Threading.ThreadState.Unstarted)
+            {
+                CTSendPayload.Start();
+            }
+            else
+            {
+                ReadyToConnect = true;
+            }
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// //!
+        /// </summary>
         private void Connect()
         {
+            DialogResult response;
+            Socket payloadSocket;
+
             while (true)
             {
-                while (!ReadyToConnect);
+                while (!ReadyToConnect) Thread.Sleep(12);
 
                 try {
                     ReadyToConnect = false;
 
-                    var payloadSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    payloadSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
                     payloadSocket.Connect
                     (
-                        new IPEndPoint(IPAddress.Parse(IPBox.Text),
-                        Convert.ToInt32(PortBox.Text))
+                        new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()),
+                        Convert.ToInt32(getPortBoxValue()))
                     );
 
                     payloadSocket.SendFile(PayloadPath.Replace("\"", string.Empty));
                     payloadSocket.Close();
 
 
-                    if (MessageBox.Show("Payload: " + PayloadPath, "Injected Without Issue :) - Press Ok To Continue | Cancel To Exit", MessageBoxButtons.OKCancel) == DialogResult.Cancel)
+                    response = MessageBox.Show("Payload: " + PayloadPath, "Payload Sent", MessageBoxButtons.YesNo);
+
+                    if (response == DialogResult.Yes)
                     {
                         exit();
                     }
@@ -234,25 +280,13 @@ namespace PayloadSender
 
 
 
-        private void SendButton_Click(object sender, EventArgs e)
-        {
-            if (ReadyToConnect)
-            {
-                return;
-            }
-
-            if (CTSendPayload.ThreadState == System.Threading.ThreadState.Unstarted)
-            {
-                CTSendPayload.Start();
-            }
-            else {
-                ReadyToConnect = true;
-            }
-        }
 
 
-
-
+        /// <summary>
+        /// //!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PayloadPathBox_TextChanged(object sender, EventArgs e)
         {
             var payloadPathBox = sender as TextBox;
