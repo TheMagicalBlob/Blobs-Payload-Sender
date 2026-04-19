@@ -15,7 +15,6 @@ namespace PayloadSender
         //==========================================================\\
         #region [Global Look/Feel-Related Variable Declarations]
 
-
         public static Color AppColour = Color.FromArgb(20, 20, 20);
         public static Color AppColourLight = Color.FromArgb(42, 42, 42);
         public static Color AppColourSpecial = Color.FromArgb(125, 183, 245);
@@ -34,6 +33,9 @@ namespace PayloadSender
 
         /// <summary> An array of Point() arrays with the start and end points of a line to draw. </summary>
         private Point[][] VSeparatorLines;
+
+
+        private Button HoveredControl;
         #endregion
 
 
@@ -104,7 +106,10 @@ namespace PayloadSender
             var hSeparatorLineScanner = new List<Point[]>();
             var vSeparatorLineScanner = new List<Point[]>();
 
-            // Apply the separator drawing function to any separator lines
+
+
+
+            //##-> Scan the form for all separator lines, and save them to the line scanner lists
             foreach (var line in controls.OfType<Label>())
             {
                 if (line.Size.Width > line.Size.Height)
@@ -112,34 +117,37 @@ namespace PayloadSender
                     // Horizontal Lines
                     hSeparatorLineScanner.Add(new Point[2]
                     {
-                            new Point(
-                                line.StretchToFitForm ? 1 : line.Location.X,
-                                line.Location.Y + 7
-                            ),
-                            new Point(
-                                line.StretchToFitForm ? line.Parent.Width - 2 : line.Location.X + line.Width,
-                                line.Location.Y + 7
-                            )
+                        new Point(
+                            line.StretchToFitForm ? 1 : line.Location.X,
+                            line.Location.Y + 7
+                        ),
+                        new Point(
+                            line.StretchToFitForm ? line.Parent.Width - 2 : line.Location.X + line.Width,
+                            line.Location.Y + 7
+                        )
                     });
                 }
                 else {
                     // Vertical Lines (the + 3 is to center the line with the displayed lines in the editor)
                     vSeparatorLineScanner.Add(new Point[2]
                     {
-                            new Point(
-                                line.Location.X + 3,
-                                line.StretchToFitForm ? 1 : line.Location.Y
-                            ),
-                            new Point(
-                                line.Location.X + 3,
-                                 line.StretchToFitForm ? line.Parent.Height - 2 : line.Location.Y + line.Height
-                            )
+                        new Point(
+                            line.Location.X + 3,
+                            line.StretchToFitForm ? 1 : line.Location.Y
+                        ),
+                        new Point(
+                            line.Location.X + 3,
+                                line.StretchToFitForm ? line.Parent.Height - 2 : line.Location.Y + line.Height
+                        )
                     });
                 }
 
                 line.Visible = false;
             }
 
+
+
+            //##-> Save the lines in from the line scanner list to the SeparatorLine arrays for actual drawing
             if (hSeparatorLineScanner.Count > 0)
             {
                 HSeparatorLines = hSeparatorLineScanner.ToArray();
@@ -151,9 +159,52 @@ namespace PayloadSender
             }
 
 
-            Paint += (venat, yoshiP) => DrawFormDecorations((Form)venat, yoshiP);
+
+            // Subscribe this main form to the decoration drawing event
+            Paint += (venat, yoshiP) => DrawFormDecorations((Form) venat, yoshiP);
         }
 
+
+
+
+        private void RemoveHighlight(Button control)
+        {
+            control.BackColor = Color.FromArgb(control.BackColor.ToArgb() - 0x00121212);
+        }
+
+        private void HighlightControlOnHover(Button control)
+        {
+            if (control == null)
+            {
+                echo($"Null control provided for highlight");
+                throw new InvalidOperationException();
+            }
+
+            var backColour = control.BackColor.ToArgb();
+
+
+            // Make sure there are no lingering highlights
+            if (HoveredControl != null)
+            {
+                HoveredControl.BackColor = Color.FromArgb(HoveredControl.BackColor.ToArgb() - 0x00121212);
+            }
+
+            HoveredControl = control;
+
+
+
+
+            if (backColour + 0x00121212 < backColour)
+            {
+                Settings.Reset();
+                Settings.Save();
+
+                throw new Exception("Are you using a fucking light theme? Fuck off.");
+                Environment.Exit(1);
+            }
+            
+            control.BackColor = Color.FromArgb(backColour + 0x00121212);
+        }
         #endregion
     }
 }

@@ -12,7 +12,7 @@ namespace Blobs_Payload_Sender.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "18.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "18.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("        Enter IP")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string SAVED_IP {
             get {
                 return ((string)(this["SAVED_IP"]));
@@ -37,7 +37,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("65280")]
+        [global::System.Configuration.DefaultSettingValueAttribute("15864420")]
         public int SAVED_THEME {
             get {
                 return ((int)(this["SAVED_THEME"]));
@@ -49,7 +49,7 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("        (Payload Path Here)")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string SAVED_PATH {
             get {
                 return ((string)(this["SAVED_PATH"]));
@@ -61,73 +61,13 @@ namespace Blobs_Payload_Sender.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("NO_PATH")]
-        public string SAVED_P1 {
-            get {
-                return ((string)(this["SAVED_P1"]));
-            }
-            set {
-                this["SAVED_P1"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool IsFirstBoot {
-            get {
-                return ((bool)(this["IsFirstBoot"]));
-            }
-            set {
-                this["IsFirstBoot"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9020")]
+        [global::System.Configuration.DefaultSettingValueAttribute("9021")]
         public int SAVED_PORT {
             get {
                 return ((int)(this["SAVED_PORT"]));
             }
             set {
                 this["SAVED_PORT"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
-        public string SAVED_P2 {
-            get {
-                return ((string)(this["SAVED_P2"]));
-            }
-            set {
-                this["SAVED_P2"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("WHYAREYOUREADINGTHECONFIGkek")]
-        public string SAVED_P3 {
-            get {
-                return ((string)(this["SAVED_P3"]));
-            }
-            set {
-                this["SAVED_P3"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("TEMP")]
-        public string SAVED_P4 {
-            get {
-                return ((string)(this["SAVED_P4"]));
-            }
-            set {
-                this["SAVED_P4"] = value;
             }
         }
     }

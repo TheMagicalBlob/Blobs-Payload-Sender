@@ -3,6 +3,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -14,7 +15,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.34.33"
+        internal const string version = "2.39.42"
         ;
 
         public Payload_Sender()
@@ -22,6 +23,7 @@ namespace PayloadSender
             //##-> Initialize form and form references
             Venat = this;
             Settings = new Settings();
+            HoveredControl = null;
 
             InitializeComponent();
             InitializeAdditionalEventHandlers(Venat);
@@ -51,14 +53,6 @@ namespace PayloadSender
             //##-> Handle Saved Settings
             LoadSavedSettings();
 
-
-            if (Settings.IsFirstBoot)
-            {
-                MessageBox.Show("READ ME\n\n- Right-Click The \"Saved\" Button To Choose A New Payload To Save.\n- Clicking The \"Port\" Label Switches The Port Between 9090/9020/9021", "First-Time Message - This Won't Show Again After This");
-                
-                Settings.IsFirstBoot = false;
-                Settings.Save();
-            }
 #if !DEBUG
             }
             catch (Exception fuck)
@@ -67,6 +61,7 @@ namespace PayloadSender
             }
 
             RebootBtn.Visible = false;
+            ResetSettingsBtn.Visible = false;
 #endif
         }
 
@@ -133,8 +128,6 @@ namespace PayloadSender
         /// <param name="colour"></param>
         private void ChangeControlColours(int colour)
         {
-            Console.WriteLine($"New RGB Colour: 0x{colour.ToString("X").PadLeft(6, '0')}");
-
             ThemeBox.Value = colour;
 
             var c = Color.FromArgb(0xFF, ThemeBox.Red, ThemeBox.Green, ThemeBox.Blue);
@@ -290,11 +283,20 @@ namespace PayloadSender
         private void PayloadPathBox_TextChanged(object sender, EventArgs e)
         {
             var payloadPathBox = sender as TextBox;
+            var path = payloadPathBox.Text;
 
-            Settings.SAVED_PATH = payloadPathBox.Text;
-            PayloadPath = payloadPathBox.Text;
 
-            payloadPathBox.SelectionStart = payloadPathBox.Text.Length;
+            // Avoid saving invalid paths, unless there's no valid one saved anyway
+            if ((Directory.Exists(path) || (Settings.SAVED_PATH?.Any() ?? false)) && Directory.Exists(Settings.SAVED_PATH))
+            {
+                Settings.SAVED_PATH = path;
+            }
+
+            PayloadPath = path;
+
+
+            // Move the caret to the right of the text box, to show the file name consistently.
+            payloadPathBox.SelectionStart = path.Length;
             payloadPathBox.ScrollToCaret();
         }
 
@@ -390,20 +392,19 @@ namespace PayloadSender
 
 
 
+            MinimizeBtn.Click += new EventHandler((sender, e) => Venat.WindowState = FormWindowState.Minimized);
+
             // TODO:
             // - Add an updated mouse enter/leave highlight function
-            MinimizeBtn.Click += new EventHandler((sender, e) => Venat.WindowState = FormWindowState.Minimized);
             //MinimizeBtn.MouseEnter += new EventHandler((sender, e) => ((Control)sender).ForeColor = Color.FromArgb(90, 100, 255));
             //MinimizeBtn.MouseLeave += new EventHandler((sender, e) => ((Control)sender).ForeColor = Color.FromArgb(0, 0, 0));
 
 
-            ExitBtn.Click += new EventHandler((sender, e) =>
-            {
-                Settings.Save();
-                Environment.Exit(0);
-            });
+            ExitBtn.Click += new EventHandler((sender, e) => exit());
             //ExitBtn.MouseEnter += new EventHandler((sender, e) => ((Control)sender).ForeColor = Color.FromArgb(230, 100, 100));
             //ExitBtn.MouseLeave += new EventHandler((sender, e) => ((Control)sender).ForeColor = Color.FromArgb(0, 0, 0));
+
+
 
 
             // Set Event Handlers for Form Dragging
@@ -412,20 +413,6 @@ namespace PayloadSender
             MouseUp += new MouseEventHandler(MouseUpFunc);
 
             MouseMove += new MouseEventHandler((sender, e) => MoveForm());
-        }
-
-
-
-
-
-
-
-        private void RebootBtn_Click(object sender, EventArgs e)
-        {
-#if DEBUG
-            Settings?.Save();
-            Close();
-#endif
         }
 
 
@@ -448,8 +435,6 @@ namespace PayloadSender
 
 
 
-
-
         /// <summary>
         /// //!
         /// </summary>
@@ -459,8 +444,6 @@ namespace PayloadSender
         {
             MouseIsDown = false;
         }
-
-
 
 
 
@@ -478,7 +461,37 @@ namespace PayloadSender
                 MouseIsDown = true;
             }
         }
+        #endregion
 
+
+
+
+
+
+
+
+        //#
+        //## Event Handler Declarations
+        //#
+        #region [Event Handler Declarations]
+
+        private void RebootBtn_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            Settings?.Save();
+            Close();
+#endif
+        }
+
+
+
+        private void ResetSettingsBtn_Click(object sender, EventArgs e)
+        {
+#if DEBUG
+            Settings?.Reset();
+            Settings?.Save();
+#endif
+        }
 
 
 
@@ -487,33 +500,51 @@ namespace PayloadSender
             ChangeControlColours(ThemeBox.Value = 0xFF00FF);
         }
 
+
+
         private void ThemeBoxApplyBtn_Click(object sender, EventArgs e)
         {
-            ThemeBox.Text = ThemeBox.Text.ToLower().Replace("0x", string.Empty).Replace("x", string.Empty);
+            NumberStyles style;
+            var text = ThemeBox.Text.ToLower();
 
-            if (int.TryParse(ThemeBox.Text, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.CurrentCulture, out int @int))
+            // Determine the format of the provided hash
+            if (text.StartsWith("0x") || text[0] == 'x')
+            {
+                style = NumberStyles.HexNumber;
+                text = text.Replace("0x", string.Empty).Replace("x", string.Empty); // Fix the text box for hex parsing
+            }
+            else {
+                style = NumberStyles.Integer;
+            }
+
+
+            // Parse the theme box text for the new colour hash
+            if (int.TryParse(text, style, CultureInfo.CurrentCulture, out int @int))
             {
                 ThemeBox.Value = @int;
             }
             else {
-                MessageBox.Show("Unable to parse new RGB hash; Please provide a 3-byte hexadecimal value (eg: 0xFE16A0)", "Three hexadecimal-formatted bytes expected.");
+                MessageBox.Show("Unable to parse new RGB hash; Please provide either a 3-byte hexadecimal value (eg: 0xFE16A0), or an regular integer", "Three hexadecimal-formatted bytes or decimal integer expected.");
                 ResetBtn_Click(null, null);
             }
 
+
+            // Apply the new colour hash
             ChangeControlColours(ThemeBox.Value);
         }
 
 
         private void ArrowBoxesApplyBtn_Click(object sender, EventArgs e)
         {
-            ThemeBox.Red   = (byte) numericUpDown1.Value;
-            ThemeBox.Green = (byte) numericUpDown2.Value;
-            ThemeBox.Blue  = (byte) numericUpDown3.Value;
+            ThemeBox.Red = (byte)numericUpDown1.Value;
+            ThemeBox.Green = (byte)numericUpDown2.Value;
+            ThemeBox.Blue = (byte)numericUpDown3.Value;
 
             ThemeBox.Text = "0x" + ThemeBox.Value.ToString("X").PadLeft(6, '0');
 
             ChangeControlColours(ThemeBox.Value);
         }
+
         #endregion
 
 
@@ -630,29 +661,27 @@ namespace PayloadSender
                 set {
                     if (value < 0)
                     {
-                        return; // Ignore default value
-                    }
-
-                    if (value == 0)
-                    {
                         throw new InvalidDataException();
+                        exit();
                     }
-
-
+                    
                     _value = value;
 
 
-                    if (((int) Red + Green + Blue) < 25)
-                        {
-                        var result = MessageBox.Show("Theme may be too dark, reset theme?", Red + Green + Blue.ToString("X"), MessageBoxButtons.YesNoCancel);
+
+
+                    //##-> Offer a reset if the theme is likely to make the form unreadable
+                    int chk = Red; //#
+                    chk += Green;  //## Lazily making sure it's not adding them as bytes. Just-in-case it's underflowing, since it was being weird a while ago
+                    chk += Blue;   //#
+
+                    if (chk < 25) 
+                    {
+                        var result = MessageBox.Show("Theme may be too dark, reset theme?", Red + Green + Blue.ToString("X"), MessageBoxButtons.YesNo);
 
                         if (result == DialogResult.Yes)
                         {
                             Venat.ResetBtn_Click(null, null);
-                        }
-
-                        if (result != DialogResult.No)
-                        {
                             return;
                         }
                     }
@@ -689,29 +718,31 @@ namespace PayloadSender
             [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public byte Red
             {
-                get => (byte) (_value / 0x10000);
+                get => (byte) (_value / 0x010000);
 
-                set => _value = (value * 0x10000) + (Green * 0x100) + (Blue * 1);
+                set => _value = (value * 0x010000) + (Green * 0x000100) + (Blue * 0x000001);
             }
 
 
             [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public byte Green
             {
-                get => (byte) (_value / 0x100);
+                get => (byte) (_value / 0x000100);
 
-                set => _value = (Red * 0x10000) + (value * 0x100) + (Blue * 1);
+                set => _value = (Red * 0x010000) + (value * 0x000100) + (Blue * 0x000001);
             }
 
 
             [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
             public byte Blue
             {
-                get => (byte) (_value / 1);
+                get => (byte) (_value / 0x000001);
 
-                set => _value = (Red * 0x10000) + (Green * 0x100) + (value * 1);
+                set => _value = (Red * 0x010000) + (Green * 0x000100) + (value * 0x000001);
             }
         }
+
+
 
 
 

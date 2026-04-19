@@ -3,31 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="SAVED_IP" Type="System.String" Scope="User">
-      <Value Profile="(Default)">        Enter IP</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SAVED_THEME" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">65280</Value>
+      <Value Profile="(Default)">15864420</Value>
     </Setting>
     <Setting Name="SAVED_PATH" Type="System.String" Scope="User">
-      <Value Profile="(Default)">        (Payload Path Here)</Value>
-    </Setting>
-    <Setting Name="SAVED_P1" Type="System.String" Scope="User">
-      <Value Profile="(Default)">NO_PATH</Value>
-    </Setting>
-    <Setting Name="IsFirstBoot" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="SAVED_PORT" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">9020</Value>
-    </Setting>
-    <Setting Name="SAVED_P2" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TEMP</Value>
-    </Setting>
-    <Setting Name="SAVED_P3" Type="System.String" Scope="User">
-      <Value Profile="(Default)">WHYAREYOUREADINGTHECONFIGkek</Value>
-    </Setting>
-    <Setting Name="SAVED_P4" Type="System.String" Scope="User">
-      <Value Profile="(Default)">TEMP</Value>
+      <Value Profile="(Default)">9021</Value>
     </Setting>
   </Settings>
 </SettingsFile>
