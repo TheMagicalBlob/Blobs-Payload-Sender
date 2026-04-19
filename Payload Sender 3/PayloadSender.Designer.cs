@@ -439,19 +439,21 @@ namespace PayloadSender
             // sendElfdrCheckBx
             // 
             this.sendElfdrCheckBx.AutoSize = true;
-            this.sendElfdrCheckBx.Location = new System.Drawing.Point(254, 83);
+            this.sendElfdrCheckBx.Location = new System.Drawing.Point(283, 86);
             this.sendElfdrCheckBx.Name = "sendElfdrCheckBx";
+            this.sendElfdrCheckBx.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.sendElfdrCheckBx.Size = new System.Drawing.Size(97, 17);
             this.sendElfdrCheckBx.TabIndex = 43;
             this.sendElfdrCheckBx.Text = "Send Elfdr First";
             this.sendElfdrCheckBx.UseVisualStyleBackColor = true;
+            this.sendElfdrCheckBx.CheckedChanged += new System.EventHandler(this.sendElfdrCheckBx_CheckedChanged);
             // 
             // PS5Btn
             // 
             this.PS5Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PS5Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
             this.PS5Btn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PS5Btn.Location = new System.Drawing.Point(271, 57);
+            this.PS5Btn.Location = new System.Drawing.Point(326, 62);
             this.PS5Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PS5Btn.Name = "PS5Btn";
             this.PS5Btn.Size = new System.Drawing.Size(37, 22);
@@ -465,7 +467,7 @@ namespace PayloadSender
             this.PS4Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PS4Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
             this.PS4Btn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PS4Btn.Location = new System.Drawing.Point(310, 57);
+            this.PS4Btn.Location = new System.Drawing.Point(286, 62);
             this.PS4Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PS4Btn.Name = "PS4Btn";
             this.PS4Btn.Size = new System.Drawing.Size(37, 22);
@@ -479,7 +481,7 @@ namespace PayloadSender
             this.elfElfdrBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.elfElfdrBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
             this.elfElfdrBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.elfElfdrBtn.Location = new System.Drawing.Point(350, 48);
+            this.elfElfdrBtn.Location = new System.Drawing.Point(253, 52);
             this.elfElfdrBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.elfElfdrBtn.Name = "elfElfdrBtn";
             this.elfElfdrBtn.Size = new System.Drawing.Size(30, 20);
@@ -493,7 +495,7 @@ namespace PayloadSender
             this.binElfdrBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.binElfdrBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
             this.binElfdrBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.binElfdrBtn.Location = new System.Drawing.Point(350, 70);
+            this.binElfdrBtn.Location = new System.Drawing.Point(253, 75);
             this.binElfdrBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.binElfdrBtn.Name = "binElfdrBtn";
             this.binElfdrBtn.Size = new System.Drawing.Size(30, 20);

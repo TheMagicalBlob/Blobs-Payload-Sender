@@ -15,7 +15,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.44.47"
+        internal const string version = "2.45.47"
         ;
 
         public Payload_Sender()
@@ -855,8 +855,10 @@ namespace PayloadSender
             }
         }
 
+        private void sendElfdrCheckBx_CheckedChanged(object sender, EventArgs e)
+        {
 
-
+        }
 
         public class Label : System.Windows.Forms.Label
         {
