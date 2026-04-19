@@ -2,17 +2,23 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Blobs_Payload_Sender.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="SAVED_IP" Type="System.String" Scope="User">
+    <Setting Name="IPAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SAVED_THEME" Type="System.Int32" Scope="User">
+    <Setting Name="Theme" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">15864420</Value>
     </Setting>
-    <Setting Name="SAVED_PATH" Type="System.String" Scope="User">
+    <Setting Name="PayloadPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="SAVED_PORT" Type="System.Int32" Scope="User">
+    <Setting Name="Port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9021</Value>
+    </Setting>
+    <Setting Name="Prospero" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ElfLoader" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

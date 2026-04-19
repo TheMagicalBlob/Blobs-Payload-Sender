@@ -15,7 +15,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.39.42"
+        internal const string version = "2.44.47"
         ;
 
         public Payload_Sender()
@@ -45,6 +45,12 @@ namespace PayloadSender
             getPortBoxValue = () => PortBox.Text;
 
 
+            //##-> Miscellaneous other form setup crap
+#if !DEBUG
+            RebootBtn.Visible = false;
+            ResetSettingsBtn.Visible = false;
+#endif
+
 
 #if !DEBUG
             try {
@@ -60,8 +66,6 @@ namespace PayloadSender
                 MessageBox.Show(fuck.Message, "An error occured when loading the settings. See exception message below");
             }
 
-            RebootBtn.Visible = false;
-            ResetSettingsBtn.Visible = false;
 #endif
         }
 
@@ -137,7 +141,7 @@ namespace PayloadSender
                 control.ForeColor = c;
             }
 
-            Settings.SAVED_THEME = colour;
+            Settings.Theme = colour;
             Settings.Save();
         }
 
@@ -151,22 +155,26 @@ namespace PayloadSender
         /// </summary>
         private void LoadSavedSettings()
         {
-            IPBox.Text = Settings.SAVED_IP;
+            IPBox.Text = Settings.IPAddress;
 
-            PortBox.Text = Convert.ToString(Settings.SAVED_PORT);
+            PortBox.Text = Convert.ToString(Settings.Port);
 
-            PayloadPathBox.Text = Settings.SAVED_PATH;
+            PayloadPathBox.Text = Settings.PayloadPath;
             PayloadPathBox.SelectionStart = PayloadPathBox.Text.Length;
             PayloadPathBox.ScrollToCaret();
 
-            PayloadPath = Settings.SAVED_PATH;
-
+            PayloadPath = Settings.PayloadPath;
 
 
             // Apply saved theme forecolour
-            ThemeBox.Value = Settings.SAVED_THEME;
+            ThemeBox.Value = Settings.Theme;
 
             ChangeControlColours(ThemeBox.Value);
+
+
+            // Set platform the buttons' states
+            TogglePlatformButtons(false);
+            ToggleBinOrElfButtons(false);
         }
 
 
@@ -189,7 +197,7 @@ namespace PayloadSender
 
             if (fileDialogue.ShowDialog() == DialogResult.OK)
             {
-                Settings.SAVED_PATH = PayloadPathBox.Text = fileDialogue.FileName;
+                Settings.PayloadPath = PayloadPathBox.Text = fileDialogue.FileName;
             }
         }
 
@@ -248,6 +256,26 @@ namespace PayloadSender
                         Convert.ToInt32(getPortBoxValue()))
                     );
 
+                    if (sendElfdrCheckBx.Checked)
+                    {
+                        throw new NotImplementedException("elfdr payload sending not implemented.");
+
+                        if (Settings.Prospero)
+                        {
+                            payloadSocket.SendFile(PayloadPath.Replace("\"", string.Empty));
+                        }
+                        else {
+                            if (Settings.ElfLoader)
+                            {
+                                payloadSocket.SendFile(string.Empty);
+                            }
+                            else {
+                                payloadSocket.SendFile(string.Empty);
+                            }
+                        }
+                    }
+
+
                     payloadSocket.SendFile(PayloadPath.Replace("\"", string.Empty));
                     payloadSocket.Close();
 
@@ -287,9 +315,9 @@ namespace PayloadSender
 
 
             // Avoid saving invalid paths, unless there's no valid one saved anyway
-            if ((Directory.Exists(path) || (Settings.SAVED_PATH?.Any() ?? false)) && Directory.Exists(Settings.SAVED_PATH))
+            if ((Directory.Exists(path) || (Settings.PayloadPath?.Any() ?? false)) && Directory.Exists(Settings.PayloadPath))
             {
-                Settings.SAVED_PATH = path;
+                Settings.PayloadPath = path;
             }
 
             PayloadPath = path;
@@ -310,12 +338,12 @@ namespace PayloadSender
         {
             if (Int32.TryParse(PortBox.Text, out var ip))
             {
-                Settings.SAVED_PORT = ip;
+                Settings.Port = ip;
             }
         }
 
 
-        private void IPBox_TextChanged(object sender, EventArgs e) { Settings.SAVED_IP = IPBox.Text; }
+        private void IPBox_TextChanged(object sender, EventArgs e) { Settings.IPAddress = IPBox.Text; }
 
 
         private void MinimizeBtn_Click(object sender, EventArgs e)  { WindowState = FormWindowState.Minimized; Settings.Save(); }
@@ -461,6 +489,54 @@ namespace PayloadSender
                 MouseIsDown = true;
             }
         }
+
+
+        private void TogglePlatformButtons(bool toggle = true)
+        {
+            if (toggle)
+            {
+                Settings.Prospero ^= true;
+            }
+
+            if (Settings.Prospero)
+            {
+                PS5Btn.ForeColor = Color.FromArgb(Settings.Theme);
+
+                PS4Btn.ForeColor = Color.Gray;
+            }
+            else {
+                PS5Btn.ForeColor = Color.Gray;
+
+                PS4Btn.ForeColor = Color.FromArgb(Settings.Theme);
+            }
+
+
+            elfElfdrBtn.Enabled = !Settings.Prospero;
+            binElfdrBtn.Enabled = !Settings.Prospero;
+        }
+
+
+
+
+        private void ToggleBinOrElfButtons(bool toggle = true)
+        {
+            if (toggle)
+            {
+                Settings.ElfLoader ^= true;
+            }
+
+            if (Settings.ElfLoader)
+            {
+                elfElfdrBtn.ForeColor = Color.FromArgb(Settings.Theme);
+
+                binElfdrBtn.ForeColor = Color.Gray;
+            }
+            else {
+                elfElfdrBtn.ForeColor = Color.Gray;
+
+                binElfdrBtn.ForeColor = Color.FromArgb(Settings.Theme);
+            }
+        }
         #endregion
 
 
@@ -474,6 +550,44 @@ namespace PayloadSender
         //## Event Handler Declarations
         //#
         #region [Event Handler Declarations]
+
+        private void PS5Btn_Click(object sender, EventArgs e)
+        {
+            if (Settings.Prospero)
+            {
+                return;
+            }
+
+            TogglePlatformButtons();
+        }
+
+
+        private void PS4Btn_Click(object sender, EventArgs e)
+        {
+            if (Settings.Prospero)
+            {
+                TogglePlatformButtons();
+            }
+        }
+
+
+
+
+        private void binElfdrBtn_Click(object sender, EventArgs e)
+        {
+            ToggleBinOrElfButtons();
+        }
+
+
+
+
+        private void elfElfdrBtn_Click(object sender, EventArgs e)
+        {
+            ToggleBinOrElfButtons();
+        }
+
+
+
 
         private void RebootBtn_Click(object sender, EventArgs e)
         {
@@ -544,7 +658,6 @@ namespace PayloadSender
 
             ChangeControlColours(ThemeBox.Value);
         }
-
         #endregion
 
 
@@ -741,8 +854,6 @@ namespace PayloadSender
                 set => _value = (Red * 0x010000) + (Green * 0x000100) + (value * 0x000001);
             }
         }
-
-
 
 
 

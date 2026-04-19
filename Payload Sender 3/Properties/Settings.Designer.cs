@@ -26,48 +26,72 @@ namespace Blobs_Payload_Sender.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SAVED_IP {
+        public string IPAddress {
             get {
-                return ((string)(this["SAVED_IP"]));
+                return ((string)(this["IPAddress"]));
             }
             set {
-                this["SAVED_IP"] = value;
+                this["IPAddress"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("15864420")]
-        public int SAVED_THEME {
+        public int Theme {
             get {
-                return ((int)(this["SAVED_THEME"]));
+                return ((int)(this["Theme"]));
             }
             set {
-                this["SAVED_THEME"] = value;
+                this["Theme"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SAVED_PATH {
+        public string PayloadPath {
             get {
-                return ((string)(this["SAVED_PATH"]));
+                return ((string)(this["PayloadPath"]));
             }
             set {
-                this["SAVED_PATH"] = value;
+                this["PayloadPath"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("9021")]
-        public int SAVED_PORT {
+        public int Port {
             get {
-                return ((int)(this["SAVED_PORT"]));
+                return ((int)(this["Port"]));
             }
             set {
-                this["SAVED_PORT"] = value;
+                this["Port"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Prospero {
+            get {
+                return ((bool)(this["Prospero"]));
+            }
+            set {
+                this["Prospero"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool ElfLoader {
+            get {
+                return ((bool)(this["ElfLoader"]));
+            }
+            set {
+                this["ElfLoader"] = value;
             }
         }
     }
