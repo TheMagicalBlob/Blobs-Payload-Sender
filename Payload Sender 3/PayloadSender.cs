@@ -15,7 +15,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.45.47"
+        internal const string version = "2.50.52"
         ;
 
         public Payload_Sender()
@@ -218,12 +218,19 @@ namespace PayloadSender
                 return;
             }
 
+
+            if (!File.Exists(PayloadPath))
+            {
+                MessageBox.Show("Invalid payload path provided (File doesn't exist). Please update the path.\nPath: " + PayloadPath, $"Payload Path did not point to a valid file.");
+                return;
+            }
+
+
             if (CTSendPayload.ThreadState == System.Threading.ThreadState.Unstarted)
             {
                 CTSendPayload.Start();
             }
-            else
-            {
+            else {
                 ReadyToConnect = true;
             }
         }
@@ -240,6 +247,7 @@ namespace PayloadSender
         {
             DialogResult response;
             Socket payloadSocket;
+            int sent;
 
             while (true)
             {
@@ -256,26 +264,41 @@ namespace PayloadSender
                         Convert.ToInt32(getPortBoxValue()))
                     );
 
+
+
+                    // words
                     if (sendElfdrCheckBx.Checked)
                     {
-                        throw new NotImplementedException("elfdr payload sending not implemented.");
+                        byte[] payload;
 
                         if (Settings.Prospero)
                         {
-                            payloadSocket.SendFile(PayloadPath.Replace("\"", string.Empty));
+                            payload = Resources.elfldr_ps5_0_22_2;
                         }
                         else {
                             if (Settings.ElfLoader)
                             {
-                                payloadSocket.SendFile(string.Empty);
+                                payload = Resources.elfldr_ps4_0_6_elf;
                             }
                             else {
-                                payloadSocket.SendFile(string.Empty);
+                                payload = Resources.elfldr_ps4_0_6_bin;
                             }
+                        }
+
+                        sent = payloadSocket.Send(payload);
+
+                        if (sent < payload.Length)
+                        {
+                            MessageBox.Show($"");
+                        }
+                        else {
+                            Thread.Sleep(3300);
                         }
                     }
 
 
+
+                    // More words
                     payloadSocket.SendFile(PayloadPath.Replace("\"", string.Empty));
                     payloadSocket.Close();
 
@@ -315,7 +338,7 @@ namespace PayloadSender
 
 
             // Avoid saving invalid paths, unless there's no valid one saved anyway
-            if ((Directory.Exists(path) || (Settings.PayloadPath?.Any() ?? false)) && Directory.Exists(Settings.PayloadPath))
+            if ((File.Exists(path) || (Settings.PayloadPath?.Any() ?? false)) && File.Exists(Settings.PayloadPath))
             {
                 Settings.PayloadPath = path;
             }
@@ -511,8 +534,8 @@ namespace PayloadSender
             }
 
 
-            elfElfdrBtn.Enabled = !Settings.Prospero;
-            binElfdrBtn.Enabled = !Settings.Prospero;
+            elfElfdrBtn.Visible = !Settings.Prospero;
+            binElfdrBtn.Visible = !Settings.Prospero;
         }
 
 
@@ -611,7 +634,7 @@ namespace PayloadSender
 
         private void ResetBtn_Click(object sender, EventArgs e)
         {
-            ChangeControlColours(ThemeBox.Value = 0xFF00FF);
+            ChangeControlColours(0xF21264);
         }
 
 
@@ -856,6 +879,11 @@ namespace PayloadSender
         }
 
         private void sendElfdrCheckBx_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ThemeBox_TextChanged(object sender, EventArgs e)
         {
 
         }
