@@ -15,7 +15,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.52.58"
+        internal const string version = "2.52.59"
         ;
 
         public Payload_Sender()
@@ -54,11 +54,10 @@ namespace PayloadSender
 
             //##-> Miscellaneous other form setup crap
 #if !DEBUG
+            // Hide debug controls
             RebootBtn.Visible = false;
             ResetSettingsBtn.Visible = false;
 #endif
-
-
             // Load & apply saved control states/values
             LoadSavedSettings();
         }

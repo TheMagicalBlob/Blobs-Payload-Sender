@@ -523,12 +523,11 @@ namespace PayloadSender
             this.tempStatusLabel.BackColor = System.Drawing.Color.Transparent;
             this.tempStatusLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
             this.tempStatusLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.tempStatusLabel.Location = new System.Drawing.Point(264, 112);
+            this.tempStatusLabel.Location = new System.Drawing.Point(264, 117);
             this.tempStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tempStatusLabel.Name = "tempStatusLabel";
-            this.tempStatusLabel.Size = new System.Drawing.Size(120, 26);
+            this.tempStatusLabel.Size = new System.Drawing.Size(120, 24);
             this.tempStatusLabel.TabIndex = 49;
-            this.tempStatusLabel.Text = "Error\r\n(sent more than filesize?!)";
             // 
             // Payload_Sender
             // 
