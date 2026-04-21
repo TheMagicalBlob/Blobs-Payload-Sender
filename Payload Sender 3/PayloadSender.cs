@@ -15,7 +15,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.52.57"
+        internal const string version = "2.52.58"
         ;
 
         public Payload_Sender()
@@ -312,13 +312,13 @@ namespace PayloadSender
                     if (sent < 0)
                     {
                         throw new InvalidDataException($"Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}");
-                        editStatusLabel("Critical Error");
+                        editStatusLabel("Critical Error (??!!)");
                         return;
                     }
 
                     if (sent < payload.Length)
                     {
-                        editStatusLabel($"Error (not all data sent)");
+                        editStatusLabel($"Error\n(not all data was sent)");
                     }
                     else if (sent > payload.Length)
                     {
