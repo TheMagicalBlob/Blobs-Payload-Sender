@@ -15,7 +15,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.52.55"
+        internal const string version = "2.52.57"
         ;
 
         public Payload_Sender()
@@ -32,10 +32,14 @@ namespace PayloadSender
             BuildLabel.Text += version;
 
 
+
+
             //##-> Shrink the form to hide the theme editor controls
             ThemeHeightAdjustment = Height - (PayloadPathBox.Location.Y + PayloadPathBox.Height + 6); // Save the amount adjusted for later toggling of the editor's visibility
 
             Venat.Height -= ThemeHeightAdjustment;
+
+
 
 
             //##-> Initialize thread used to send payloads
@@ -46,6 +50,8 @@ namespace PayloadSender
             editStatusLabel = (msg) => tempStatusLabel.Text = msg?.ToString() ?? "null";
 
 
+
+
             //##-> Miscellaneous other form setup crap
 #if !DEBUG
             RebootBtn.Visible = false;
@@ -53,21 +59,8 @@ namespace PayloadSender
 #endif
 
 
-#if !DEBUG
-            try {
-#endif
-
-            //##-> Handle Saved Settings
+            // Load & apply saved control states/values
             LoadSavedSettings();
-
-#if !DEBUG
-            }
-            catch (Exception fuck)
-            {
-                MessageBox.Show(fuck.Message, "An error occured when loading the settings. See exception message below");
-            }
-
-#endif
         }
 
 
@@ -156,26 +149,36 @@ namespace PayloadSender
         /// </summary>
         private void LoadSavedSettings()
         {
-            IPBox.Text = Settings.IPAddress;
+#if !DEBUG
+            try {
+#endif
+                IPBox.Text = Settings.IPAddress;
 
-            PortBox.Text = Convert.ToString(Settings.Port);
+                PortBox.Text = Convert.ToString(Settings.Port);
 
-            PayloadPathBox.Text = Settings.PayloadPath;
-            PayloadPathBox.SelectionStart = PayloadPathBox.Text.Length;
-            PayloadPathBox.ScrollToCaret();
+                PayloadPathBox.Text = Settings.PayloadPath;
+                PayloadPathBox.SelectionStart = PayloadPathBox.Text.Length;
+                PayloadPathBox.ScrollToCaret();
 
-            PayloadPath = Settings.PayloadPath;
-
-
-            // Apply saved theme forecolour
-            ThemeBox.Value = Settings.Theme;
-
-            ChangeControlColours(ThemeBox.Value);
+                PayloadPath = Settings.PayloadPath;
 
 
-            // Set platform the buttons' states
-            TogglePlatformButtons(false);
-            ToggleBinOrElfButtons(false);
+                // Apply saved theme forecolour
+                ThemeBox.Value = Settings.Theme;
+
+                ChangeControlColours(ThemeBox.Value);
+
+
+                // Set platform the buttons' states
+                TogglePlatformButtons(false);
+                ToggleBinOrElfButtons(false);
+#if !DEBUG
+            }
+            catch (Exception fuck)
+            {
+                MessageBox.Show(fuck.Message, "An error occurred when loading the settings. See exception message below");
+            }
+#endif
         }
 
 
