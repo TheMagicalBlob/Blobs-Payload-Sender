@@ -15,7 +15,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form
     {
-        internal const string version = "2.50.52"
+        internal const string version = "2.52.55"
         ;
 
         public Payload_Sender()
@@ -41,8 +41,9 @@ namespace PayloadSender
             //##-> Initialize thread used to send payloads
             CTSendPayload = new Thread(Connect);
 
-            getIPBoxValue = () => IPBox.Text;
-            getPortBoxValue = () => PortBox.Text;
+            getIPBoxValue = (_) => IPBox.Text;
+            getPortBoxValue = (_) => PortBox.Text;
+            editStatusLabel = (msg) => tempStatusLabel.Text = msg?.ToString() ?? "null";
 
 
             //##-> Miscellaneous other form setup crap
@@ -89,9 +90,9 @@ namespace PayloadSender
         private readonly Thread CTSendPayload;
 
 
-        private delegate object CTControlProbe();
+        private delegate object CTControlProbe(object obj = null);
 
-        private CTControlProbe getIPBoxValue, getPortBoxValue;
+        private CTControlProbe getIPBoxValue, getPortBoxValue, editStatusLabel;
 
         private bool ReadyToConnect;
 
@@ -247,6 +248,7 @@ namespace PayloadSender
         {
             DialogResult response;
             Socket payloadSocket;
+            byte[] payload;
             int sent;
 
             while (true)
@@ -269,8 +271,6 @@ namespace PayloadSender
                     // words
                     if (sendElfdrCheckBx.Checked)
                     {
-                        byte[] payload;
-
                         if (Settings.Prospero)
                         {
                             payload = Resources.elfldr_ps5_0_22_2;
@@ -289,26 +289,41 @@ namespace PayloadSender
 
                         if (sent < payload.Length)
                         {
-                            MessageBox.Show($"");
+                            MessageBox.Show($"//!");
                         }
                         else {
                             Thread.Sleep(3300);
                         }
                     }
+                    sent = -1;
 
 
 
                     // More words
-                    payloadSocket.SendFile(PayloadPath.Replace("\"", string.Empty));
+                    payload = File.ReadAllBytes(PayloadPath.Replace("\"", string.Empty));
+
+                    sent = payloadSocket.Send(payload);
                     payloadSocket.Close();
 
 
-                    response = MessageBox.Show("Payload: " + PayloadPath, "Payload Sent", MessageBoxButtons.YesNo);
-
-                    if (response == DialogResult.Yes)
+                    if (sent < 0)
                     {
-                        exit();
+                        throw new InvalidDataException($"Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}");
+                        editStatusLabel("Critical Error");
+                        return;
                     }
+
+                    if (sent < payload.Length)
+                    {
+                        editStatusLabel($"Error (not all data sent)");
+                    }
+                    else if (sent > payload.Length)
+                    {
+                        editStatusLabel("Error\n(sent more than filesize?!)");
+                    }
+
+
+                    editStatusLabel("Success");
                 }
                 catch (FileNotFoundException)
                 {
@@ -536,6 +551,7 @@ namespace PayloadSender
 
             elfElfdrBtn.Visible = !Settings.Prospero;
             binElfdrBtn.Visible = !Settings.Prospero;
+            arrowLabel.Visible = !Settings.Prospero;
         }
 
 

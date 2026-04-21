@@ -42,7 +42,6 @@ namespace PayloadSender
             this.ThemeBox = new PayloadSender.Payload_Sender.RGBBox();
             this.ResetBtn = new System.Windows.Forms.Button();
             this.TitleLabel = new System.Windows.Forms.Label();
-            this.TcpLabel = new System.Windows.Forms.Label();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
@@ -61,6 +60,9 @@ namespace PayloadSender
             this.PS4Btn = new System.Windows.Forms.Button();
             this.elfElfdrBtn = new System.Windows.Forms.Button();
             this.binElfdrBtn = new System.Windows.Forms.Button();
+            this.TcpLabel = new System.Windows.Forms.Label();
+            this.arrowLabel = new System.Windows.Forms.Label();
+            this.tempStatusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -129,7 +131,7 @@ namespace PayloadSender
             // 
             this.MinimizeBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.MinimizeBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.MinimizeBtn.Location = new System.Drawing.Point(338, 3);
+            this.MinimizeBtn.Location = new System.Drawing.Point(339, 3);
             this.MinimizeBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.MinimizeBtn.Name = "MinimizeBtn";
             this.MinimizeBtn.Size = new System.Drawing.Size(23, 23);
@@ -232,18 +234,6 @@ namespace PayloadSender
             this.TitleLabel.Size = new System.Drawing.Size(133, 22);
             this.TitleLabel.TabIndex = 27;
             this.TitleLabel.Text = "Payload Sender";
-            // 
-            // TcpLabel
-            // 
-            this.TcpLabel.BackColor = System.Drawing.Color.Transparent;
-            this.TcpLabel.Font = new System.Drawing.Font("Verdana", 6.5F);
-            this.TcpLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.TcpLabel.Location = new System.Drawing.Point(127, 3);
-            this.TcpLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.TcpLabel.Name = "TcpLabel";
-            this.TcpLabel.Size = new System.Drawing.Size(29, 16);
-            this.TcpLabel.TabIndex = 28;
-            this.TcpLabel.Text = "(tcp)";
             // 
             // numericUpDown1
             // 
@@ -440,7 +430,7 @@ namespace PayloadSender
             // sendElfdrCheckBx
             // 
             this.sendElfdrCheckBx.AutoSize = true;
-            this.sendElfdrCheckBx.Location = new System.Drawing.Point(7, 37);
+            this.sendElfdrCheckBx.Location = new System.Drawing.Point(7, 35);
             this.sendElfdrCheckBx.Name = "sendElfdrCheckBx";
             this.sendElfdrCheckBx.Size = new System.Drawing.Size(97, 17);
             this.sendElfdrCheckBx.TabIndex = 43;
@@ -453,7 +443,7 @@ namespace PayloadSender
             this.PS5Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PS5Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
             this.PS5Btn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PS5Btn.Location = new System.Drawing.Point(7, 81);
+            this.PS5Btn.Location = new System.Drawing.Point(7, 80);
             this.PS5Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PS5Btn.Name = "PS5Btn";
             this.PS5Btn.Size = new System.Drawing.Size(77, 25);
@@ -467,7 +457,7 @@ namespace PayloadSender
             this.PS4Btn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.PS4Btn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7F);
             this.PS4Btn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PS4Btn.Location = new System.Drawing.Point(7, 57);
+            this.PS4Btn.Location = new System.Drawing.Point(7, 54);
             this.PS4Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PS4Btn.Name = "PS4Btn";
             this.PS4Btn.Size = new System.Drawing.Size(77, 25);
@@ -481,7 +471,7 @@ namespace PayloadSender
             this.elfElfdrBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.elfElfdrBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
             this.elfElfdrBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.elfElfdrBtn.Location = new System.Drawing.Point(86, 59);
+            this.elfElfdrBtn.Location = new System.Drawing.Point(105, 56);
             this.elfElfdrBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.elfElfdrBtn.Name = "elfElfdrBtn";
             this.elfElfdrBtn.Size = new System.Drawing.Size(30, 21);
@@ -495,7 +485,7 @@ namespace PayloadSender
             this.binElfdrBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.binElfdrBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
             this.binElfdrBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.binElfdrBtn.Location = new System.Drawing.Point(117, 59);
+            this.binElfdrBtn.Location = new System.Drawing.Point(136, 56);
             this.binElfdrBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.binElfdrBtn.Name = "binElfdrBtn";
             this.binElfdrBtn.Size = new System.Drawing.Size(30, 21);
@@ -504,12 +494,50 @@ namespace PayloadSender
             this.binElfdrBtn.UseVisualStyleBackColor = true;
             this.binElfdrBtn.Click += new System.EventHandler(this.binElfdrBtn_Click);
             // 
+            // TcpLabel
+            // 
+            this.TcpLabel.BackColor = System.Drawing.Color.Transparent;
+            this.TcpLabel.Font = new System.Drawing.Font("Verdana", 6.5F);
+            this.TcpLabel.ForeColor = System.Drawing.Color.Fuchsia;
+            this.TcpLabel.Location = new System.Drawing.Point(127, 3);
+            this.TcpLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.TcpLabel.Name = "TcpLabel";
+            this.TcpLabel.Size = new System.Drawing.Size(29, 16);
+            this.TcpLabel.TabIndex = 28;
+            this.TcpLabel.Text = "(tcp)";
+            // 
+            // arrowLabel
+            // 
+            this.arrowLabel.BackColor = System.Drawing.Color.Transparent;
+            this.arrowLabel.Font = new System.Drawing.Font("Verdana", 6.5F);
+            this.arrowLabel.ForeColor = System.Drawing.Color.Fuchsia;
+            this.arrowLabel.Location = new System.Drawing.Point(84, 60);
+            this.arrowLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.arrowLabel.Name = "arrowLabel";
+            this.arrowLabel.Size = new System.Drawing.Size(22, 12);
+            this.arrowLabel.TabIndex = 48;
+            this.arrowLabel.Text = "-->";
+            // 
+            // tempStatusLabel
+            // 
+            this.tempStatusLabel.BackColor = System.Drawing.Color.Transparent;
+            this.tempStatusLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
+            this.tempStatusLabel.ForeColor = System.Drawing.Color.Fuchsia;
+            this.tempStatusLabel.Location = new System.Drawing.Point(264, 112);
+            this.tempStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.tempStatusLabel.Name = "tempStatusLabel";
+            this.tempStatusLabel.Size = new System.Drawing.Size(120, 26);
+            this.tempStatusLabel.TabIndex = 49;
+            this.tempStatusLabel.Text = "Error\r\n(sent more than filesize?!)";
+            // 
             // Payload_Sender
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(387, 245);
+            this.Controls.Add(this.tempStatusLabel);
             this.Controls.Add(this.elfElfdrBtn);
+            this.Controls.Add(this.arrowLabel);
             this.Controls.Add(this.binElfdrBtn);
             this.Controls.Add(this.PS5Btn);
             this.Controls.Add(this.PS4Btn);
@@ -570,7 +598,6 @@ namespace PayloadSender
         private PayloadSender.Payload_Sender.RGBBox ThemeBox;
         private System.Windows.Forms.Button ResetBtn;
         private System.Windows.Forms.Label TitleLabel;
-        private System.Windows.Forms.Label TcpLabel;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
@@ -589,6 +616,9 @@ namespace PayloadSender
         private System.Windows.Forms.Button PS4Btn;
         private System.Windows.Forms.Button elfElfdrBtn;
         private System.Windows.Forms.Button binElfdrBtn;
+        private System.Windows.Forms.Label TcpLabel;
+        private System.Windows.Forms.Label arrowLabel;
+        private System.Windows.Forms.Label tempStatusLabel;
     }
 }
 
