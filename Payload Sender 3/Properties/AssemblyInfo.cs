@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Blob's Payload Sender 2.52.59")]
+[assembly: AssemblyTitle("Blob's Payload Sender 2.56.68")]
 [assembly: AssemblyDescription("An Application To Send .bin Payloads From A Windows System To An Exploited Playstation 4 Console")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("TheMagicalBlob")]
-[assembly: AssemblyProduct("Blob's Payload Sender 2.52.59")]
+[assembly: AssemblyProduct("Blob's Payload Sender 2.56.68")]
 [assembly: AssemblyCopyright("Copyright © 2026")]
 [assembly: AssemblyTrademark("TheMagicalBlob")]
 [assembly: AssemblyCulture("")]
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.52.59.0")]
+[assembly: AssemblyVersion("2.56.68.0")]
 [assembly: AssemblyFileVersion("3.0.0.0")]

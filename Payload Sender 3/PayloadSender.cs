@@ -1,6 +1,7 @@
 ﻿using Blobs_Payload_Sender.Properties;
 using System;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -13,9 +14,9 @@ using System.Windows.Forms;
 
 namespace PayloadSender
 {
-    internal partial class Payload_Sender : Form
+    internal partial class Payload_Sender : Form // 71, 117
     {
-        internal const string version = "2.52.59"
+        internal const string version = "2.56.68"
         ;
 
         public Payload_Sender()
@@ -43,10 +44,13 @@ namespace PayloadSender
 
 
             //##-> Initialize thread used to send payloads
-            CTSendPayload = new Thread(Connect);
+            PayloadThread = new Thread(Connect);
+            LocalServerThread = new Thread(LocalServer);
 
             getIPBoxValue = (_) => IPBox.Text;
             getPortBoxValue = (_) => PortBox.Text;
+            getElfdrPortBoxValue = (_) => ElfdrPortBox.Text;
+            
             editStatusLabel = (msg) => tempStatusLabel.Text = msg?.ToString() ?? "null";
 
 
@@ -73,18 +77,22 @@ namespace PayloadSender
         //========================================\\
         #region [Global Variable Declarations]
 
-        public static string PayloadPath = "(Payload Path Here)        ";
+        public static string PayloadPath;
+        
+
 
         private static Payload_Sender Venat;
 
         private static Settings Settings;
 
-        private readonly Thread CTSendPayload;
+        private readonly Thread PayloadThread;
+        private readonly Thread LocalServerThread;
 
+        private Socket PayloadSocket;
 
         private delegate object CTControlProbe(object obj = null);
 
-        private CTControlProbe getIPBoxValue, getPortBoxValue, editStatusLabel;
+        private CTControlProbe getIPBoxValue, getElfdrPortBoxValue, getPortBoxValue, editStatusLabel;
 
         private bool ReadyToConnect;
 
@@ -159,7 +167,7 @@ namespace PayloadSender
                 PayloadPathBox.SelectionStart = PayloadPathBox.Text.Length;
                 PayloadPathBox.ScrollToCaret();
 
-                PayloadPath = Settings.PayloadPath;
+                PayloadPath = Settings.PayloadPath.Replace("\"", string.Empty);
 
 
                 // Apply saved theme forecolour
@@ -169,8 +177,10 @@ namespace PayloadSender
 
 
                 // Set platform the buttons' states
-                TogglePlatformButtons(false);
-                ToggleBinOrElfButtons(false);
+                TogglePlatformButtonsSelectionHighlight(false);
+                ToggleBinOrElfButtonsSelectionHighlight(false);
+
+                TogglePlatformButtonsVisibility();
 #if !DEBUG
             }
             catch (Exception fuck)
@@ -229,13 +239,12 @@ namespace PayloadSender
             }
 
 
-            if (CTSendPayload.ThreadState == System.Threading.ThreadState.Unstarted)
+            if (PayloadThread.ThreadState == System.Threading.ThreadState.Unstarted)
             {
-                CTSendPayload.Start();
+                PayloadThread.Start();
             }
-            else {
-                ReadyToConnect = true;
-            }
+
+            ReadyToConnect = true;
         }
 
 
@@ -248,50 +257,46 @@ namespace PayloadSender
         /// </summary>
         private void Connect()
         {
-            DialogResult response;
-            Socket payloadSocket;
-            byte[] payload;
             int sent;
+            byte[] payload;
+            var error = string.Empty;
+            PayloadSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
 
             while (true)
             {
-                while (!ReadyToConnect) Thread.Sleep(12);
+                while (!ReadyToConnect)
+                {
+                    Thread.Sleep(7);
+                }
+
+
+                // Verify provided file path
+                if (!File.Exists(PayloadPath))
+                {
+                    tempStatusLabel.Text = "File does not exist.";
+                    ReadyToConnect = false;
+                    continue;
+                }
+
+
 
                 try {
-                    ReadyToConnect = false;
-
-                    payloadSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-                    payloadSocket.Connect
-                    (
-                        new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()),
-                        Convert.ToInt32(getPortBoxValue()))
-                    );
-
-
-
-                    // words
-                    if (sendElfdrCheckBx.Checked)
+                    // Send the sekected elfdr payload and sleep for ~3 seconds before sending the main provided payload
+                    if (sendElfdrCheckBox.Checked)
                     {
-                        if (Settings.Prospero)
-                        {
-                            payload = Resources.elfldr_ps5_0_22_2;
-                        }
-                        else {
-                            if (Settings.ElfLoader)
-                            {
-                                payload = Resources.elfldr_ps4_0_6_elf;
-                            }
-                            else {
-                                payload = Resources.elfldr_ps4_0_6_bin;
-                            }
-                        }
+                        PayloadSocket.Connect
+                        (
+                            new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()),
+                            Convert.ToInt32(getElfdrPortBoxValue()))
+                        );
 
-                        sent = payloadSocket.Send(payload);
+
+                        payload = GetSelectedElfdrPayload();
+                        sent = PayloadSocket.Send(payload);
 
                         if (sent < payload.Length)
                         {
-                            MessageBox.Show($"//!");
+                            goto fack;
                         }
                         else {
                             Thread.Sleep(3300);
@@ -302,106 +307,88 @@ namespace PayloadSender
 
 
                     // More words
-                    payload = File.ReadAllBytes(PayloadPath.Replace("\"", string.Empty));
+                    PayloadSocket.Connect
+                    (
+                        new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()),
+                        Convert.ToInt32(getPortBoxValue()))
+                    );
 
-                    sent = payloadSocket.Send(payload);
-                    payloadSocket.Close();
+                    payload = File.ReadAllBytes(PayloadPath);
 
+                    sent = PayloadSocket.Send(payload);
 
                     if (sent < 0)
                     {
-                        throw new InvalidDataException($"Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}");
-                        editStatusLabel("Critical Error (??!!)");
-                        return;
+                        goto QUOI;
                     }
 
                     if (sent < payload.Length)
                     {
                         editStatusLabel($"Error\n(not all data was sent)");
+                        goto fack;
                     }
-                    else if (sent > payload.Length)
+
+                    if (sent > payload.Length)
                     {
                         editStatusLabel("Error\n(sent more than filesize?!)");
+                        goto fack;
                     }
 
-
                     editStatusLabel("Success");
+                    continue;
+
+
+
+                fack:
+                    MessageBox.Show($"ERROR: Sent amount wasn't equal to the size of the selected file.\nSent 0x{sent:X} out of 0x{payload.Length:X}", "Error: not all data sent");
+                    throw new SocketException();
+                    continue;
+
+
+                QUOI:
+                    editStatusLabel("Critical Error");
+                    MessageBox.Show($"Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}", "QUOI?!");
+                    throw new SocketException();
+                    continue;
                 }
                 catch (FileNotFoundException)
                 {
                     MessageBox.Show("Please provide a valid payload path. (file does not exist)", $"Path \"{PayloadPath}\" was not valid.");
                 }
-                catch (Exception fuck)
-                {
-                    MessageBox.Show(fuck.Message, $"Unexpected error occurred in {nameof(Payload_Sender)}.{nameof(Connect)}().");
+                finally {
+                    PayloadSocket?.Disconnect(true);
+                    ReadyToConnect = false;
                 }
             }
         }
 
 
-
-
-
-
-        /// <summary>
-        /// //!
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void PayloadPathBox_TextChanged(object sender, EventArgs e)
+        private byte[] GetSelectedElfdrPayload()
         {
-            var payloadPathBox = sender as TextBox;
-            var path = payloadPathBox.Text;
-
-
-            // Avoid saving invalid paths, unless there's no valid one saved anyway
-            if ((File.Exists(path) || (Settings.PayloadPath?.Any() ?? false)) && File.Exists(Settings.PayloadPath))
+            if (Settings.Prospero)
             {
-                Settings.PayloadPath = path;
-            }
-
-            PayloadPath = path;
-
-
-            // Move the caret to the right of the text box, to show the file name consistently.
-            payloadPathBox.SelectionStart = path.Length;
-            payloadPathBox.ScrollToCaret();
-        }
-
-
-
-
-        private void CloseBtn_Click(object sender, EventArgs e) { Settings.Save(); Close(); }
-
-
-        private void PortBox_TextChanged(object sender, EventArgs e)
-        {
-            if (Int32.TryParse(PortBox.Text, out var ip))
-            {
-                Settings.Port = ip;
-            }
-        }
-
-
-        private void IPBox_TextChanged(object sender, EventArgs e) { Settings.IPAddress = IPBox.Text; }
-
-
-        private void MinimizeBtn_Click(object sender, EventArgs e)  { WindowState = FormWindowState.Minimized; Settings.Save(); }
-
-
-        private void ThemeBtn_Click(object sender, EventArgs e)
-        {
-            if (!ThemePanelOpen)
-            {
-                ClientSize = new Size(Width, Height + ThemeHeightAdjustment);
+                return Resources.elfldr_ps5_0_22_2;
             }
             else {
-                ClientSize = new Size(Width, Height - ThemeHeightAdjustment);
+                if (Settings.ElfOverBin)
+                {
+                    return Resources.elfldr_ps4_0_6_elf;
+                }
+                else {
+                    return Resources.elfldr_ps4_0_6_bin;
+                }
             }
 
-            ThemePanelOpen ^= true;
+        }
 
-            Refresh();
+
+
+        private void LocalServer()
+        {
+            return;
+
+            var listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 23);
+            listener.Start();
         }
 
 
@@ -531,7 +518,13 @@ namespace PayloadSender
         }
 
 
-        private void TogglePlatformButtons(bool toggle = true)
+
+
+        /// <summary>
+        /// //!
+        /// </summary>
+        /// <param name="toggle"></param>
+        private void TogglePlatformButtonsSelectionHighlight(bool toggle = true)
         {
             if (toggle)
             {
@@ -551,22 +544,24 @@ namespace PayloadSender
             }
 
 
-            elfElfdrBtn.Visible = !Settings.Prospero;
-            binElfdrBtn.Visible = !Settings.Prospero;
-            arrowLabel.Visible = !Settings.Prospero;
+            SetBinOrElfButtonsVisibility(!Settings.Prospero);
         }
 
 
 
 
-        private void ToggleBinOrElfButtons(bool toggle = true)
+        /// <summary>
+        /// //!
+        /// </summary>
+        /// <param name="toggle"></param>
+        private void ToggleBinOrElfButtonsSelectionHighlight(bool toggle = true)
         {
             if (toggle)
             {
-                Settings.ElfLoader ^= true;
+                Settings.ElfOverBin ^= true;
             }
 
-            if (Settings.ElfLoader)
+            if (Settings.ElfOverBin)
             {
                 elfElfdrBtn.ForeColor = Color.FromArgb(Settings.Theme);
 
@@ -578,6 +573,63 @@ namespace PayloadSender
                 binElfdrBtn.ForeColor = Color.FromArgb(Settings.Theme);
             }
         }
+
+
+
+
+        /// <summary>
+        /// //!
+        /// </summary>
+        private void TogglePlatformButtonsVisibility()
+        {
+            var checkedState = sendElfdrCheckBox.Checked;
+            var state = !Settings.Prospero && checkedState;
+
+            PS4Btn.Visible = checkedState;
+            PS5Btn.Visible = checkedState;
+
+            Settings.SendElfdr = state;
+
+            SetBinOrElfButtonsVisibility(state);
+            ToggleElfdrPortBoxVisibility();
+        }
+
+
+
+
+        private void SetBinOrElfButtonsVisibility(bool state)
+        {
+            elfElfdrBtn.Visible = state;
+            binElfdrBtn.Visible = state;
+            arrowLabel.Visible = state;
+        }
+
+
+
+
+        private void ToggleElfdrPortBoxVisibility()
+        {
+            var checkedState = sendElfdrCheckBox.Checked;
+            var state = !Settings.Prospero && checkedState;
+
+
+            ElfdrPortBox.Visible = checkedState;
+            elfdrPortBoxLabel.Visible = state;
+            
+            portBoxLabel.Visible = state;
+
+
+            // Move the controls over to fit the new box or fill the gap
+            if (checkedState)
+            {
+                IPBox.Location = new Point(IPBox.Location.X + PortBox.Width / 2, IPBox.Location.Y);
+                PortBox.Location = new Point(PortBox.Location.X + (PortBox.Width + 2), PortBox.Location.Y);
+            }
+            else {
+                IPBox.Location = new Point(IPBox.Location.X - PortBox.Width / 2, IPBox.Location.Y);
+                PortBox.Location = new Point(PortBox.Location.X - (PortBox.Width + 2), PortBox.Location.Y);
+            }
+        }
         #endregion
 
 
@@ -587,9 +639,13 @@ namespace PayloadSender
 
 
 
-        //#
-        //## Event Handler Declarations
-        //#
+
+
+
+
+        //========================================\\
+        //---|   Event Handler Declarations   |---\\
+        //========================================\\
         #region [Event Handler Declarations]
 
         private void PS5Btn_Click(object sender, EventArgs e)
@@ -599,7 +655,7 @@ namespace PayloadSender
                 return;
             }
 
-            TogglePlatformButtons();
+            TogglePlatformButtonsSelectionHighlight();
         }
 
 
@@ -607,7 +663,7 @@ namespace PayloadSender
         {
             if (Settings.Prospero)
             {
-                TogglePlatformButtons();
+                TogglePlatformButtonsSelectionHighlight();
             }
         }
 
@@ -616,7 +672,7 @@ namespace PayloadSender
 
         private void binElfdrBtn_Click(object sender, EventArgs e)
         {
-            ToggleBinOrElfButtons();
+            ToggleBinOrElfButtonsSelectionHighlight();
         }
 
 
@@ -624,7 +680,7 @@ namespace PayloadSender
 
         private void elfElfdrBtn_Click(object sender, EventArgs e)
         {
-            ToggleBinOrElfButtons();
+            ToggleBinOrElfButtonsSelectionHighlight();
         }
 
 
@@ -633,6 +689,7 @@ namespace PayloadSender
         private void RebootBtn_Click(object sender, EventArgs e)
         {
 #if DEBUG
+            PayloadSocket?.Disconnect(false);
             Settings?.Save();
             Close();
 #endif
@@ -654,6 +711,65 @@ namespace PayloadSender
         {
             ChangeControlColours(0xF21264);
         }
+
+
+        /// <summary>
+        /// //!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PayloadPathBox_TextChanged(object sender, EventArgs e)
+        {
+            var payloadPathBox = sender as TextBox;
+            var path = payloadPathBox.Text.Replace("\"", string.Empty);
+
+
+            // Avoid saving invalid paths, unless there's no valid one saved anyway
+            if ((File.Exists(path) || (Settings.PayloadPath?.Any() ?? false)) && File.Exists(Settings.PayloadPath))
+            {
+                Settings.PayloadPath = path;
+            }
+
+            PayloadPath = path;
+
+
+            // Move the caret to the right of the text box, to show the file name consistently.
+            payloadPathBox.SelectionStart = path.Length;
+            payloadPathBox.ScrollToCaret();
+        }
+
+
+
+        private void PortBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Int32.TryParse(PortBox.Text, out var ip))
+            {
+                Settings.Port = ip;
+            }
+        }
+
+
+        private void IPBox_TextChanged(object sender, EventArgs e) { Settings.IPAddress = IPBox.Text; }
+
+
+        private void MinimizeBtn_Click(object sender, EventArgs e) { WindowState = FormWindowState.Minimized; Settings.Save(); }
+
+
+        private void ThemeBtn_Click(object sender, EventArgs e)
+        {
+            if (!ThemePanelOpen)
+            {
+                ClientSize = new Size(Width, Height + ThemeHeightAdjustment);
+            }
+            else {
+                ClientSize = new Size(Width, Height - ThemeHeightAdjustment);
+            }
+
+            ThemePanelOpen ^= true;
+
+            Refresh();
+        }
+
 
 
 
@@ -698,6 +814,21 @@ namespace PayloadSender
             ThemeBox.Text = "0x" + ThemeBox.Value.ToString("X").PadLeft(6, '0');
 
             ChangeControlColours(ThemeBox.Value);
+        }
+
+
+
+
+        private void sendElfdrCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            TogglePlatformButtonsVisibility();
+        }
+
+
+
+        private void toggleDebugServerBtn_Click(object sender, EventArgs e)
+        {
+            LocalServerThread?.Start();
         }
         #endregion
 
@@ -774,20 +905,35 @@ namespace PayloadSender
             if (Settings != null)
             {
                 Settings.Save();
-                echo("Settings Saved.");
+                echo("Settings saved.");
             }
             else {
                 echo($"{nameof(Payload_Sender)}.{nameof(Settings)} was null for some reason, nothing to save.");
             }
 
+            if (Venat.PayloadSocket != null)
+            {
+                _echo("Closing socket... ");
+                Venat.PayloadSocket?.Disconnect(false);
+                Venat.PayloadSocket?.Close(1200);
+                echo("Socket disconnected & closed.");
+            }
+
+
+
+            Venat.Controls.Clear();
+            Venat.Dispose();
 
             Environment.Exit(exitCode);
         }
+
+        private void scaleBtn_Click(object sender, EventArgs e)
+        {
+            this.Scale(new SizeF(1.01f, 1.01f));
+        }
 #pragma warning restore IDE1006
         #endregion
-
         #endregion (function declarations)
-
 
 
 
@@ -854,19 +1000,6 @@ namespace PayloadSender
 
 
 
-            /// <summary>
-            /// //! Unimplemented override
-            /// </summary>
-            new public string Text
-            {
-                get => base.Text;
-
-                set {
-                    base.Text = value;
-                }
-            }
-
-
 
 
             [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
@@ -896,15 +1029,10 @@ namespace PayloadSender
             }
         }
 
-        private void sendElfdrCheckBx_CheckedChanged(object sender, EventArgs e)
-        {
 
-        }
 
-        private void ThemeBox_TextChanged(object sender, EventArgs e)
-        {
 
-        }
+
 
         public class Label : System.Windows.Forms.Label
         {

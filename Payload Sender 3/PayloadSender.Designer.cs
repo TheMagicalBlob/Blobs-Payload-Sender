@@ -55,7 +55,7 @@ namespace PayloadSender
             this.label1 = new PayloadSender.Payload_Sender.Label();
             this.hashLabel = new System.Windows.Forms.Label();
             this.ResetSettingsBtn = new System.Windows.Forms.Button();
-            this.sendElfdrCheckBx = new System.Windows.Forms.CheckBox();
+            this.sendElfdrCheckBox = new System.Windows.Forms.CheckBox();
             this.PS5Btn = new System.Windows.Forms.Button();
             this.PS4Btn = new System.Windows.Forms.Button();
             this.elfElfdrBtn = new System.Windows.Forms.Button();
@@ -63,6 +63,11 @@ namespace PayloadSender
             this.TcpLabel = new System.Windows.Forms.Label();
             this.arrowLabel = new System.Windows.Forms.Label();
             this.tempStatusLabel = new System.Windows.Forms.Label();
+            this.toggleDebugServerBtn = new System.Windows.Forms.Button();
+            this.scaleBtn = new System.Windows.Forms.Button();
+            this.ElfdrPortBox = new System.Windows.Forms.TextBox();
+            this.elfdrPortBoxLabel = new System.Windows.Forms.Label();
+            this.portBoxLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -74,11 +79,11 @@ namespace PayloadSender
             this.IPBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.IPBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
             this.IPBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.IPBox.Location = new System.Drawing.Point(71, 117);
+            this.IPBox.Location = new System.Drawing.Point(92, 130);
             this.IPBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.IPBox.Name = "IPBox";
             this.IPBox.Size = new System.Drawing.Size(107, 21);
-            this.IPBox.TabIndex = 1;
+            this.IPBox.TabIndex = 3;
             this.IPBox.Text = "192.168.1";
             this.IPBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.IPBox.TextChanged += new System.EventHandler(this.IPBox_TextChanged);
@@ -89,7 +94,7 @@ namespace PayloadSender
             this.PortBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PortBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
             this.PortBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PortBox.Location = new System.Drawing.Point(4, 117);
+            this.PortBox.Location = new System.Drawing.Point(48, 130);
             this.PortBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PortBox.Name = "PortBox";
             this.PortBox.Size = new System.Drawing.Size(42, 21);
@@ -105,7 +110,7 @@ namespace PayloadSender
             this.PayloadPathBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PayloadPathBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.PayloadPathBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.PayloadPathBox.Location = new System.Drawing.Point(4, 143);
+            this.PayloadPathBox.Location = new System.Drawing.Point(4, 155);
             this.PayloadPathBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PayloadPathBox.Name = "PayloadPathBox";
             this.PayloadPathBox.Size = new System.Drawing.Size(258, 23);
@@ -118,11 +123,11 @@ namespace PayloadSender
             this.BrowseButton.BackColor = System.Drawing.Color.Black;
             this.BrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BrowseButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.BrowseButton.Location = new System.Drawing.Point(266, 143);
+            this.BrowseButton.Location = new System.Drawing.Point(266, 155);
             this.BrowseButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.BrowseButton.Name = "BrowseButton";
             this.BrowseButton.Size = new System.Drawing.Size(117, 23);
-            this.BrowseButton.TabIndex = 5;
+            this.BrowseButton.TabIndex = 0;
             this.BrowseButton.Text = "Browse for Payload...";
             this.BrowseButton.UseVisualStyleBackColor = false;
             this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
@@ -136,6 +141,7 @@ namespace PayloadSender
             this.MinimizeBtn.Name = "MinimizeBtn";
             this.MinimizeBtn.Size = new System.Drawing.Size(23, 23);
             this.MinimizeBtn.TabIndex = 7;
+            this.MinimizeBtn.TabStop = false;
             this.MinimizeBtn.Text = "--";
             this.MinimizeBtn.UseVisualStyleBackColor = true;
             this.MinimizeBtn.Click += new System.EventHandler(this.MinimizeBtn_Click);
@@ -149,9 +155,9 @@ namespace PayloadSender
             this.ExitBtn.Name = "ExitBtn";
             this.ExitBtn.Size = new System.Drawing.Size(23, 23);
             this.ExitBtn.TabIndex = 8;
+            this.ExitBtn.TabStop = false;
             this.ExitBtn.Text = "X";
             this.ExitBtn.UseVisualStyleBackColor = true;
-            this.ExitBtn.Click += new System.EventHandler(this.CloseBtn_Click);
             // 
             // ThemeBtn
             // 
@@ -162,7 +168,7 @@ namespace PayloadSender
             this.ThemeBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ThemeBtn.Name = "ThemeBtn";
             this.ThemeBtn.Size = new System.Drawing.Size(43, 23);
-            this.ThemeBtn.TabIndex = 14;
+            this.ThemeBtn.TabIndex = 10;
             this.ThemeBtn.Text = "Theme";
             this.ThemeBtn.UseVisualStyleBackColor = true;
             this.ThemeBtn.Click += new System.EventHandler(this.ThemeBtn_Click);
@@ -184,11 +190,11 @@ namespace PayloadSender
             // 
             this.SendButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.SendButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.SendButton.Location = new System.Drawing.Point(201, 117);
+            this.SendButton.Location = new System.Drawing.Point(201, 130);
             this.SendButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.SendButton.Name = "SendButton";
             this.SendButton.Size = new System.Drawing.Size(61, 21);
-            this.SendButton.TabIndex = 6;
+            this.SendButton.TabIndex = 4;
             this.SendButton.Text = "Send File";
             this.SendButton.UseVisualStyleBackColor = true;
             this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
@@ -200,25 +206,24 @@ namespace PayloadSender
             this.ThemeBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.ThemeBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.25F);
             this.ThemeBox.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ThemeBox.Location = new System.Drawing.Point(7, 216);
+            this.ThemeBox.Location = new System.Drawing.Point(7, 229);
             this.ThemeBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ThemeBox.MaxLength = 8;
             this.ThemeBox.Name = "ThemeBox";
             this.ThemeBox.Size = new System.Drawing.Size(64, 16);
-            this.ThemeBox.TabIndex = 24;
+            this.ThemeBox.TabIndex = 11;
             this.ThemeBox.Text = "0xFF00FF";
-            this.ThemeBox.TextChanged += new System.EventHandler(this.ThemeBox_TextChanged);
             // 
             // ResetBtn
             // 
             this.ResetBtn.BackColor = System.Drawing.Color.Black;
             this.ResetBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResetBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ResetBtn.Location = new System.Drawing.Point(332, 192);
+            this.ResetBtn.Location = new System.Drawing.Point(332, 205);
             this.ResetBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ResetBtn.Name = "ResetBtn";
             this.ResetBtn.Size = new System.Drawing.Size(52, 49);
-            this.ResetBtn.TabIndex = 26;
+            this.ResetBtn.TabIndex = 17;
             this.ResetBtn.Text = "Reset";
             this.ResetBtn.UseVisualStyleBackColor = false;
             this.ResetBtn.Click += new System.EventHandler(this.ResetBtn_Click);
@@ -240,7 +245,7 @@ namespace PayloadSender
             this.numericUpDown1.BackColor = System.Drawing.SystemColors.WindowText;
             this.numericUpDown1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numericUpDown1.ForeColor = System.Drawing.Color.Fuchsia;
-            this.numericUpDown1.Location = new System.Drawing.Point(143, 209);
+            this.numericUpDown1.Location = new System.Drawing.Point(143, 222);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             255,
             0,
@@ -248,7 +253,7 @@ namespace PayloadSender
             0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(38, 16);
-            this.numericUpDown1.TabIndex = 29;
+            this.numericUpDown1.TabIndex = 13;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown1.Value = new decimal(new int[] {
             255,
@@ -261,7 +266,7 @@ namespace PayloadSender
             this.numericUpDown2.BackColor = System.Drawing.SystemColors.WindowText;
             this.numericUpDown2.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numericUpDown2.ForeColor = System.Drawing.Color.Fuchsia;
-            this.numericUpDown2.Location = new System.Drawing.Point(184, 209);
+            this.numericUpDown2.Location = new System.Drawing.Point(184, 222);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             255,
             0,
@@ -269,7 +274,7 @@ namespace PayloadSender
             0});
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(38, 16);
-            this.numericUpDown2.TabIndex = 30;
+            this.numericUpDown2.TabIndex = 14;
             this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // numericUpDown3
@@ -277,7 +282,7 @@ namespace PayloadSender
             this.numericUpDown3.BackColor = System.Drawing.SystemColors.WindowText;
             this.numericUpDown3.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numericUpDown3.ForeColor = System.Drawing.Color.Fuchsia;
-            this.numericUpDown3.Location = new System.Drawing.Point(224, 209);
+            this.numericUpDown3.Location = new System.Drawing.Point(224, 222);
             this.numericUpDown3.Maximum = new decimal(new int[] {
             255,
             0,
@@ -285,7 +290,7 @@ namespace PayloadSender
             0});
             this.numericUpDown3.Name = "numericUpDown3";
             this.numericUpDown3.Size = new System.Drawing.Size(38, 16);
-            this.numericUpDown3.TabIndex = 31;
+            this.numericUpDown3.TabIndex = 15;
             this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numericUpDown3.Value = new decimal(new int[] {
             255,
@@ -298,7 +303,7 @@ namespace PayloadSender
             this.redGreenBlueLabel.BackColor = System.Drawing.Color.Transparent;
             this.redGreenBlueLabel.Font = new System.Drawing.Font("Verdana", 6.5F);
             this.redGreenBlueLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.redGreenBlueLabel.Location = new System.Drawing.Point(150, 192);
+            this.redGreenBlueLabel.Location = new System.Drawing.Point(150, 205);
             this.redGreenBlueLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.redGreenBlueLabel.Name = "redGreenBlueLabel";
             this.redGreenBlueLabel.Size = new System.Drawing.Size(108, 14);
@@ -311,7 +316,7 @@ namespace PayloadSender
             this.separatorLine0.Font = new System.Drawing.Font("Verdana", 6.5F);
             this.separatorLine0.ForeColor = System.Drawing.Color.Fuchsia;
             this.separatorLine0.IsSeparatorLine = true;
-            this.separatorLine0.Location = new System.Drawing.Point(6, 166);
+            this.separatorLine0.Location = new System.Drawing.Point(6, 178);
             this.separatorLine0.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.separatorLine0.Name = "separatorLine0";
             this.separatorLine0.Size = new System.Drawing.Size(291, 13);
@@ -338,7 +343,7 @@ namespace PayloadSender
             this.propertyEditorLabel.BackColor = System.Drawing.Color.Transparent;
             this.propertyEditorLabel.Font = new System.Drawing.Font("Verdana", 9.5F, System.Drawing.FontStyle.Bold);
             this.propertyEditorLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.propertyEditorLabel.Location = new System.Drawing.Point(3, 177);
+            this.propertyEditorLabel.Location = new System.Drawing.Point(3, 190);
             this.propertyEditorLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.propertyEditorLabel.Name = "propertyEditorLabel";
             this.propertyEditorLabel.Size = new System.Drawing.Size(105, 18);
@@ -355,6 +360,7 @@ namespace PayloadSender
             this.RebootBtn.Name = "RebootBtn";
             this.RebootBtn.Size = new System.Drawing.Size(46, 20);
             this.RebootBtn.TabIndex = 37;
+            this.RebootBtn.TabStop = false;
             this.RebootBtn.Text = "Reboot";
             this.RebootBtn.UseVisualStyleBackColor = true;
             this.RebootBtn.Click += new System.EventHandler(this.RebootBtn_Click);
@@ -364,11 +370,11 @@ namespace PayloadSender
             this.ArrowBoxesApplyBtn.BackColor = System.Drawing.Color.Black;
             this.ArrowBoxesApplyBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ArrowBoxesApplyBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ArrowBoxesApplyBtn.Location = new System.Drawing.Point(270, 203);
+            this.ArrowBoxesApplyBtn.Location = new System.Drawing.Point(270, 216);
             this.ArrowBoxesApplyBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ArrowBoxesApplyBtn.Name = "ArrowBoxesApplyBtn";
             this.ArrowBoxesApplyBtn.Size = new System.Drawing.Size(43, 26);
-            this.ArrowBoxesApplyBtn.TabIndex = 38;
+            this.ArrowBoxesApplyBtn.TabIndex = 16;
             this.ArrowBoxesApplyBtn.Text = "Apply";
             this.ArrowBoxesApplyBtn.UseVisualStyleBackColor = false;
             this.ArrowBoxesApplyBtn.Click += new System.EventHandler(this.ArrowBoxesApplyBtn_Click);
@@ -378,11 +384,11 @@ namespace PayloadSender
             this.ThemeBoxApplyBtn.BackColor = System.Drawing.Color.Black;
             this.ThemeBoxApplyBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ThemeBoxApplyBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ThemeBoxApplyBtn.Location = new System.Drawing.Point(75, 211);
+            this.ThemeBoxApplyBtn.Location = new System.Drawing.Point(75, 224);
             this.ThemeBoxApplyBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ThemeBoxApplyBtn.Name = "ThemeBoxApplyBtn";
             this.ThemeBoxApplyBtn.Size = new System.Drawing.Size(43, 26);
-            this.ThemeBoxApplyBtn.TabIndex = 39;
+            this.ThemeBoxApplyBtn.TabIndex = 12;
             this.ThemeBoxApplyBtn.Text = "Apply";
             this.ThemeBoxApplyBtn.UseVisualStyleBackColor = false;
             this.ThemeBoxApplyBtn.Click += new System.EventHandler(this.ThemeBoxApplyBtn_Click);
@@ -393,7 +399,7 @@ namespace PayloadSender
             this.label1.Font = new System.Drawing.Font("Verdana", 6.5F);
             this.label1.ForeColor = System.Drawing.Color.Fuchsia;
             this.label1.IsSeparatorLine = true;
-            this.label1.Location = new System.Drawing.Point(124, 174);
+            this.label1.Location = new System.Drawing.Point(124, 187);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(10, 69);
@@ -406,7 +412,7 @@ namespace PayloadSender
             this.hashLabel.BackColor = System.Drawing.Color.Transparent;
             this.hashLabel.Font = new System.Drawing.Font("Verdana", 6.5F);
             this.hashLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.hashLabel.Location = new System.Drawing.Point(5, 200);
+            this.hashLabel.Location = new System.Drawing.Point(5, 213);
             this.hashLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.hashLabel.Name = "hashLabel";
             this.hashLabel.Size = new System.Drawing.Size(39, 14);
@@ -418,25 +424,26 @@ namespace PayloadSender
             this.ResetSettingsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ResetSettingsBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
             this.ResetSettingsBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ResetSettingsBtn.Location = new System.Drawing.Point(308, 77);
+            this.ResetSettingsBtn.Location = new System.Drawing.Point(264, 32);
             this.ResetSettingsBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.ResetSettingsBtn.Name = "ResetSettingsBtn";
-            this.ResetSettingsBtn.Size = new System.Drawing.Size(76, 22);
+            this.ResetSettingsBtn.Size = new System.Drawing.Size(76, 23);
             this.ResetSettingsBtn.TabIndex = 42;
+            this.ResetSettingsBtn.TabStop = false;
             this.ResetSettingsBtn.Text = "Reset Settings";
             this.ResetSettingsBtn.UseVisualStyleBackColor = true;
             this.ResetSettingsBtn.Click += new System.EventHandler(this.ResetSettingsBtn_Click);
             // 
-            // sendElfdrCheckBx
+            // sendElfdrCheckBox
             // 
-            this.sendElfdrCheckBx.AutoSize = true;
-            this.sendElfdrCheckBx.Location = new System.Drawing.Point(7, 35);
-            this.sendElfdrCheckBx.Name = "sendElfdrCheckBx";
-            this.sendElfdrCheckBx.Size = new System.Drawing.Size(97, 17);
-            this.sendElfdrCheckBx.TabIndex = 43;
-            this.sendElfdrCheckBx.Text = "Send Elfdr First";
-            this.sendElfdrCheckBx.UseVisualStyleBackColor = true;
-            this.sendElfdrCheckBx.CheckedChanged += new System.EventHandler(this.sendElfdrCheckBx_CheckedChanged);
+            this.sendElfdrCheckBox.AutoSize = true;
+            this.sendElfdrCheckBox.Location = new System.Drawing.Point(7, 35);
+            this.sendElfdrCheckBox.Name = "sendElfdrCheckBox";
+            this.sendElfdrCheckBox.Size = new System.Drawing.Size(97, 17);
+            this.sendElfdrCheckBox.TabIndex = 5;
+            this.sendElfdrCheckBox.Text = "Send Elfdr First";
+            this.sendElfdrCheckBox.UseVisualStyleBackColor = true;
+            this.sendElfdrCheckBox.CheckedChanged += new System.EventHandler(this.sendElfdrCheckBox_CheckedChanged);
             // 
             // PS5Btn
             // 
@@ -447,7 +454,7 @@ namespace PayloadSender
             this.PS5Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PS5Btn.Name = "PS5Btn";
             this.PS5Btn.Size = new System.Drawing.Size(77, 25);
-            this.PS5Btn.TabIndex = 45;
+            this.PS5Btn.TabIndex = 9;
             this.PS5Btn.Text = "Playstation 5";
             this.PS5Btn.UseVisualStyleBackColor = true;
             this.PS5Btn.Click += new System.EventHandler(this.PS5Btn_Click);
@@ -461,7 +468,7 @@ namespace PayloadSender
             this.PS4Btn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.PS4Btn.Name = "PS4Btn";
             this.PS4Btn.Size = new System.Drawing.Size(77, 25);
-            this.PS4Btn.TabIndex = 44;
+            this.PS4Btn.TabIndex = 6;
             this.PS4Btn.Text = "Playstation 4";
             this.PS4Btn.UseVisualStyleBackColor = true;
             this.PS4Btn.Click += new System.EventHandler(this.PS4Btn_Click);
@@ -475,7 +482,7 @@ namespace PayloadSender
             this.elfElfdrBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.elfElfdrBtn.Name = "elfElfdrBtn";
             this.elfElfdrBtn.Size = new System.Drawing.Size(30, 21);
-            this.elfElfdrBtn.TabIndex = 47;
+            this.elfElfdrBtn.TabIndex = 7;
             this.elfElfdrBtn.Text = ".elf";
             this.elfElfdrBtn.UseVisualStyleBackColor = true;
             this.elfElfdrBtn.Click += new System.EventHandler(this.elfElfdrBtn_Click);
@@ -489,7 +496,7 @@ namespace PayloadSender
             this.binElfdrBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.binElfdrBtn.Name = "binElfdrBtn";
             this.binElfdrBtn.Size = new System.Drawing.Size(30, 21);
-            this.binElfdrBtn.TabIndex = 46;
+            this.binElfdrBtn.TabIndex = 8;
             this.binElfdrBtn.Text = ".bin";
             this.binElfdrBtn.UseVisualStyleBackColor = true;
             this.binElfdrBtn.Click += new System.EventHandler(this.binElfdrBtn_Click);
@@ -523,24 +530,97 @@ namespace PayloadSender
             this.tempStatusLabel.BackColor = System.Drawing.Color.Transparent;
             this.tempStatusLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
             this.tempStatusLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.tempStatusLabel.Location = new System.Drawing.Point(264, 117);
+            this.tempStatusLabel.Location = new System.Drawing.Point(264, 130);
             this.tempStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tempStatusLabel.Name = "tempStatusLabel";
             this.tempStatusLabel.Size = new System.Drawing.Size(120, 24);
             this.tempStatusLabel.TabIndex = 49;
             // 
+            // toggleDebugServerBtn
+            // 
+            this.toggleDebugServerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.toggleDebugServerBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
+            this.toggleDebugServerBtn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.toggleDebugServerBtn.Location = new System.Drawing.Point(273, 56);
+            this.toggleDebugServerBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.toggleDebugServerBtn.Name = "toggleDebugServerBtn";
+            this.toggleDebugServerBtn.Size = new System.Drawing.Size(64, 20);
+            this.toggleDebugServerBtn.TabIndex = 50;
+            this.toggleDebugServerBtn.TabStop = false;
+            this.toggleDebugServerBtn.Text = "Start Local Server";
+            this.toggleDebugServerBtn.UseVisualStyleBackColor = true;
+            this.toggleDebugServerBtn.Click += new System.EventHandler(this.toggleDebugServerBtn_Click);
+            // 
+            // scaleBtn
+            // 
+            this.scaleBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.scaleBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
+            this.scaleBtn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.scaleBtn.Location = new System.Drawing.Point(320, 77);
+            this.scaleBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.scaleBtn.Name = "scaleBtn";
+            this.scaleBtn.Size = new System.Drawing.Size(64, 20);
+            this.scaleBtn.TabIndex = 51;
+            this.scaleBtn.TabStop = false;
+            this.scaleBtn.Text = "scale";
+            this.scaleBtn.UseVisualStyleBackColor = true;
+            this.scaleBtn.Click += new System.EventHandler(this.scaleBtn_Click);
+            // 
+            // ElfdrPortBox
+            // 
+            this.ElfdrPortBox.BackColor = System.Drawing.Color.Black;
+            this.ElfdrPortBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ElfdrPortBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.75F);
+            this.ElfdrPortBox.ForeColor = System.Drawing.Color.Fuchsia;
+            this.ElfdrPortBox.Location = new System.Drawing.Point(4, 130);
+            this.ElfdrPortBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.ElfdrPortBox.Name = "ElfdrPortBox";
+            this.ElfdrPortBox.Size = new System.Drawing.Size(42, 21);
+            this.ElfdrPortBox.TabIndex = 1;
+            this.ElfdrPortBox.Text = "9020";
+            this.ElfdrPortBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // elfdrPortBoxLabel
+            // 
+            this.elfdrPortBoxLabel.BackColor = System.Drawing.Color.Transparent;
+            this.elfdrPortBoxLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 6.25F);
+            this.elfdrPortBoxLabel.ForeColor = System.Drawing.Color.Fuchsia;
+            this.elfdrPortBoxLabel.Location = new System.Drawing.Point(14, 117);
+            this.elfdrPortBoxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.elfdrPortBoxLabel.Name = "elfdrPortBoxLabel";
+            this.elfdrPortBoxLabel.Size = new System.Drawing.Size(23, 14);
+            this.elfdrPortBoxLabel.TabIndex = 53;
+            this.elfdrPortBoxLabel.Text = "elfdr";
+            // 
+            // portBoxLabel
+            // 
+            this.portBoxLabel.BackColor = System.Drawing.Color.Transparent;
+            this.portBoxLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 6.25F);
+            this.portBoxLabel.ForeColor = System.Drawing.Color.Fuchsia;
+            this.portBoxLabel.Location = new System.Drawing.Point(51, 116);
+            this.portBoxLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.portBoxLabel.Name = "portBoxLabel";
+            this.portBoxLabel.Size = new System.Drawing.Size(37, 14);
+            this.portBoxLabel.TabIndex = 54;
+            this.portBoxLabel.Text = "payload";
+            // 
             // Payload_Sender
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Black;
-            this.ClientSize = new System.Drawing.Size(387, 245);
+            this.ClientSize = new System.Drawing.Size(387, 257);
+            this.Controls.Add(this.ElfdrPortBox);
+            this.Controls.Add(this.portBoxLabel);
+            this.Controls.Add(this.elfdrPortBoxLabel);
+            this.Controls.Add(this.scaleBtn);
+            this.Controls.Add(this.toggleDebugServerBtn);
             this.Controls.Add(this.tempStatusLabel);
             this.Controls.Add(this.elfElfdrBtn);
             this.Controls.Add(this.arrowLabel);
             this.Controls.Add(this.binElfdrBtn);
             this.Controls.Add(this.PS5Btn);
             this.Controls.Add(this.PS4Btn);
-            this.Controls.Add(this.sendElfdrCheckBx);
+            this.Controls.Add(this.sendElfdrCheckBox);
             this.Controls.Add(this.ResetSettingsBtn);
             this.Controls.Add(this.hashLabel);
             this.Controls.Add(this.label1);
@@ -610,7 +690,7 @@ namespace PayloadSender
         private Label label1;
         private System.Windows.Forms.Label hashLabel;
         private System.Windows.Forms.Button ResetSettingsBtn;
-        private System.Windows.Forms.CheckBox sendElfdrCheckBx;
+        private System.Windows.Forms.CheckBox sendElfdrCheckBox;
         private System.Windows.Forms.Button PS5Btn;
         private System.Windows.Forms.Button PS4Btn;
         private System.Windows.Forms.Button elfElfdrBtn;
@@ -618,6 +698,11 @@ namespace PayloadSender
         private System.Windows.Forms.Label TcpLabel;
         private System.Windows.Forms.Label arrowLabel;
         private System.Windows.Forms.Label tempStatusLabel;
+        private System.Windows.Forms.Button toggleDebugServerBtn;
+        private System.Windows.Forms.Button scaleBtn;
+        private System.Windows.Forms.TextBox ElfdrPortBox;
+        private System.Windows.Forms.Label elfdrPortBoxLabel;
+        private System.Windows.Forms.Label portBoxLabel;
     }
 }
 

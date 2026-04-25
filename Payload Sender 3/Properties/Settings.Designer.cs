@@ -86,12 +86,24 @@ namespace Blobs_Payload_Sender.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ElfLoader {
+        public bool ElfOverBin {
             get {
-                return ((bool)(this["ElfLoader"]));
+                return ((bool)(this["ElfOverBin"]));
             }
             set {
-                this["ElfLoader"] = value;
+                this["ElfOverBin"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SendElfdr {
+            get {
+                return ((bool)(this["SendElfdr"]));
+            }
+            set {
+                this["SendElfdr"] = value;
             }
         }
     }
