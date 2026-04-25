@@ -1,7 +1,6 @@
 ﻿using Blobs_Payload_Sender.Properties;
 using System;
 using System.ComponentModel;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
@@ -16,7 +15,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form // 71, 117
     {
-        internal const string version = "2.56.68"
+        internal const string version = "2.58.69"
         ;
 
         public Payload_Sender()
@@ -61,6 +60,8 @@ namespace PayloadSender
             // Hide debug controls
             RebootBtn.Visible = false;
             ResetSettingsBtn.Visible = false;
+            toggleDebugServerBtn.Visible = false;
+            scaleBtn.Visible = false;
 #endif
             // Load & apply saved control states/values
             LoadSavedSettings();
@@ -742,9 +743,9 @@ namespace PayloadSender
 
         private void PortBox_TextChanged(object sender, EventArgs e)
         {
-            if (Int32.TryParse(PortBox.Text, out var ip))
+            if (Int32.TryParse(PortBox.Text, out var port))
             {
-                Settings.Port = ip;
+                Settings.Port = port;
             }
         }
 
@@ -925,6 +926,14 @@ namespace PayloadSender
             Venat.Dispose();
 
             Environment.Exit(exitCode);
+        }
+
+        private void ElfdrPortBox_TextChanged(object sender, EventArgs e)
+        {
+            if (Int32.TryParse(ElfdrPortBox.Text, out var port))
+            {
+                Settings.ElfdrPort = port;
+            }
         }
 
         private void scaleBtn_Click(object sender, EventArgs e)

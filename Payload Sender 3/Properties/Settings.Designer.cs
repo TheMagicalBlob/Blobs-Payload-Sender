@@ -106,5 +106,17 @@ namespace Blobs_Payload_Sender.Properties {
                 this["SendElfdr"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("9020")]
+        public int ElfdrPort {
+            get {
+                return ((int)(this["ElfdrPort"]));
+            }
+            set {
+                this["ElfdrPort"] = value;
+            }
+        }
     }
 }

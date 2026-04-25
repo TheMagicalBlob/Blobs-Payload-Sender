@@ -538,6 +538,7 @@ namespace PayloadSender
             // 
             // toggleDebugServerBtn
             // 
+            this.toggleDebugServerBtn.Enabled = false;
             this.toggleDebugServerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.toggleDebugServerBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
             this.toggleDebugServerBtn.ForeColor = System.Drawing.Color.Fuchsia;
@@ -579,6 +580,7 @@ namespace PayloadSender
             this.ElfdrPortBox.TabIndex = 1;
             this.ElfdrPortBox.Text = "9020";
             this.ElfdrPortBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.ElfdrPortBox.TextChanged += new System.EventHandler(this.ElfdrPortBox_TextChanged);
             // 
             // elfdrPortBoxLabel
             // 
