@@ -17,7 +17,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form // 71, 117
     {
-        internal const string version = "2.62.79"
+        internal const string version = "2.62.80"
         ;
 
         public Payload_Sender()
@@ -329,7 +329,7 @@ namespace PayloadSender
                 catch (FileNotFoundException)
                 {
                     echo("File doesn't exist, doing jack.");
-                    editStatusLabel("File Error");
+                    Venat?.Invoke(editStatusLabel, "File Error!");
                     MessageBox.Show("Invalid payload path provided (File doesn't exist). Please update the path.\nPath: " + PayloadPath, $"Payload Path did not point to a valid file.");
                 }
                 finally {

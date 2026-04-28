@@ -504,7 +504,6 @@ namespace PayloadSender
             this.tempStatusLabel.Name = "tempStatusLabel";
             this.tempStatusLabel.Size = new System.Drawing.Size(120, 24);
             this.tempStatusLabel.TabIndex = 49;
-            this.tempStatusLabel.Text = "Error\r\n(sent more than filesize?!)";
             this.tempStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // toggleDebugServerBtn
