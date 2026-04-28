@@ -49,12 +49,10 @@ namespace PayloadSender
             this.separatorLine0 = new PayloadSender.Payload_Sender.Label();
             this.separatorLine1 = new PayloadSender.Payload_Sender.Label();
             this.propertyEditorLabel = new System.Windows.Forms.Label();
-            this.RebootBtn = new System.Windows.Forms.Button();
             this.ArrowBoxesApplyBtn = new System.Windows.Forms.Button();
             this.ThemeBoxApplyBtn = new System.Windows.Forms.Button();
             this.label1 = new PayloadSender.Payload_Sender.Label();
             this.hashLabel = new System.Windows.Forms.Label();
-            this.ResetSettingsBtn = new System.Windows.Forms.Button();
             this.sendElfdrCheckBox = new System.Windows.Forms.CheckBox();
             this.PS5Btn = new System.Windows.Forms.Button();
             this.PS4Btn = new System.Windows.Forms.Button();
@@ -122,6 +120,7 @@ namespace PayloadSender
             // 
             this.BrowseButton.BackColor = System.Drawing.Color.Black;
             this.BrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BrowseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F);
             this.BrowseButton.ForeColor = System.Drawing.Color.Fuchsia;
             this.BrowseButton.Location = new System.Drawing.Point(266, 155);
             this.BrowseButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
@@ -350,21 +349,6 @@ namespace PayloadSender
             this.propertyEditorLabel.TabIndex = 36;
             this.propertyEditorLabel.Text = "Theme Editor";
             // 
-            // RebootBtn
-            // 
-            this.RebootBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RebootBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
-            this.RebootBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.RebootBtn.Location = new System.Drawing.Point(338, 56);
-            this.RebootBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.RebootBtn.Name = "RebootBtn";
-            this.RebootBtn.Size = new System.Drawing.Size(46, 20);
-            this.RebootBtn.TabIndex = 37;
-            this.RebootBtn.TabStop = false;
-            this.RebootBtn.Text = "Reboot";
-            this.RebootBtn.UseVisualStyleBackColor = true;
-            this.RebootBtn.Click += new System.EventHandler(this.RebootBtn_Click);
-            // 
             // ArrowBoxesApplyBtn
             // 
             this.ArrowBoxesApplyBtn.BackColor = System.Drawing.Color.Black;
@@ -418,21 +402,6 @@ namespace PayloadSender
             this.hashLabel.Size = new System.Drawing.Size(39, 14);
             this.hashLabel.TabIndex = 41;
             this.hashLabel.Text = "Hash";
-            // 
-            // ResetSettingsBtn
-            // 
-            this.ResetSettingsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ResetSettingsBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
-            this.ResetSettingsBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.ResetSettingsBtn.Location = new System.Drawing.Point(264, 32);
-            this.ResetSettingsBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.ResetSettingsBtn.Name = "ResetSettingsBtn";
-            this.ResetSettingsBtn.Size = new System.Drawing.Size(76, 23);
-            this.ResetSettingsBtn.TabIndex = 42;
-            this.ResetSettingsBtn.TabStop = false;
-            this.ResetSettingsBtn.Text = "Reset Settings";
-            this.ResetSettingsBtn.UseVisualStyleBackColor = true;
-            this.ResetSettingsBtn.Click += new System.EventHandler(this.ResetSettingsBtn_Click);
             // 
             // sendElfdrCheckBox
             // 
@@ -528,24 +497,25 @@ namespace PayloadSender
             // tempStatusLabel
             // 
             this.tempStatusLabel.BackColor = System.Drawing.Color.Transparent;
-            this.tempStatusLabel.Font = new System.Drawing.Font("Verdana", 5.75F);
+            this.tempStatusLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
             this.tempStatusLabel.ForeColor = System.Drawing.Color.Fuchsia;
             this.tempStatusLabel.Location = new System.Drawing.Point(264, 130);
             this.tempStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.tempStatusLabel.Name = "tempStatusLabel";
             this.tempStatusLabel.Size = new System.Drawing.Size(120, 24);
             this.tempStatusLabel.TabIndex = 49;
+            this.tempStatusLabel.Text = "Error\r\n(sent more than filesize?!)";
+            this.tempStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // toggleDebugServerBtn
             // 
-            this.toggleDebugServerBtn.Enabled = false;
             this.toggleDebugServerBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.toggleDebugServerBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
+            this.toggleDebugServerBtn.Font = new System.Drawing.Font("Verdana", 6.5F);
             this.toggleDebugServerBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.toggleDebugServerBtn.Location = new System.Drawing.Point(273, 56);
+            this.toggleDebugServerBtn.Location = new System.Drawing.Point(293, 32);
             this.toggleDebugServerBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.toggleDebugServerBtn.Name = "toggleDebugServerBtn";
-            this.toggleDebugServerBtn.Size = new System.Drawing.Size(64, 20);
+            this.toggleDebugServerBtn.Size = new System.Drawing.Size(46, 20);
             this.toggleDebugServerBtn.TabIndex = 50;
             this.toggleDebugServerBtn.TabStop = false;
             this.toggleDebugServerBtn.Text = "Start Local Server";
@@ -557,7 +527,7 @@ namespace PayloadSender
             this.scaleBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.scaleBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.5F);
             this.scaleBtn.ForeColor = System.Drawing.Color.Fuchsia;
-            this.scaleBtn.Location = new System.Drawing.Point(320, 77);
+            this.scaleBtn.Location = new System.Drawing.Point(320, 56);
             this.scaleBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.scaleBtn.Name = "scaleBtn";
             this.scaleBtn.Size = new System.Drawing.Size(64, 20);
@@ -623,12 +593,10 @@ namespace PayloadSender
             this.Controls.Add(this.PS5Btn);
             this.Controls.Add(this.PS4Btn);
             this.Controls.Add(this.sendElfdrCheckBox);
-            this.Controls.Add(this.ResetSettingsBtn);
             this.Controls.Add(this.hashLabel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ThemeBoxApplyBtn);
             this.Controls.Add(this.ArrowBoxesApplyBtn);
-            this.Controls.Add(this.RebootBtn);
             this.Controls.Add(this.propertyEditorLabel);
             this.Controls.Add(this.separatorLine1);
             this.Controls.Add(this.separatorLine0);
@@ -686,12 +654,10 @@ namespace PayloadSender
         private PayloadSender.Payload_Sender.Label separatorLine0;
         private Label separatorLine1;
         private System.Windows.Forms.Label propertyEditorLabel;
-        private System.Windows.Forms.Button RebootBtn;
         private System.Windows.Forms.Button ArrowBoxesApplyBtn;
         private System.Windows.Forms.Button ThemeBoxApplyBtn;
         private Label label1;
         private System.Windows.Forms.Label hashLabel;
-        private System.Windows.Forms.Button ResetSettingsBtn;
         private System.Windows.Forms.CheckBox sendElfdrCheckBox;
         private System.Windows.Forms.Button PS5Btn;
         private System.Windows.Forms.Button PS4Btn;

@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PayloadSender
@@ -22,7 +20,7 @@ namespace PayloadSender
 
         public static Pen FormDecorationPen = new Pen(AppAccentColour); // Colouring for Border Drawing
 
-        public static Font MainFont = new Font("Gadugi", 8.25f, FontStyle.Bold); // For the vast majority of controls; anything the user doesn't edit, really.
+        public static Font MainFont = new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold); // For the vast majority of controls; anything the user doesn't edit, really.
         public static Font TextFont = new Font("Segoe UI Semibold", 7.5f); // For option controls with customized contents
 
         private static int ThemeHeightAdjustment;

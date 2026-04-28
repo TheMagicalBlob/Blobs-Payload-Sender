@@ -1,7 +1,6 @@
 ﻿using Blobs_Payload_Sender.Properties;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -10,12 +9,15 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Windows.Forms;
+#if DEBUG
+using System.Diagnostics;
+#endif
 
 namespace PayloadSender
 {
     internal partial class Payload_Sender : Form // 71, 117
     {
-        internal const string version = "2.58.69"
+        internal const string version = "2.62.79"
         ;
 
         public Payload_Sender()
@@ -49,7 +51,9 @@ namespace PayloadSender
             getIPBoxValue = (_) => IPBox.Text;
             getPortBoxValue = (_) => PortBox.Text;
             getElfdrPortBoxValue = (_) => ElfdrPortBox.Text;
-            
+
+            getPathBoxValue = (_) => PayloadPathBox.Text;
+
             editStatusLabel = (msg) => tempStatusLabel.Text = msg?.ToString() ?? "null";
 
 
@@ -58,8 +62,6 @@ namespace PayloadSender
             //##-> Miscellaneous other form setup crap
 #if !DEBUG
             // Hide debug controls
-            RebootBtn.Visible = false;
-            ResetSettingsBtn.Visible = false;
             toggleDebugServerBtn.Visible = false;
             scaleBtn.Visible = false;
 #endif
@@ -89,11 +91,11 @@ namespace PayloadSender
         private readonly Thread PayloadThread;
         private readonly Thread LocalServerThread;
 
-        private Socket PayloadSocket;
+        private TcpClient PayloadSocket;
 
         private delegate object CTControlProbe(object obj = null);
 
-        private CTControlProbe getIPBoxValue, getElfdrPortBoxValue, getPortBoxValue, editStatusLabel;
+        private CTControlProbe getIPBoxValue, getElfdrPortBoxValue, getPortBoxValue, editStatusLabel, getPathBoxValue;
 
         private bool ReadyToConnect;
 
@@ -136,7 +138,7 @@ namespace PayloadSender
         {
             ThemeBox.Value = colour;
 
-            var c = Color.FromArgb(0xFF, ThemeBox.Red, ThemeBox.Green, ThemeBox.Blue);
+            var c = Color.FromArgb(alpha:0xFF, ThemeBox.Red, ThemeBox.Green, ThemeBox.Blue);
 
             foreach (var control in Controls.Cast<Control>().Where(control => control.GetType() != typeof(Label)))
             {
@@ -160,6 +162,7 @@ namespace PayloadSender
 #if !DEBUG
             try {
 #endif
+                // Load control states
                 IPBox.Text = Settings.IPAddress;
 
                 PortBox.Text = Convert.ToString(Settings.Port);
@@ -196,57 +199,6 @@ namespace PayloadSender
 
 
 
-        /// <summary>
-        /// //!
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BrowseButton_Click(object sender, EventArgs e)
-        {
-            var fileDialogue = new OpenFileDialog
-            {
-                Filter = "Payload/Executable|*.bin;*.elf",
-                Title = "Select a .bin or /elf Payload to send."
-            };
-
-            if (fileDialogue.ShowDialog() == DialogResult.OK)
-            {
-                Settings.PayloadPath = PayloadPathBox.Text = fileDialogue.FileName;
-            }
-        }
-
-
-
-
-
-
-        /// <summary>
-        /// //!
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SendButton_Click(object sender, EventArgs e)
-        {
-            if (ReadyToConnect)
-            {
-                return;
-            }
-
-
-            if (!File.Exists(PayloadPath))
-            {
-                MessageBox.Show("Invalid payload path provided (File doesn't exist). Please update the path.\nPath: " + PayloadPath, $"Payload Path did not point to a valid file.");
-                return;
-            }
-
-
-            if (PayloadThread.ThreadState == System.Threading.ThreadState.Unstarted)
-            {
-                PayloadThread.Start();
-            }
-
-            ReadyToConnect = true;
-        }
 
 
 
@@ -261,62 +213,79 @@ namespace PayloadSender
             int sent;
             byte[] payload;
             var error = string.Empty;
-            PayloadSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            PayloadSocket = null;
 
             while (true)
             {
                 while (!ReadyToConnect)
                 {
-                    Thread.Sleep(7);
+                    Thread.Sleep(7); // Wait for first/subsequent file
                 }
 
-
-                // Verify provided file path
-                if (!File.Exists(PayloadPath))
-                {
-                    tempStatusLabel.Text = "File does not exist.";
-                    ReadyToConnect = false;
-                    continue;
-                }
 
 
 
                 try {
+                    // Verify provided file path
+                    if (!File.Exists(PayloadPath))
+                    {
+                        throw new FileNotFoundException();
+                    }
+
+
                     // Send the sekected elfdr payload and sleep for ~3 seconds before sending the main provided payload
                     if (sendElfdrCheckBox.Checked)
                     {
-                        PayloadSocket.Connect
-                        (
-                            new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()),
-                            Convert.ToInt32(getElfdrPortBoxValue()))
-                        );
+                        PayloadSocket = new TcpClient();
+                        PayloadSocket.Connect(new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()), Convert.ToInt32(getElfdrPortBoxValue())));
 
-
+                        _echo("Loading selcted elfdr payload... ");
                         payload = GetSelectedElfdrPayload();
-                        sent = PayloadSocket.Send(payload);
+                        echo($"payload loaded. (Size: {payload.Length:X})");
+
+
+                        _echo("Sending elfdr payload... ");
+                        sent = PayloadSocket.Client.Send(payload);
+                        echo($"payload sent. (sent: {sent:X})\n");
+
+
+                        if (sent < 0)
+                        {
+                            goto QUOI;
+                        }
 
                         if (sent < payload.Length)
                         {
+                            error = "(not all data was sent)";
                             goto fack;
                         }
-                        else {
-                            Thread.Sleep(3300);
+                        if (sent > payload.Length)
+                        {
+                            error = "(sent more than filesize?!)";
+                            goto fack;
                         }
+
+                        echo("loader sent without error.\n");
+                        Thread.Sleep(3300);
                     }
                     sent = -1;
 
 
 
-                    // More words
-                    PayloadSocket.Connect
-                    (
-                        new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()),
-                        Convert.ToInt32(getPortBoxValue()))
-                    );
 
+
+
+                    // Reset socket and send the payload provided in the PayloadPathBox
+                    PayloadSocket = new TcpClient();
+                    PayloadSocket.Connect(new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()), Convert.ToInt32(getPortBoxValue())));
+
+                    _echo("Loading selcted payload... ");
                     payload = File.ReadAllBytes(PayloadPath);
+                    echo($"payload loaded. (Size: {payload.Length:X})");
 
-                    sent = PayloadSocket.Send(payload);
+                    _echo("Sending loaded payload... ");
+                    sent = PayloadSocket.Client.Send(payload);
+                    echo($"payload sent. (sent: {sent:X})\n");
 
                     if (sent < 0)
                     {
@@ -325,43 +294,109 @@ namespace PayloadSender
 
                     if (sent < payload.Length)
                     {
-                        editStatusLabel($"Error\n(not all data was sent)");
+                        error = "(not all data was sent)";
                         goto fack;
                     }
 
                     if (sent > payload.Length)
                     {
-                        editStatusLabel("Error\n(sent more than filesize?!)");
+                        error = "(sent more than filesize?!)";
                         goto fack;
                     }
 
-                    editStatusLabel("Success");
+                    Venat?.Invoke(editStatusLabel, "Success");
                     continue;
+
 
 
 
                 fack:
-                    MessageBox.Show($"ERROR: Sent amount wasn't equal to the size of the selected file.\nSent 0x{sent:X} out of 0x{payload.Length:X}", "Error: not all data sent");
-                    throw new SocketException();
-                    continue;
+                    echo($"sent the wrong amount of data; see exception message");
+                    Venat?.Invoke(editStatusLabel, "TCP Error");
+                    throw new InvalidDataException($"Sent amount wasn't equal to the size of the selected file.\nSent 0x{sent:X} out of 0x{payload.Length:X}");
 
 
                 QUOI:
-                    editStatusLabel("Critical Error");
-                    MessageBox.Show($"Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}", "QUOI?!");
-                    throw new SocketException();
-                    continue;
+                    error = "QUOI?!";
+                    echo("sent value remained -1");
+                    Venat?.Invoke(editStatusLabel, "!ERROR!");
+                    throw new InvalidDataException($"Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}");
+                }
+                catch (InvalidDataException message)
+                {
+                    MessageBox.Show("Error: " + message.Message, error);
                 }
                 catch (FileNotFoundException)
                 {
-                    MessageBox.Show("Please provide a valid payload path. (file does not exist)", $"Path \"{PayloadPath}\" was not valid.");
+                    echo("File doesn't exist, doing jack.");
+                    editStatusLabel("File Error");
+                    MessageBox.Show("Invalid payload path provided (File doesn't exist). Please update the path.\nPath: " + PayloadPath, $"Payload Path did not point to a valid file.");
                 }
                 finally {
-                    PayloadSocket?.Disconnect(true);
+                    if (PayloadSocket?.Connected ?? false)
+                    {
+                        PayloadSocket?.Close();
+                    }
                     ReadyToConnect = false;
                 }
             }
         }
+
+
+
+
+
+
+        private void LocalServer()
+        {
+            var listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 23);
+
+            while (true)
+            {
+                listener.Start();
+                _echo($"Listenter started, waiting for socket... ");
+
+                var socket = listener.AcceptSocket();
+                echo($"Accepted socket.");
+
+                listener.Stop();
+
+
+
+
+                echo("Waiting for file.");
+                while (socket.Available < 1)
+                {
+                    Thread.Sleep(2);
+                }
+
+
+                echo($"Receiving File... ");
+                var dataStream = new MemoryStream();
+                int num;
+                byte[] buff;
+
+                do {
+                    num = socket.Receive(buff = new byte[socket.Available]);
+
+                    dataStream.Write(buff, 0, num);
+                    
+                    echo($"- Recieved {num:X} bytes. ({File.ReadAllBytes(PayloadPath).Length:X}) - ({num:X})");
+                }
+                while (socket.Available > 0);
+
+
+
+                var newFile = Directory.GetCurrentDirectory() + '\\' + PayloadPath.Substring(PayloadPath.LastIndexOf('\\') + 1);
+                
+                echo($"File read, saving @{newFile}");
+                File.WriteAllBytes(newFile, dataStream.ToArray());
+            }
+        }
+
+
+
+
 
 
         private byte[] GetSelectedElfdrPayload()
@@ -370,26 +405,18 @@ namespace PayloadSender
             {
                 return Resources.elfldr_ps5_0_22_2;
             }
-            else {
+            else
+            {
                 if (Settings.ElfOverBin)
                 {
                     return Resources.elfldr_ps4_0_6_elf;
                 }
-                else {
+                else
+                {
                     return Resources.elfldr_ps4_0_6_bin;
                 }
             }
 
-        }
-
-
-
-        private void LocalServer()
-        {
-            return;
-
-            var listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 23);
-            listener.Start();
         }
 
 
@@ -448,10 +475,10 @@ namespace PayloadSender
 
 
 
-            MinimizeBtn.Click += new EventHandler((sender, e) => Venat.WindowState = FormWindowState.Minimized);
-
             // TODO:
             // - Add an updated mouse enter/leave highlight function
+
+            MinimizeBtn.Click += new EventHandler((sender, e) => Venat.WindowState = FormWindowState.Minimized);
             //MinimizeBtn.MouseEnter += new EventHandler((sender, e) => ((Control)sender).ForeColor = Color.FromArgb(90, 100, 255));
             //MinimizeBtn.MouseLeave += new EventHandler((sender, e) => ((Control)sender).ForeColor = Color.FromArgb(0, 0, 0));
 
@@ -648,6 +675,56 @@ namespace PayloadSender
         //---|   Event Handler Declarations   |---\\
         //========================================\\
         #region [Event Handler Declarations]
+        /// <summary>
+        /// //!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BrowseButton_Click(object sender, EventArgs e)
+        {
+            var fileDialogue = new OpenFileDialog
+            {
+                Filter = "Payload/Executable|*.bin;*.elf",
+                Title = "Select a .bin or /elf Payload to send."
+            };
+
+            if (fileDialogue.ShowDialog() == DialogResult.OK)
+            {
+                Settings.PayloadPath = PayloadPathBox.Text = fileDialogue.FileName;
+            }
+        }
+
+
+
+
+
+
+        /// <summary>
+        /// //!
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SendButton_Click(object sender, EventArgs e)
+        {
+            if (ReadyToConnect)
+            {
+                echo("Already/still sending payload");
+                return;
+            }
+
+
+            if (PayloadThread.ThreadState == System.Threading.ThreadState.Unstarted)
+            {
+                PayloadThread.Start();
+            }
+
+            ReadyToConnect = true;
+            echo("Ready to Connect");
+        }
+
+
+
+
 
         private void PS5Btn_Click(object sender, EventArgs e)
         {
@@ -658,6 +735,10 @@ namespace PayloadSender
 
             TogglePlatformButtonsSelectionHighlight();
         }
+
+
+
+
 
 
         private void PS4Btn_Click(object sender, EventArgs e)
@@ -690,7 +771,7 @@ namespace PayloadSender
         private void RebootBtn_Click(object sender, EventArgs e)
         {
 #if DEBUG
-            PayloadSocket?.Disconnect(false);
+            PayloadSocket?.Close();
             Settings?.Save();
             Close();
 #endif
@@ -829,7 +910,13 @@ namespace PayloadSender
 
         private void toggleDebugServerBtn_Click(object sender, EventArgs e)
         {
-            LocalServerThread?.Start();
+            if (LocalServerThread?.ThreadState == System.Threading.ThreadState.Unstarted)
+            {
+                LocalServerThread.Start();
+            }
+            else {
+                echo("non");
+            }
         }
         #endregion
 
@@ -854,7 +941,13 @@ namespace PayloadSender
         /// <br/> Appends an empty new line if no message is provided.
         /// </summary>
 #pragma warning disable IDE1006 // bug off, this one's lowercase
-        public static void echo(object message = null)
+        public static void echo(object
+#if DEBUG
+            message
+#else
+            _
+#endif
+            = null)
         {
 #if DEBUG
             var str = message?.ToString() ?? string.Empty;
@@ -877,7 +970,14 @@ namespace PayloadSender
         /// <br/> Appends a single whitespace character if no message is provided.
         /// </summary>
         /// <param name="message"></param>
-        public static void _echo(object message = null)
+        public static void _echo(object
+#if DEBUG
+            message
+#else
+            _
+#endif
+            = null
+            )
         {
 #if DEBUG
             var str = message?.ToString() ?? " ";
@@ -915,8 +1015,7 @@ namespace PayloadSender
             if (Venat.PayloadSocket != null)
             {
                 _echo("Closing socket... ");
-                Venat.PayloadSocket?.Disconnect(false);
-                Venat.PayloadSocket?.Close(1200);
+                Venat.PayloadSocket?.Close();
                 echo("Socket disconnected & closed.");
             }
 
@@ -941,8 +1040,8 @@ namespace PayloadSender
             this.Scale(new SizeF(1.01f, 1.01f));
         }
 #pragma warning restore IDE1006
-        #endregion
-        #endregion (function declarations)
+#endregion
+#endregion (function declarations)
 
 
 
