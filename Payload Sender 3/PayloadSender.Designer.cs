@@ -33,7 +33,7 @@ namespace PayloadSender
             this.IPBox = new System.Windows.Forms.TextBox();
             this.PortBox = new System.Windows.Forms.TextBox();
             this.PayloadPathBox = new System.Windows.Forms.TextBox();
-            this.BrowseButton = new System.Windows.Forms.Button();
+            this.PayloadPathBrowseBtn = new System.Windows.Forms.Button();
             this.MinimizeBtn = new System.Windows.Forms.Button();
             this.ExitBtn = new System.Windows.Forms.Button();
             this.ThemeBtn = new System.Windows.Forms.Button();
@@ -116,20 +116,20 @@ namespace PayloadSender
             this.PayloadPathBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.PayloadPathBox.TextChanged += new System.EventHandler(this.PayloadPathBox_TextChanged);
             // 
-            // BrowseButton
+            // PayloadPathBrowseBtn
             // 
-            this.BrowseButton.BackColor = System.Drawing.Color.Black;
-            this.BrowseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BrowseButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F);
-            this.BrowseButton.ForeColor = System.Drawing.Color.Fuchsia;
-            this.BrowseButton.Location = new System.Drawing.Point(266, 155);
-            this.BrowseButton.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
-            this.BrowseButton.Name = "BrowseButton";
-            this.BrowseButton.Size = new System.Drawing.Size(117, 23);
-            this.BrowseButton.TabIndex = 0;
-            this.BrowseButton.Text = "Browse for Payload...";
-            this.BrowseButton.UseVisualStyleBackColor = false;
-            this.BrowseButton.Click += new System.EventHandler(this.BrowseButton_Click);
+            this.PayloadPathBrowseBtn.BackColor = System.Drawing.Color.Black;
+            this.PayloadPathBrowseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PayloadPathBrowseBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F);
+            this.PayloadPathBrowseBtn.ForeColor = System.Drawing.Color.Fuchsia;
+            this.PayloadPathBrowseBtn.Location = new System.Drawing.Point(266, 155);
+            this.PayloadPathBrowseBtn.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.PayloadPathBrowseBtn.Name = "PayloadPathBrowseBtn";
+            this.PayloadPathBrowseBtn.Size = new System.Drawing.Size(117, 23);
+            this.PayloadPathBrowseBtn.TabIndex = 0;
+            this.PayloadPathBrowseBtn.Text = "Browse for Payload...";
+            this.PayloadPathBrowseBtn.UseVisualStyleBackColor = false;
+            this.PayloadPathBrowseBtn.Click += new System.EventHandler(this.PayloadPathBrowseBtn_Click);
             // 
             // MinimizeBtn
             // 
@@ -611,7 +611,7 @@ namespace PayloadSender
             this.Controls.Add(this.ExitBtn);
             this.Controls.Add(this.MinimizeBtn);
             this.Controls.Add(this.PortBox);
-            this.Controls.Add(this.BrowseButton);
+            this.Controls.Add(this.PayloadPathBrowseBtn);
             this.Controls.Add(this.BuildLabel);
             this.Controls.Add(this.IPBox);
             this.Controls.Add(this.PayloadPathBox);
@@ -637,7 +637,7 @@ namespace PayloadSender
         private System.Windows.Forms.TextBox IPBox;
         private System.Windows.Forms.TextBox PortBox;
         private System.Windows.Forms.TextBox PayloadPathBox;
-        private System.Windows.Forms.Button BrowseButton;
+        private System.Windows.Forms.Button PayloadPathBrowseBtn;
         private System.Windows.Forms.Button MinimizeBtn;
         private System.Windows.Forms.Button ExitBtn;
         private System.Windows.Forms.Button ThemeBtn;
