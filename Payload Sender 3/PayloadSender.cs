@@ -19,7 +19,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form // 71, 117
     {
-        internal const string version = "2.64.84"
+        internal const string version = "2.65.84"
         ;
 
         public Payload_Sender()
@@ -444,6 +444,7 @@ namespace PayloadSender
 
 
 
+
         //======================================================\\
         //---|   Form Functionality Function Declarations   |---\\
         //======================================================\\
@@ -795,7 +796,7 @@ namespace PayloadSender
 
 
             // Avoid saving invalid paths, unless there's no valid one saved anyway
-            if ((File.Exists(path) || (Settings.PayloadPath?.Any() ?? false)) && !File.Exists(Settings.PayloadPath))
+            //if ((File.Exists(path) || (Settings.PayloadPath?.Any() ?? false)) && !File.Exists(Settings.PayloadPath))
             {
                 Settings.PayloadPath = path;
             }
