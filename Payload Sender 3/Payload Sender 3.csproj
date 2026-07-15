@@ -7,7 +7,7 @@
     <ProjectGuid>{B5103A5E-5FD3-4341-8DFC-BF652B414354}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Blobs_Payload_Sender</RootNamespace>
-    <AssemblyName>Payload Sender 2.64.84</AssemblyName>
+    <AssemblyName>Payload Sender 2.65.84</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -83,6 +83,9 @@
       <DependentUpon>PayloadSender.cs</DependentUpon>
     </Compile>
     <Compile Include="PayloadSender.Design.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Payload_Sender.dmenu_type_ids.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
