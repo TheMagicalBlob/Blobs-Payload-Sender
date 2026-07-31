@@ -71,6 +71,21 @@ namespace PayloadSender
 #endif
             // Load & apply saved control states/values
             LoadSavedSettings();
+
+
+
+            PayloadPathBox.LostFocus += (sender, _) =>
+            {
+                var box = (TextBox)sender;
+                if (box == null)
+                {
+                    return;
+                }
+
+                // Move the caret to the right of the text box, to show the file name consistently.
+                box.SelectionStart = box.Text?.Length ?? 0;
+                box.ScrollToCaret();
+            };
         }
 
 
@@ -797,7 +812,12 @@ namespace PayloadSender
             var path = payloadPathBox.Text.Replace("\"", string.Empty);
             Settings.PayloadPath = Settings.PayloadPath.Replace("\"", string.Empty);
 
+            if (path.Length < 4)
+            {
+                return;
+            }
 
+            
             // Avoid saving invalid paths, unless there's no valid one saved anyway
             //if ((File.Exists(path) || (Settings.PayloadPath?.Any() ?? false)) && !File.Exists(Settings.PayloadPath))
             {
@@ -806,6 +826,13 @@ namespace PayloadSender
 
             PayloadPath = path;
 
+
+
+
+            if (((TextBox)sender).Focused)
+            {
+                return;
+            }
 
             // Move the caret to the right of the text box, to show the file name consistently.
             payloadPathBox.SelectionStart = path.Length;
