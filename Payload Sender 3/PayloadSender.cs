@@ -11,6 +11,8 @@ using System.Threading;
 using System.Windows.Forms;
 using System.Runtime.Remoting.Messaging;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms.VisualStyles;
+using System.Text;
 
 
 #if DEBUG
@@ -21,9 +23,14 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form // 71, 117
     {
-        internal const string version = "2.65.84"
+        internal const string version = "2.67.97"
         ;
 
+
+
+        /// <summary>
+        /// Initialize a new instance of the Payload_Sender GUI class. <br/>
+        /// </summary>
         public Payload_Sender()
         {
             //##-> Initialize form and form references
@@ -50,7 +57,6 @@ namespace PayloadSender
 
             //##-> Initialize thread used to send payloads
             PayloadThread = new Thread(Connect);
-            LocalServerThread = new Thread(LocalServer);
 
             getIPBoxValue = (_) => IPBox.Text;
             getPortBoxValue = (_) => PortBox.Text;
@@ -58,7 +64,7 @@ namespace PayloadSender
 
             getPathBoxValue = (_) => PayloadPathBox.Text;
 
-            editStatusLabel = (msg) => tempStatusLabel.Text = msg?.ToString() ?? "null";
+            editStatusLabel = (msg) => StatusLabel.Text = msg?.ToString() ?? "null";
 
 
 
@@ -95,13 +101,112 @@ namespace PayloadSender
 
 
 
+
+
+        /// <summary>
+        /// Initialize a new instance of the Payload_Sender class with limited functionality, for use from the command prompt. <br/>
+        /// 
+        /// Each payload path provided in args is sent with a delay read from 0x14 in a local ps.blb file.
+        /// </summary>
+        /// <param name="args"> The path(s) to any payload(s) to immediately send on startup, then exit. </param>
+        public Payload_Sender(string[] args)
+        {
+            if (args?.Length > 0)
+            {
+                bool? ret = CMDLoadSettings();
+                if (ret == null)
+                {
+                    echo("Issue encountere during {nameof(LoadSettings)}, defaults used.");
+                }
+                else if ((bool)ret)
+                {
+                    echo("{nameof(LoadSettings)} encountered an exception, defaults used.");
+                }
+
+
+
+                var filtered_args = args.Select(arg => arg = arg?.TrimEnd('\\') ?? string.Empty).Where(arg => File.Exists(arg)).ToArray();
+
+                if (filtered_args.Length < 1)
+                {
+                    echo("ERROR: None of the provided paths were valid. Aborting.");
+                }
+                else if (filtered_args.Length < args.Length)
+                {
+                    echo($"WARNING: {args.Length - filtered_args.Length} invalid paths were ignored.");
+                }
+
+
+
+
+
+                int sent;
+                byte[] payload;
+                foreach (var file in filtered_args)
+                {
+                    PayloadSocket = new TcpClient();
+                    PayloadSocket.Connect(new IPEndPoint(IPAddress.Parse(CMDIP), CMDPORT));
+
+
+                    if (!PayloadSocket.Connected)
+                    {
+                        echo("Abort.");
+                        MessageBox.Show("Socket failed to connect, aborting.");
+                        goto _beh;
+                    }
+
+
+                    echo("Sending file: " + file);
+
+                    payload = File.ReadAllBytes(file) ?? Array.Empty<byte>();
+                    if (payload.Length < 0x4010)
+                    {
+                        echo($"ERROR: Invalid length of loaded file ({payload.Length:X}), skipping file \"{file}\"");
+                        return;
+                    }
+
+
+                    sent = PayloadSocket.Client.Send(payload);
+
+                    if (sent != payload.Length)
+                    {
+                        MessageBox.Show($"ERROR: Sent length was not equal to payload length. ({sent} != {payload.Length})");
+                    }
+
+                    PayloadSocket?.Close();
+
+                    Thread.Sleep(CMDDELAY);
+                }
+
+                PayloadSocket = null;
+
+                echo("Finished, exiting");
+
+
+            _beh:
+                PayloadSocket?.Close();
+
+                exit();
+                return;
+            }
+        }
+
+
+
+
+
+
+
+
         //========================================\\
         //--|   Global Variable Declarations   |--\\
         //========================================\\
         #region [Global Variable Declarations]
 
         public static string PayloadPath;
-        
+
+        private static string CMDIP;
+        private static int CMDPORT, CMDDELAY;
 
 
         private static Payload_Sender Venat;
@@ -109,7 +214,7 @@ namespace PayloadSender
         private static Settings Settings;
 
         private readonly Thread PayloadThread;
-        private readonly Thread LocalServerThread;
+        private Thread LocalServerThread;
 
         private TcpClient PayloadSocket;
 
@@ -151,9 +256,9 @@ namespace PayloadSender
         #region [Function Declarations]
 
         /// <summary>
-        /// //!
+        /// Set the fore colour of each non-label control to provided RGB value
         /// </summary>
-        /// <param name="colour"></param>
+        /// <param name="colour"> The RGBA value to use (RGBA alpha is ignored). </param>
         private void ChangeControlColours(int colour)
         {
             ThemeBox.Value = colour;
@@ -168,6 +273,162 @@ namespace PayloadSender
             Settings.Theme = colour;
             Settings.Save();
         }
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Command line usage version. Uses local file in sender working directory rather than the native winforms settings file<br/>
+        /// Load the settings from a ps.blb file in the payload sender's working directory. If one does not exist, default values are used, and an attempt to create a default ps.blb is made.
+        /// </summary>
+        /// <returns>
+        /// On success, returns false.<br/>
+        /// On handled failure, returns null and defaults IP and Port.<br/><br/>
+        /// 
+        /// If an exception occurs, true is returned. IP and Port are still defaulted
+        /// </returns>
+        private bool? CMDLoadSettings()
+        {
+            try {
+                var settings_file_path = Directory.GetCurrentDirectory() + @"\ps.blb";
+                if (!File.Exists(settings_file_path))
+                {
+                    // Settings file doesn't exist, assign defaults and create new one using them
+                    echo($@"Settings file not found at {settings_file_path}, creating default and using default values.");
+                    CMDIP = "192.168.137.169";
+                    CMDPORT = 9021;
+                    CMDDELAY = 3000;
+
+                    if (CMDCreateDefaultSettings())
+                    {
+                        echo("Unable to create default settings file.");
+                        return null;
+                    }
+                    return false;
+                }
+
+
+                var fs = File.ReadAllBytes(settings_file_path);
+
+
+                // Load IP address
+                CMDIP = string.Empty;
+                for(int i = 0;;)
+                {
+                    if (i >= fs.Length)
+                    {
+                        echo("ERROR: Reached the end of the byte array before we finished reading the IP. Aboring and using default settings.\nRead IP: {CMDIP}");
+
+                        CMDIP = "192.168.137.169";
+                        CMDPORT = 9021;
+                        CMDDELAY = 3000;
+                        return null;
+                    }
+
+                    if (i >= 0x10)
+                    {
+                        echo($"ERROR: Reached the end of the ip text buffer before we finished reading the IP. Aboring and using default settings..\nRead IP: {CMDIP}");
+                        CMDIP = "192.168.137.169";
+                        CMDPORT = 9021;
+                        CMDDELAY = 3000;
+                        return null;
+                    }
+
+
+                    if (fs[i] == 0)
+                    {
+                        break;
+                    }
+
+
+                    CMDIP += Encoding.UTF8.GetChars(new byte[] { fs[i++] })[0];
+                }
+
+
+                // Load port
+                CMDPORT = BitConverter.ToInt32(fs, 0x10);
+                CMDDELAY = BitConverter.ToInt32(fs, 0x14);
+
+                return false;
+            }
+            catch (Exception err)
+            {
+                echo($"{nameof(CMDLoadSettings)}() {err.GetType().Name}: {err.Message}");
+
+                CMDIP = "192.168.137.169";
+                CMDPORT = 9021;
+                CMDDELAY = 3000;
+                return true;
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// Command line usage version. Uses local file in sender working directory rather than the native winforms settings file
+        /// </summary>
+        /// <returns>
+        /// False if no error occurs, true if an exception is raised.
+        /// </returns>
+        private bool CMDCreateDefaultSettings()
+        {
+            try {
+                var settingsFilePath = Directory.GetCurrentDirectory() + @"\ps.blb";
+                if (File.Exists(settingsFilePath))
+                {
+                    echo($@"WARING: Settings file already exists, removing old one.");
+                    File.Delete(settingsFilePath);
+                }
+
+
+                var itemBuffer = new byte[0x10];
+                var fileBuffer = new byte[0x20];
+                
+
+
+                // Write IP address to buffer
+                itemBuffer = Encoding.UTF8.GetBytes(CMDIP).Append<byte>(0).ToArray();
+                for(int i = 0; i < itemBuffer.Length; i++)
+                {
+                    fileBuffer[i] = itemBuffer[i];
+                }
+                
+                
+                // Write port to buffer
+                itemBuffer = BitConverter.GetBytes(CMDPORT);
+                for(int i = 0; i < itemBuffer.Length; i++)
+                {
+                    fileBuffer[0x10 + i] = itemBuffer[i];
+                }
+
+
+                // Write delay to buffer
+                itemBuffer = BitConverter.GetBytes(CMDDELAY);
+                for (int i = 0; i < itemBuffer.Length; i++)
+                {
+                    fileBuffer[0x14 + i] = itemBuffer[i];
+                }
+
+
+
+                // Write buffer to local settings file
+                File.WriteAllBytes(settingsFilePath, fileBuffer);
+
+                return false;
+            }
+            catch (Exception err)
+            {
+                echo($"{nameof(CMDCreateDefaultSettings)}() {err.GetType().Name}: {err.Message}");
+                return true;
+            }
+        }
+
+
 
 
 
@@ -213,6 +474,8 @@ namespace PayloadSender
             }
 #endif
         }
+
+
 
 
 
@@ -265,7 +528,11 @@ namespace PayloadSender
 
                         if (sent < 0)
                         {
-                            goto QUOI;
+                            echo("sent value remained negative when sending elfdr!");
+
+                            error = "QUOI?!";
+                            Venat?.Invoke(editStatusLabel, "!ERROR!");
+                            MessageBox.Show($"Error: Sent buffer size for elfdr was negative- something has gone terribly wrong. {nameof(sent)} == {sent}", error);
                         }
 
                         if (sent < payload.Length)
@@ -303,7 +570,11 @@ namespace PayloadSender
 
                     if (sent < 0)
                     {
-                        goto QUOI;
+                        echo("sent value remained negative!");
+
+                        error = "QUOI?!";
+                        Venat?.Invoke(editStatusLabel, "!ERROR!");
+                        MessageBox.Show($"Error: Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}", error);
                     }
 
                     if (sent < payload.Length)
@@ -324,21 +595,16 @@ namespace PayloadSender
 
 
 
+
                 fack:
                     echo($"sent the wrong amount of data; see exception message");
 
                     Venat?.Invoke(editStatusLabel, "TCP Error");
                     MessageBox.Show($"Error: Sent amount wasn't equal to the size of the selected file.\nSent 0x{sent:X} out of 0x{payload.Length:X}", error);
-
-
-
-                QUOI:
-                    echo("sent value remained negative!");
-
-                    error = "QUOI?!";
-                    Venat?.Invoke(editStatusLabel, "!ERROR!");
-                    MessageBox.Show($"Error: Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}", error);
+                    continue;
                 }
+
+                // Handle socket errors like invalid IP/Port, or a nonexistent client
                 catch (SocketException err)
                 {
                     echo($"A SocketException was raised in {nameof(Connect)}().\nMessage:\n\t{err.Message.Replace("\n", "\n\t")}");
@@ -346,6 +612,8 @@ namespace PayloadSender
                     
                     MessageBox.Show($"Socket Error: Please verify the provided IP and Port, and that the payload loader is running.", err.Message);
                 }
+
+                // Handle missing payload file
                 catch (FileNotFoundException)
                 {
                     echo("File doesn't exist, doing jack.");
@@ -357,7 +625,15 @@ namespace PayloadSender
                     {
                         PayloadSocket?.Close();
                     }
+
+
                     ReadyToConnect = false;
+
+                    for (int i = 0; i < 7500 && !ReadyToConnect;) // Reworked sleep to be canceled by subsequent payload requests
+                    {
+                        Thread.Sleep(++i * 10);
+                    }
+                    Venat?.Invoke(editStatusLabel, "");
                 }
             }
         }
@@ -951,13 +1227,26 @@ namespace PayloadSender
         private void toggleDebugServerBtn_Click(object sender, EventArgs e)
         {
 #if DEBUG
-            if (LocalServerThread?.ThreadState == System.Threading.ThreadState.Unstarted)
+            if (LocalServerThread == null)
             {
+                LocalServerThread = new Thread(LocalServer);
                 LocalServerThread.Start();
+
+                PortBox.Text = "23";
+                IPBox.Text = "127.0.0.1";
+
+                return;
             }
-            else {
-                echo("Server's already running. F*ck you- restart the app.");
+
+
+
+            echo("Killing local payload server.");
+
+            try {
+                LocalServerThread.Abort();
+                LocalServerThread = null;
             }
+            catch (ThreadAbortException) { }
 #endif
         }
 
@@ -1006,11 +1295,6 @@ namespace PayloadSender
 
             Console.WriteLine(str);
             Debug.WriteLineIf(!Console.IsOutputRedirected, str);
-
-            if (!Console.IsOutputRedirected)
-            {
-                Debug.WriteLine(str);
-            }
 #endif
         }
 
@@ -1035,11 +1319,7 @@ namespace PayloadSender
             var str = message?.ToString() ?? " ";
 
             Console.Write(str);
-
-            if (!Console.IsOutputRedirected)
-            {
-                Debug.Write(str);
-            }
+            Debug.WriteIf(!Console.IsOutputRedirected, str);
 #endif
         }
 
@@ -1054,27 +1334,31 @@ namespace PayloadSender
         {
             echo($"Application exiting with code {exitCode:X}");
 
-            _echo("Saving settings... ");
-            if (Settings != null)
+
+            if (Venat != null) // Avoid doing gui-specific cleanup if used as a command line app
             {
-                Settings.Save();
-                echo("Settings saved.");
+                _echo("Saving settings... ");
+
+                if (Settings != null)
+                {
+                    Settings.Save();
+                    echo("Settings saved.");
+                }
+                else {
+                    echo($"WARNING: {nameof(Payload_Sender)}.{nameof(Settings)} was null for some reason, nothing to save.");
+                }
+
+                if (Venat.PayloadSocket != null)
+                {
+                    _echo("Closing socket... ");
+                    Venat.PayloadSocket?.Close();
+                    echo("Socket disconnected & closed.");
+                }
+
+
+                Venat.Controls.Clear();
+                Venat.Dispose();
             }
-            else {
-                echo($"{nameof(Payload_Sender)}.{nameof(Settings)} was null for some reason, nothing to save.");
-            }
-
-            if (Venat.PayloadSocket != null)
-            {
-                _echo("Closing socket... ");
-                Venat.PayloadSocket?.Close();
-                echo("Socket disconnected & closed.");
-            }
-
-
-
-            Venat.Controls.Clear();
-            Venat.Dispose();
 
             Environment.Exit(exitCode);
         }

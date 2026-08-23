@@ -60,7 +60,7 @@ namespace PayloadSender
             this.binElfdrBtn = new System.Windows.Forms.Button();
             this.TcpLabel = new System.Windows.Forms.Label();
             this.arrowLabel = new System.Windows.Forms.Label();
-            this.tempStatusLabel = new System.Windows.Forms.Label();
+            this.StatusLabel = new System.Windows.Forms.Label();
             this.toggleDebugServerBtn = new System.Windows.Forms.Button();
             this.scaleBtn = new System.Windows.Forms.Button();
             this.ElfdrPortBox = new System.Windows.Forms.TextBox();
@@ -494,17 +494,17 @@ namespace PayloadSender
             this.arrowLabel.TabIndex = 48;
             this.arrowLabel.Text = "-->";
             // 
-            // tempStatusLabel
+            // StatusLabel
             // 
-            this.tempStatusLabel.BackColor = System.Drawing.Color.Transparent;
-            this.tempStatusLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
-            this.tempStatusLabel.ForeColor = System.Drawing.Color.Fuchsia;
-            this.tempStatusLabel.Location = new System.Drawing.Point(264, 130);
-            this.tempStatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.tempStatusLabel.Name = "tempStatusLabel";
-            this.tempStatusLabel.Size = new System.Drawing.Size(120, 24);
-            this.tempStatusLabel.TabIndex = 49;
-            this.tempStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.StatusLabel.BackColor = System.Drawing.Color.Transparent;
+            this.StatusLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
+            this.StatusLabel.ForeColor = System.Drawing.Color.Fuchsia;
+            this.StatusLabel.Location = new System.Drawing.Point(264, 130);
+            this.StatusLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.StatusLabel.Name = "StatusLabel";
+            this.StatusLabel.Size = new System.Drawing.Size(120, 24);
+            this.StatusLabel.TabIndex = 49;
+            this.StatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // toggleDebugServerBtn
             // 
@@ -585,7 +585,7 @@ namespace PayloadSender
             this.Controls.Add(this.elfdrPortBoxLabel);
             this.Controls.Add(this.scaleBtn);
             this.Controls.Add(this.toggleDebugServerBtn);
-            this.Controls.Add(this.tempStatusLabel);
+            this.Controls.Add(this.StatusLabel);
             this.Controls.Add(this.elfElfdrBtn);
             this.Controls.Add(this.arrowLabel);
             this.Controls.Add(this.binElfdrBtn);
@@ -664,7 +664,7 @@ namespace PayloadSender
         private System.Windows.Forms.Button binElfdrBtn;
         private System.Windows.Forms.Label TcpLabel;
         private System.Windows.Forms.Label arrowLabel;
-        private System.Windows.Forms.Label tempStatusLabel;
+        private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.Button toggleDebugServerBtn;
         private System.Windows.Forms.Button scaleBtn;
         private System.Windows.Forms.TextBox ElfdrPortBox;

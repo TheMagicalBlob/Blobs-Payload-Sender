@@ -9,16 +9,21 @@ namespace Payload_Sender
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(params string[] args)
         {
+            args = args ?? Array.Empty<string>();
+
+            if (args.Length > 0)
+            {
+                Application.Run(new PayloadSender.Payload_Sender(args));
+                return;
+            }
+
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            do {
-                Application.Run(new PayloadSender.Payload_Sender());
-                Console.WriteLine("\nRestarting program...");
-            }
-            while (true); // Restart program when closed through Close() function instead of Environment.Exit(0)
+            Application.Run(new PayloadSender.Payload_Sender());
         }
     }
 }
