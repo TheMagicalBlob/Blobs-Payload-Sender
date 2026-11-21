@@ -23,7 +23,7 @@ namespace PayloadSender
 {
     internal partial class Payload_Sender : Form // 71, 117
     {
-        internal const string version = "2.67.97"
+        internal const string version = "2.67.99"
         ;
 
 
@@ -233,6 +233,111 @@ namespace PayloadSender
 
         public static bool MouseIsDown;
         public static Point MouseDif;
+        #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+        //=======================================================\\
+        //---|   Logging/Output Functionality Declarations   |---\\
+        //=======================================================\\
+        #region [Logging/Output Functionality Declarations]
+
+        /// <summary>
+        /// Echo a provided string (or string representation of an object) to the standard console output, followed by a newline.
+        /// <br/> Appends an empty new line if no message is provided.
+        /// </summary>
+#pragma warning disable IDE1006 // bug off, this one's lowercase
+        public static void echo(object
+#if DEBUG
+            message
+#else
+            _
+#endif
+            = null)
+        {
+#if DEBUG
+            var str = message?.ToString() ?? string.Empty;
+
+            Console.WriteLine(str);
+            Debug.WriteLineIf(!Console.IsOutputRedirected, str);
+#endif
+        }
+
+
+
+
+        /// <summary>
+        /// Echo a provided string (or string representation of an object) to the standard console output.
+        /// <br/> Appends a single whitespace character if no message is provided.
+        /// </summary>
+        /// <param name="message"></param>
+        public static void _echo(object
+#if DEBUG
+            message
+#else
+            _
+#endif
+            = null
+            )
+        {
+#if DEBUG
+            var str = message?.ToString() ?? " ";
+
+            Console.Write(str);
+            Debug.WriteIf(!Console.IsOutputRedirected, str);
+#endif
+        }
+
+
+
+
+        /// <summary>
+        /// Save settings and close the form
+        /// </summary>
+        /// <param name="exitCode"></param>
+        private static void exit(int exitCode = 0)
+        {
+            echo($"Application exiting with code {exitCode:X}");
+
+
+            if (Venat != null) // Avoid doing gui-specific cleanup if used as a command line app
+            {
+                _echo("Saving settings... ");
+
+                if (Settings != null)
+                {
+                    Settings.Save();
+                    echo("Settings saved.");
+                }
+                else
+                {
+                    echo($"WARNING: {nameof(Payload_Sender)}.{nameof(Settings)} was null for some reason, nothing to save.");
+                }
+
+                if (Venat.PayloadSocket != null)
+                {
+                    _echo("Closing socket... ");
+                    Venat.PayloadSocket?.Close();
+                    echo("Socket disconnected & closed.");
+                }
+
+
+                Venat.Controls.Clear();
+                Venat.Dispose();
+            }
+
+            Environment.Exit(exitCode);
+        }
+#pragma warning restore IDE1006
         #endregion
 
 
@@ -496,18 +601,26 @@ namespace PayloadSender
             {
                 while (!ReadyToConnect)
                 {
-                    Thread.Sleep(7); // Wait for first/subsequent file
+                    Thread.Sleep(100); // Wait for file(s)
                 }
 
 
 
-
                 try {
-                    // Verify provided file path
-                    if (!File.Exists(PayloadPath))
+                    // Avoid miscounting on user error
+                    PayloadPath = PayloadPath.Trim(';');
+
+                    // Verify provided file path(s)
+                    if (PayloadPath.Contains(";"))
                     {
-                        throw new FileNotFoundException();
+                        if (PayloadPath.Split(';').Any(file => !File.Exists(file))) {
+                            throw new FileNotFoundException($"One or more provided paths was invalid\nPath: {PayloadPath.Replace(";", ";\n")}");
+                        }
                     }
+                    else if (!File.Exists(PayloadPath)) {
+                        throw new FileNotFoundException($"Provided payload path was invalid.\nPath: {PayloadPath}");
+                    }
+
 
 
                     // Send the sekected elfdr payload and sleep for ~3 seconds before sending the main provided payload
@@ -554,45 +667,56 @@ namespace PayloadSender
 
 
 
-
-
                     // Reset socket and send the payload provided in the PayloadPathBox
-                    PayloadSocket = new TcpClient();
-                    PayloadSocket.Connect(new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()), Convert.ToInt32(getPortBoxValue())));
+                    sent = 0;
 
-                    _echo("Loading selcted payload... ");
-                    payload = File.ReadAllBytes(PayloadPath);
-                    echo($"payload loaded. (Size: {payload.Length:X})");
-
-                    _echo("Sending loaded payload... ");
-                    sent = PayloadSocket.Client.Send(payload);
-                    echo($"payload sent. (sent: {sent:X})\n");
-
-                    if (sent < 0)
+                    foreach(var path in PayloadPath.Split(';'))
                     {
-                        echo("sent value remained negative!");
+                        // Not the most-efficient way of doing it, but whatever. The tool's lightweight-enough that it doesn't really matter
+                        PayloadSocket = new TcpClient();
+                        PayloadSocket.Connect(new IPEndPoint(IPAddress.Parse(getIPBoxValue().ToString()), Convert.ToInt32(getPortBoxValue())));
 
-                        error = "QUOI?!";
-                        Venat?.Invoke(editStatusLabel, "!ERROR!");
-                        MessageBox.Show($"Error: Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}", error);
+                        echo(path);
+                        if (sent != 0)
+                        {
+                            echo($"waiting; already sent 0x{sent:X} bytes");
+                            Thread.Sleep(4500);
+                        }
+
+                        _echo($"Loading payload from \"{path.Substring(path.LastIndexOf('\\') + 1)}\"... ");
+                        payload = File.ReadAllBytes(path);
+                        echo($"payload loaded. (Size: {payload.Length:X})");
+
+                        _echo("Sending loaded payload... ");
+                        sent = PayloadSocket.Client.Send(payload);
+                        echo($"payload sent. (sent: {sent:X})\n");
+
+                        if (sent < 0)
+                        {
+                            echo("sent value remained negative!");
+
+                            error = "QUOI?!";
+                            Venat?.Invoke(editStatusLabel, "!ERROR!");
+                            MessageBox.Show($"Error: Sent buffer size was negative- something has gone terribly wrong. {nameof(sent)} == {sent}", error);
+                        }
+
+                        if (sent < payload.Length)
+                        {
+                            error = "(not all data was sent)";
+                            goto fack;
+                        }
+
+                        if (sent > payload.Length)
+                        {
+                            error = "(sent more than filesize?!)";
+                            goto fack;
+                        }
+
+                        echo("");
+                        Venat?.Invoke(editStatusLabel, "Success");
                     }
-
-                    if (sent < payload.Length)
-                    {
-                        error = "(not all data was sent)";
-                        goto fack;
-                    }
-
-                    if (sent > payload.Length)
-                    {
-                        error = "(sent more than filesize?!)";
-                        goto fack;
-                    }
-
-                    Venat?.Invoke(editStatusLabel, "Success");
+                    
                     continue;
-
-
 
 
 
@@ -601,7 +725,6 @@ namespace PayloadSender
 
                     Venat?.Invoke(editStatusLabel, "TCP Error");
                     MessageBox.Show($"Error: Sent amount wasn't equal to the size of the selected file.\nSent 0x{sent:X} out of 0x{payload.Length:X}", error);
-                    continue;
                 }
 
                 // Handle socket errors like invalid IP/Port, or a nonexistent client
@@ -614,9 +737,9 @@ namespace PayloadSender
                 }
 
                 // Handle missing payload file
-                catch (FileNotFoundException)
+                catch (FileNotFoundException e)
                 {
-                    echo("File doesn't exist, doing jack.");
+                    echo($"File doesn't exist, doing jack.\n{e.Message}");
                     Venat?.Invoke(editStatusLabel, "File Error!");
                     MessageBox.Show("Invalid payload path provided (File doesn't exist). Please update the path.\nPath: " + PayloadPath, $"Payload Path did not point to a valid file.");
                 }
@@ -627,11 +750,11 @@ namespace PayloadSender
                     }
 
 
+                    sent = 0;
                     ReadyToConnect = false;
 
-                    for (int i = 0; i < 7500 && !ReadyToConnect;) // Reworked sleep to be canceled by subsequent payload requests
-                    {
-                        Thread.Sleep(++i * 10);
+                    for (int i = 0; i++ < 5 && !ReadyToConnect;) { // Reworked sleep to be canceled by subsequent payload requests
+                        Thread.Sleep(1000);
                     }
                     Venat?.Invoke(editStatusLabel, "");
                 }
@@ -978,12 +1101,13 @@ namespace PayloadSender
             var fileDialogue = new OpenFileDialog
             {
                 Filter = "Payload/Executable|*.bin;*.elf",
-                Title = "Select a .bin or /elf Payload to send."
+                Title = "Select a .bin or /elf Payload to send.",
+                Multiselect = true
             };
 
             if (fileDialogue.ShowDialog() == DialogResult.OK)
             {
-                Settings.PayloadPath = PayloadPathBox.Text = fileDialogue.FileName;
+                Settings.PayloadPath = PayloadPathBox.Text = string.Join(";", fileDialogue.FileNames);
             }
         }
 
@@ -1001,6 +1125,7 @@ namespace PayloadSender
 
             if (PayloadThread.ThreadState == System.Threading.ThreadState.Unstarted)
             {
+                echo("Starting payload thread");
                 PayloadThread.Start();
             }
 
@@ -1105,7 +1230,7 @@ namespace PayloadSender
 
 
 
-            if (((TextBox)sender).Focused)
+            if (((TextBox) sender).Focused) // Avoid constantly scrolling the carrot with each character written to it
             {
                 return;
             }
@@ -1259,110 +1384,6 @@ namespace PayloadSender
             this.Scale(new SizeF(1.01f, 1.01f));
 #endif
         }
-#endregion
-
-
-
-
-
-
-
-
-
-
-
-
-        //=======================================================\\
-        //---|   Logging/Output Functionality Declarations   |---\\
-        //=======================================================\\
-        #region [Logging/Output Functionality Declarations]
-
-        /// <summary>
-        /// Echo a provided string (or string representation of an object) to the standard console output, followed by a newline.
-        /// <br/> Appends an empty new line if no message is provided.
-        /// </summary>
-#pragma warning disable IDE1006 // bug off, this one's lowercase
-        public static void echo(object
-#if DEBUG
-            message
-#else
-            _
-#endif
-            = null)
-        {
-#if DEBUG
-            var str = message?.ToString() ?? string.Empty;
-
-            Console.WriteLine(str);
-            Debug.WriteLineIf(!Console.IsOutputRedirected, str);
-#endif
-        }
-
-
-
-
-        /// <summary>
-        /// Echo a provided string (or string representation of an object) to the standard console output.
-        /// <br/> Appends a single whitespace character if no message is provided.
-        /// </summary>
-        /// <param name="message"></param>
-        public static void _echo(object
-#if DEBUG
-            message
-#else
-            _
-#endif
-            = null
-            )
-        {
-#if DEBUG
-            var str = message?.ToString() ?? " ";
-
-            Console.Write(str);
-            Debug.WriteIf(!Console.IsOutputRedirected, str);
-#endif
-        }
-
-
-
-
-        /// <summary>
-        /// Save settings and close the form
-        /// </summary>
-        /// <param name="exitCode"></param>
-        private static void exit(int exitCode = 0)
-        {
-            echo($"Application exiting with code {exitCode:X}");
-
-
-            if (Venat != null) // Avoid doing gui-specific cleanup if used as a command line app
-            {
-                _echo("Saving settings... ");
-
-                if (Settings != null)
-                {
-                    Settings.Save();
-                    echo("Settings saved.");
-                }
-                else {
-                    echo($"WARNING: {nameof(Payload_Sender)}.{nameof(Settings)} was null for some reason, nothing to save.");
-                }
-
-                if (Venat.PayloadSocket != null)
-                {
-                    _echo("Closing socket... ");
-                    Venat.PayloadSocket?.Close();
-                    echo("Socket disconnected & closed.");
-                }
-
-
-                Venat.Controls.Clear();
-                Venat.Dispose();
-            }
-
-            Environment.Exit(exitCode);
-        }
-#pragma warning restore IDE1006
 #endregion
 #endregion (function declarations)
 
